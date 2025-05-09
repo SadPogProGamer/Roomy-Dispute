@@ -94,6 +94,7 @@ public class ItemPlacement : MonoBehaviour
             GameObject item = Instantiate(_item, _hit.collider.transform.position, _item.transform.localRotation, _hit.transform);
             item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
             item.GetComponent<Collider>().enabled = true;
+            item.GetComponent<ItemStats>().IsPlaced = true;
             Destroy(_item);
             _itemRotation = 0;
         }
