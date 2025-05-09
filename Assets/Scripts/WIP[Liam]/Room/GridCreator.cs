@@ -22,6 +22,8 @@ public class GridCreator : MonoBehaviour
                 box.transform.localScale = new Vector3(_floor.transform.parent.localScale.x / _xRange, _floor.transform.parent.localScale.y / _yRange, _floor.transform.parent.localScale.y / _yRange);
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRange / 2f) + .5f), 0, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRange / 2f) + .5f));
+
+                box.layer = 7;
             }
 
         //this is for the longverticalgrid
@@ -34,7 +36,8 @@ public class GridCreator : MonoBehaviour
                 box.transform.localScale = new Vector3(_floor.transform.parent.localScale.x / _xRange, _floor.transform.parent.localScale.y / _yRange, _floor.transform.parent.localScale.y / _yRange);
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRange / 2f) + .5f), 0, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRange / 2f) + .5f) - box.transform.localScale.y / 2);
-
+                
+                box.layer = 9;
             }
 
         //this is for the longhorizontalgrid
@@ -48,6 +51,7 @@ public class GridCreator : MonoBehaviour
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRange / 2f) + .5f) - box.transform.localScale.y / 2, 0, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRange / 2f) + .5f));
 
+                box.layer = 8;
             }
 
         //this is for the biggrid
@@ -61,6 +65,7 @@ public class GridCreator : MonoBehaviour
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRange / 2f) + .5f) - box.transform.localScale.y / 2, 0, ((y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRange / 2f) + .5f) - box.transform.localScale.y / 2));
 
+                box.layer = 6;
             }
 
     }
