@@ -8,6 +8,13 @@ TagManager:
   - ShortGrid
   - LongGrid/Vert
   - LongGrid/Hori
+  - Item/Small
+  - Item/Big
+  - Item/Long
+  - Item/Placable/Big
+  - Item/Placable/Medium
+  - Item/Placable/Small
+  - BigGrid
   layers:
   - Default
   - TransparentFX
@@ -15,10 +22,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Big
+  - Small
+  - LongH
+  - LongV
   - 
   - 
   - 
