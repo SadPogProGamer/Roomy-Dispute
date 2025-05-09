@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class ItemStats : MonoBehaviour
 {
-    private int _hp;
-    public bool IsGlass, IsWood;
-    private float _placementTime;
+    public int HP, Cost;
+    public bool IsGlass, IsWood, IsPlaced;
+    public float _placementTime;
    
     // Update is called once per frame
     void Update()
     {
-        
+        if (HP <= 0) Destroy(gameObject);
     }
 }
