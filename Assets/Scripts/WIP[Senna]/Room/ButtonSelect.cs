@@ -13,30 +13,24 @@ public class ButtonSelect : MonoBehaviour
     [Header("Sabotage Images")]
     [SerializeField] private Image _fireImage;
     [SerializeField] private Image _bombImage;
+    [SerializeField] private Image _targetIcon;
+    [SerializeField] private Image _breakIcon;
 
     private InputAction _cancelAction;
-    private InputAction _southAction;
-    private InputAction _eastAction;
+    private InputAction _selectAction;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _fireImage.enabled = false;
-        _bombImage.enabled = false;
+        HideSabotageIcons();
 
         _cancelAction = new InputAction("Cancel", binding: "<Gamepad>/buttonEast");
         _cancelAction.performed += OnCancel;
         _cancelAction.Enable();
 
-        _southAction = new InputAction("South", binding: "<Gamepad>/buttonSouth");
-        _southAction.performed += OnSelect;
-        _southAction.Enable();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        _selectAction = new InputAction("South", binding: "<Gamepad>/buttonSouth");
+        _selectAction.performed += OnSelect;
+        _selectAction.Enable();
     }
 
     private void OnSelect(InputAction.CallbackContext context)
@@ -54,8 +48,7 @@ public class ButtonSelect : MonoBehaviour
 
     public void IsCashAppPressed()
     {
-        _sabotageAppImage.enabled = false;
-        _cashAppImage.enabled = false;
+        HideBigIcons();
         ShowFurnitureImages();
     }
 
@@ -66,8 +59,7 @@ public class ButtonSelect : MonoBehaviour
 
     public void IsSabotageAppPressed()
     {
-        _sabotageAppImage.enabled = false;
-        _cashAppImage.enabled = false;
+        HideBigIcons();
         ShowSabotageImages();
     }
 
@@ -75,9 +67,37 @@ public class ButtonSelect : MonoBehaviour
     {
         _fireImage.enabled = true;
         _bombImage.enabled = true;
+        _targetIcon.enabled = true;
+        _breakIcon.enabled = true;
     }
 
     void OnCancel(InputAction.CallbackContext context)
+    {
+        HideSabotageIcons();
+        HideFurnitureIcons();
+        ShowBigIcons();
+    }
+
+    private void HideFurnitureIcons()
+    {
+
+    }
+
+    private void HideSabotageIcons()
+    {
+        _bombImage.enabled = false;
+        _fireImage.enabled = false;
+        _targetIcon.enabled = false;
+        _breakIcon.enabled = false;
+    }
+
+    private void ShowBigIcons()
+    {
+        _sabotageAppImage.enabled = true;
+        _cashAppImage.enabled = true;
+    }
+
+    private void HideBigIcons()
     {
         _sabotageAppImage.enabled = false;
         _cashAppImage.enabled = false;
