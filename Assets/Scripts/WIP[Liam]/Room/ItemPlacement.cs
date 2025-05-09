@@ -23,7 +23,7 @@ public class ItemPlacement : MonoBehaviour
                 if (_hit.collider.gameObject.transform.childCount == 0)
                 {
                     _item.transform.localScale = new Vector3(1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.y, 1.5f * _hit.transform.localScale.z);
-                    _item.transform.localPosition = new Vector3(_hit.transform.position.x, _item.transform.lossyScale.y, _hit.transform.position.z);
+                    _item.transform.localPosition = new Vector3(_hit.transform.position.x, _item.transform.lossyScale.y/2, _hit.transform.position.z);
                 }
             }
             else {Vector3 mousePos = Input.mousePosition; mousePos.z = _itemDistanceFromCamera; _item.transform.position = Camera.main.ScreenToWorldPoint(mousePos); }
@@ -40,7 +40,6 @@ public class ItemPlacement : MonoBehaviour
                 {
                     GameObject item = Instantiate(_item, _hit.collider.transform.position, _item.transform.localRotation, _hit.transform);
                     item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
-                    item.transform.localPosition = new Vector3(item.transform.localPosition.x, .65f, item.transform.localPosition.z);
                     Destroy(_item);
                     _itemRotation = 0;
                 }
