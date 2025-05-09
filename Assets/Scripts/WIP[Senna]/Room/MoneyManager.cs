@@ -49,7 +49,7 @@ public class MoneyManager : MonoBehaviour
 
     private void UpdateMoneyUI(int playerID)
     {
-        _playerTexts[playerID].text = $"Player {playerID + 1}: {_playerMoney[playerID]}";
+        _playerTexts[playerID].text = $"Player {playerID + 1}: ${_playerMoney[playerID]}";
     }
 
     private void UpdateAllMoneyUI()
