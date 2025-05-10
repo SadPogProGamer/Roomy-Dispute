@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class ItemStats : MonoBehaviour
 {
-    public int HP, Cost;
+    public int HP, Cost, Points;
     public bool IsGlass, IsWood, IsPlaced;
-    public float _placementTime;
+    public float PlacementTime;
    
     // Update is called once per frame
     void Update()
