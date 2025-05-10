@@ -21,7 +21,7 @@ public class ItemPlacement : MonoBehaviour
             if (_item.CompareTag("Item/Big")) _layerMask = 1 << 6;
             if (_item.CompareTag("Item/Long"))
             {
-                if (Mathf.Abs(_itemRotation) == 90)
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
                     _layerMask = 1 << 9;
                 else
                     _layerMask = 1 << 8;
@@ -32,10 +32,11 @@ public class ItemPlacement : MonoBehaviour
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _layerMask))
             {
+                print(_hit.transform.parent.tag);
                 MoveObjectOnGrid("ShortGrid", "Item/Small");
 
-                if (Mathf.Abs(_itemRotation) == 90)
-                    MoveObjectOnGrid("LongGrid/Virt", "Item/Long");
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    MoveObjectOnGrid("LongGrid/Vert", "Item/Long");
                 else
                     MoveObjectOnGrid("LongGrid/Hori", "Item/Long");
 
@@ -53,7 +54,7 @@ public class ItemPlacement : MonoBehaviour
             PlaceObjectOnGrid("ShortGrid", "Item/Small");
 
             if (Mathf.Abs(_itemRotation) == 90)
-                PlaceObjectOnGrid("LongGrid/Virt", "Item/Long");
+                PlaceObjectOnGrid("LongGrid/Vert", "Item/Long");
             else
                 PlaceObjectOnGrid("LongGrid/Hori", "Item/Long");
 
