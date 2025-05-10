@@ -360,19 +360,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 104631789}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1982056318}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: IsSabotageAppPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &104631789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,8 +2592,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cashAppImage: {fileID: 2125463660}
   _sabotageAppImage: {fileID: 104631789}
-  _fireImage: {fileID: 1268659025}
-  _bombImage: {fileID: 520062701}
+  _fireIcon: {fileID: 1268659025}
+  _bombIcon: {fileID: 520062701}
   _targetIcon: {fileID: 1993423818}
   _breakIcon: {fileID: 73839278}
   eventSystem: {fileID: 731539980}
@@ -2879,19 +2867,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2125463660}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1982056318}
-        m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: IsCashAppPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2125463660
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -65,7 +66,23 @@ public class ButtonSelect : MonoBehaviour
     {
         if (_currentSelected == _sabotageAppImage.gameObject)
         {
-            IsSabotageAppPressed();
+            SelectSabotageApp();
+        }
+        else if (_currentSelected == _cashAppImage.gameObject)
+        {
+            SelectCashApp();
+        }
+        else if (_currentSelected == _bombIcon.gameObject)
+        {
+            SelectBombIcon();
+        }
+        else if (_currentSelected == _breakIcon.gameObject)
+        {
+            SelectBreakIcon();
+        }
+        else if (_currentSelected == _targetIcon.gameObject)
+        {
+            SelectTargetIcon();
         }
         else if (_currentSelected == _fireIcon.gameObject)
         {
@@ -73,8 +90,9 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    private void IsCashAppPressed()
+    private void SelectCashApp()
     {
+        Debug.Log("Cash App pressed");
         HideBigIcons();
         ShowFurnitureImages();
         _lastSelected = _cashAppImage.gameObject;
@@ -85,13 +103,14 @@ public class ButtonSelect : MonoBehaviour
         // Implement showing furniture images logic here
     }
 
-    private void IsSabotageAppPressed()
+    private void SelectSabotageApp()
     {
+        Debug.Log("Sabotage App pressed");
         HideBigIcons();
         ShowSabotageImages();
-        _currentSelected = _fireIcon.gameObject;  // Set the current selection to the Fire icon
+        _currentSelected = _fireIcon.gameObject;
         _lastSelected = _sabotageAppImage.gameObject;
-        eventSystem.SetSelectedGameObject(_currentSelected);  // Ensure the Fire icon is selected
+        eventSystem.SetSelectedGameObject(_currentSelected);
     }
 
     private void ShowSabotageImages()
@@ -104,17 +123,17 @@ public class ButtonSelect : MonoBehaviour
 
     void OnCancel(InputAction.CallbackContext context)
     {
-        if (_currentSelected == _sabotageAppImage.gameObject | _currentSelected == _cashAppImage.gameObject)
+        if (_currentSelected == _sabotageAppImage.gameObject || _currentSelected == _cashAppImage.gameObject)
         {
-            return; 
             Debug.Log("Cancel button pressed on Sabotage or Cash App");
+            return;
         }
 
-        _currentSelected = _lastSelected;  // Return to the last selected object
+        _currentSelected = _lastSelected;
         HideSabotageIcons();
         HideFurnitureIcons();
         ShowBigIcons();
-        eventSystem.SetSelectedGameObject(_currentSelected);  // Ensure the last selected object is focused again
+        eventSystem.SetSelectedGameObject(_currentSelected);
     }
 
     private void HideFurnitureIcons()
@@ -148,6 +167,23 @@ public class ButtonSelect : MonoBehaviour
         Debug.Log("Fire Icon Selected");
     }
 
+    private void SelectBombIcon()
+    {
+        // Add any specific behavior when the bomb icon is selected
+        Debug.Log("Bomb Icon Selected");
+    }
+
+    private void SelectTargetIcon()
+    {
+        // Add any specific behavior when the target icon is selected
+        Debug.Log("Target Icon Selected");
+    }
+    private void SelectBreakIcon()
+    {
+        // Add any specific behavior when the break icon is selected
+        Debug.Log("Break Icon Selected");
+    }
+
     private void HandleMovement()
     {
         Vector2 dpadInput = Gamepad.current.dpad.ReadValue();
@@ -172,6 +208,7 @@ public class ButtonSelect : MonoBehaviour
             }
         }
     }
+
 
     private void NavigateUp()
     {
@@ -219,10 +256,7 @@ public class ButtonSelect : MonoBehaviour
         {
             if (Gamepad.current.buttonSouth.wasPressedThisFrame)
             {
-                if (_currentSelected != null)
-                {
-                    _currentSelected.GetComponent<Button>().onClick.Invoke();
-                }
+                Debug.Log("Select button pressed");
             }
             else if (Gamepad.current.buttonEast.wasPressedThisFrame)
             {
