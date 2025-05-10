@@ -1,3 +1,4 @@
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -5,6 +6,7 @@ using UnityEngine.InputSystem.UI;
 
 public class PlayerPointer : MonoBehaviour
 {
+    public Vector3 OriginPoint;
     [SerializeField]
     private float _speed;
     private Vector2 _moveVector;
