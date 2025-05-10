@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ef3ba28f62e5854429c12f777b33eb1c, type: 3}
       propertyPath: m_Name
-      value: Vase01
+      value: BigVase01
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ef3ba28f62e5854429c12f777b33eb1c, type: 3}
       propertyPath: m_TagString
@@ -136,8 +136,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 2
-  Cost: 0
+  Cost: 225
+  Points: 18000
   IsGlass: 1
   IsWood: 0
   IsPlaced: 0
-  _placementTime: 0
+  PlacementTime: 0
