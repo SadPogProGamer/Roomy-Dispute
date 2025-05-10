@@ -9256,7 +9256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cashAppIcon: {fileID: 2125463657}
   _sabotageIcon: {fileID: 104631786}
-  _furnitureTab:
+  _furnitureObjects:
   - {fileID: 314649942}
   - {fileID: 2117761251}
   - {fileID: 2096017905}
