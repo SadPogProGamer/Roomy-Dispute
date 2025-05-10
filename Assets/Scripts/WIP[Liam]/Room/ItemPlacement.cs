@@ -157,52 +157,57 @@ public class ItemPlacement : MonoBehaviour
     {
         if (Item.tag.Contains("Placable") && _hit.transform.CompareTag(objectTag))
         {
+            GameObject item;
             if (_hit.transform.CompareTag("Item/Big"))
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 10)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
                 }
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 9)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                 }
                 if (Item.transform.CompareTag("Item/Placable/Big") && _hit.transform.childCount < 8)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                 }
             }
             if (_hit.transform.CompareTag("Item/Long"))
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 6)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
                 }
                
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 5)
                 {
-                    InstantiatePlacable();
-                    Instantiate(_empty, _hit.transform);
+                    item = InstantiatePlacable();
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
 
                 }
 
                 if (Item.transform.CompareTag("Item/Placable/Big") && _hit.transform.childCount < 4)
                 {
-                    InstantiatePlacable();
-                    Instantiate(_empty, _hit.transform);
-                    Instantiate(_empty, _hit.transform);
+                    item = InstantiatePlacable();
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                 }
             }
         }
     }
-    private void InstantiatePlacable()
+    private GameObject InstantiatePlacable()
     {
         GameObject item;
         item = Instantiate(Item, _child.position, Item.transform.localRotation, _hit.transform);
-        item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        item.transform.localScale = new Vector3(1, 1, 1);
         item.GetComponent<Collider>().enabled = true;
         item.GetComponent<ItemStats>().IsPlaced = true;
         Destroy(Item);
         _itemRotation = 0;
+        return item;
     }
 }
