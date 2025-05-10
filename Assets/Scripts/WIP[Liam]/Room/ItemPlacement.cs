@@ -16,12 +16,12 @@ public class ItemPlacement : MonoBehaviour
     {
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         _ray = Camera.main.ScreenPointToRay(screenPos);
-        if (_item != null) 
+        if (_item != null)
         {
             if (_item.CompareTag("Item/Big")) _layerMask = 1 << 6;
             if (_item.CompareTag("Item/Long"))
             {
-                if (Mathf.Abs(_itemRotation) == 90)
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
                     _layerMask = 1 << 9;
                 else
                     _layerMask = 1 << 8;
@@ -34,8 +34,8 @@ public class ItemPlacement : MonoBehaviour
             {
                 MoveObjectOnGrid("ShortGrid", "Item/Small");
 
-                if (Mathf.Abs(_itemRotation) == 90)
-                    MoveObjectOnGrid("LongGrid/Virt", "Item/Long");
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    MoveObjectOnGrid("LongGrid/Vert", "Item/Long");
                 else
                     MoveObjectOnGrid("LongGrid/Hori", "Item/Long");
 
@@ -52,8 +52,8 @@ public class ItemPlacement : MonoBehaviour
 
             PlaceObjectOnGrid("ShortGrid", "Item/Small");
 
-            if (Mathf.Abs(_itemRotation) == 90)
-                PlaceObjectOnGrid("LongGrid/Virt", "Item/Long");
+            if (Mathf.Abs(_itemRotation) % 180 != 0)
+                PlaceObjectOnGrid("LongGrid/Vert", "Item/Long");
             else
                 PlaceObjectOnGrid("LongGrid/Hori", "Item/Long");
 
