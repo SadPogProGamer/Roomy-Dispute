@@ -27,9 +27,9 @@ TagManager:
   - LongH
   - LongV
   - PlacableOn
-  - 
-  - 
-  - 
+  - SmallWall
+  - LongHWall
+  - LongVWall
   - 
   - 
   - 

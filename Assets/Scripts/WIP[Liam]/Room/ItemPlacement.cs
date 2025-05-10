@@ -88,7 +88,7 @@ public class ItemPlacement : MonoBehaviour
         _itemRotation += GetRotationValue();
     }
 
-    public void OnCancel()
+    public void OnReturn()
     {
         Destroy(Item);
     }
@@ -162,7 +162,7 @@ public class ItemPlacement : MonoBehaviour
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 10)
                 {
-                    item = InstantiatePlacable();
+                    InstantiatePlacable();
                 }
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 9)
                 {
@@ -180,7 +180,7 @@ public class ItemPlacement : MonoBehaviour
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 6)
                 {
-                    item = InstantiatePlacable();
+                    InstantiatePlacable();
                 }
                
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 5)
