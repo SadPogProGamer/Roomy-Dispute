@@ -124,7 +124,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7694e18e1b8fc444aa1ca4c2b0243ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _item: {fileID: 0}
+  _empty: {fileID: 7848992286272240212, guid: 68319d2ba70c3b0459a7f8f84619a9c7, type: 3}
+  Item: {fileID: 0}
   _itemDistanceFromCamera: 1.2
 --- !u!114 &7323040997257396752
 MonoBehaviour:
