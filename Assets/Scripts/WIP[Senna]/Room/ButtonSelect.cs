@@ -9,8 +9,8 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private Image _sabotageAppImage;
 
     [Header("Sabotage Images")]
-    [SerializeField] private Image _fireImage;
-    [SerializeField] private Image _bombImage;
+    [SerializeField] private Image _fireIcon;
+    [SerializeField] private Image _bombIcon;
     [SerializeField] private Image _targetIcon;
     [SerializeField] private Image _breakIcon;
 
@@ -35,6 +35,7 @@ public class ButtonSelect : MonoBehaviour
         _selectAction.performed += OnSelect;
         _selectAction.Enable();
 
+        // Initially, the selected object is the main SabotageApp icon
         _currentSelected = _cashAppImage.gameObject;
     }
 
@@ -66,7 +67,7 @@ public class ButtonSelect : MonoBehaviour
         {
             IsSabotageAppPressed();
         }
-        else if (_currentSelected == _fireImage.gameObject)
+        else if (_currentSelected == _fireIcon.gameObject)
         {
             SelectFireIcon();
         }
@@ -88,26 +89,32 @@ public class ButtonSelect : MonoBehaviour
     {
         HideBigIcons();
         ShowSabotageImages();
-        _currentSelected = _fireImage.gameObject;
+        _currentSelected = _fireIcon.gameObject;  // Set the current selection to the Fire icon
         _lastSelected = _sabotageAppImage.gameObject;
-        eventSystem.SetSelectedGameObject(_currentSelected);  
+        eventSystem.SetSelectedGameObject(_currentSelected);  // Ensure the Fire icon is selected
     }
 
     private void ShowSabotageImages()
     {
-        _fireImage.enabled = true;
-        _bombImage.enabled = true;
+        _fireIcon.enabled = true;
+        _bombIcon.enabled = true;
         _targetIcon.enabled = true;
         _breakIcon.enabled = true;
     }
 
     void OnCancel(InputAction.CallbackContext context)
     {
-        _currentSelected = _lastSelected; 
+        if (_currentSelected == _sabotageAppImage.gameObject | _currentSelected == _cashAppImage.gameObject)
+        {
+            return; 
+            Debug.Log("Cancel button pressed on Sabotage or Cash App");
+        }
+
+        _currentSelected = _lastSelected;  // Return to the last selected object
         HideSabotageIcons();
         HideFurnitureIcons();
         ShowBigIcons();
-        eventSystem.SetSelectedGameObject(_currentSelected); 
+        eventSystem.SetSelectedGameObject(_currentSelected);  // Ensure the last selected object is focused again
     }
 
     private void HideFurnitureIcons()
@@ -117,8 +124,8 @@ public class ButtonSelect : MonoBehaviour
 
     private void HideSabotageIcons()
     {
-        _fireImage.enabled = false;
-        _bombImage.enabled = false;
+        _fireIcon.enabled = false;
+        _bombIcon.enabled = false;
         _targetIcon.enabled = false;
         _breakIcon.enabled = false;
     }
@@ -137,22 +144,8 @@ public class ButtonSelect : MonoBehaviour
 
     private void SelectFireIcon()
     {
+        // Add any specific behavior when the fire icon is selected
         Debug.Log("Fire Icon Selected");
-    }
-
-    private void SelectBombIcon()
-    {
-        Debug.Log("Bomb Icon Selected");
-    }
-
-    private void SelectTargetIcon()
-    {
-        Debug.Log("Target Icon Selected");
-    }
-
-    private void SelectBreakIcon()
-    {
-        Debug.Log("Break Icon Selected");
     }
 
     private void HandleMovement()
