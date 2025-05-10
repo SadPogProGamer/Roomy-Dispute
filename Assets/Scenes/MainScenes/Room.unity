@@ -2775,7 +2775,7 @@ MonoBehaviour:
   _chairPriceText: {fileID: 2108073679}
   _bookshelfItemStats: {fileID: 1486116743}
   _bowlItemStats: {fileID: 820930943}
-  _chairItemStats: {fileID: 0}
+  _chairItemStats: {fileID: 1250185937}
 --- !u!4 &983987244
 Transform:
   m_ObjectHideFlags: 0
@@ -3270,6 +3270,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5292092316209521885, guid: b5824ec54daad3c4b8ccd2a13198075d, type: 3}
   m_PrefabInstance: {fileID: 7461746245970497285}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1250185937 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2228472131923506382, guid: b5824ec54daad3c4b8ccd2a13198075d, type: 3}
+  m_PrefabInstance: {fileID: 7461746245970497285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250185935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b638c5beeb63705479c1d0d2baed70dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1268659022
 GameObject:
   m_ObjectHideFlags: 0

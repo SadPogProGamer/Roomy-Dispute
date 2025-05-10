@@ -23,7 +23,10 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private EventSystem _eventSystem;
 
     private GameObject _lastSelectedButton;
+
     private int _currentFurnitureIndex = 0;  // To track the selected furniture item
+
+    private bool _inFurnitureApp = false;
 
     private void Start()
     {
@@ -34,6 +37,7 @@ public class ButtonSelect : MonoBehaviour
         if (_eventSystem != null && _cashAppIcon != null)
         {
             _eventSystem.SetSelectedGameObject(_cashAppIcon);
+            _lastSelectedButton = _cashAppIcon;  // Track the last selected button
         }
     }
 
@@ -55,9 +59,10 @@ public class ButtonSelect : MonoBehaviour
     private void CancelAction()
     {
         EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_lastSelectedButton);
+        _eventSystem.SetSelectedGameObject(_lastSelectedButton);  // Use _lastSelectedButton to go back
         DisableSabotageApps();
         DisableFurnitureApps();
+        _inFurnitureApp = false;
     }
 
     private void CheckCurrentSelectedButton()
@@ -98,13 +103,27 @@ public class ButtonSelect : MonoBehaviour
     private void MoveSelection(Vector2 direction)
     {
         GameObject currentSelected = _eventSystem.currentSelectedGameObject;
-
         if (currentSelected != null)
         {
-            // Handle Up and Down Movement through the furniture array
+            Navigation navigation = currentSelected.GetComponent<UnityEngine.UI.Button>().navigation;
             if (direction == Vector2.up)
             {
-                if (_currentFurnitureIndex > 0)  // Prevent going below index 0
+                if (currentSelected == _sabotageIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_cashAppIcon);
+                }
+
+                if (currentSelected == _targetApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_fireApp);
+                }
+
+                if (currentSelected == _breakApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_bombApp);
+                }
+
+                if (_currentFurnitureIndex > 0 && _inFurnitureApp)
                 {
                     _currentFurnitureIndex--;  // Move up in the array
                 }
@@ -112,11 +131,48 @@ public class ButtonSelect : MonoBehaviour
             }
             else if (direction == Vector2.down)
             {
-                if (_currentFurnitureIndex < _furnitureObjects.Length - 1)  // Prevent going beyond array length
+                if (currentSelected == _cashAppIcon)
                 {
-                    _currentFurnitureIndex++;  // Move down in the array
+                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
                 }
-                UpdateSelectedFurniture();
+                if (currentSelected == _fireApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_targetApp);
+                }
+                if (currentSelected == _bombApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_breakApp);
+                }
+                else if (_inFurnitureApp)
+                {
+                    if (_currentFurnitureIndex < _furnitureObjects.Length - 1)  // Check if we are at the last index
+                    {
+                        _currentFurnitureIndex++;  // Move down in the array
+                    }
+                    UpdateSelectedFurniture();
+                }
+            }
+            else if (direction == Vector2.left)
+            {
+                if (currentSelected == _bombApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_fireApp);
+                }
+                if (currentSelected == _breakApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_targetApp);
+                }
+            }
+            else if (direction == Vector2.right)
+            {
+                if (currentSelected == _fireApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_bombApp);
+                }
+                if (currentSelected == _targetApp)
+                {
+                    _eventSystem.SetSelectedGameObject(_breakApp);
+                }
             }
         }
     }
@@ -135,7 +191,9 @@ public class ButtonSelect : MonoBehaviour
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
-        _eventSystem.SetSelectedGameObject(_furnitureObjects[0]);  // Set the first item of furniture as selected
+        _inFurnitureApp = true;
+        _currentFurnitureIndex = 0;
+        _eventSystem.SetSelectedGameObject(_furnitureObjects[0]);
         _lastSelectedButton = _cashAppIcon;
     }
 
@@ -148,6 +206,7 @@ public class ButtonSelect : MonoBehaviour
         _lastSelectedButton = _sabotageIcon;
     }
 
+    // Furniture App Button Clicks
     public void OnFireAppButtonClick()
     {
         Debug.Log("Fire App Button Clicked");
