@@ -4102,10 +4102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cashAppIcon: {fileID: 2125463657}
   _sabotageIcon: {fileID: 104631786}
-  _bookshelfIcon: {fileID: 741018777}
-  _chairIcon: {fileID: 618732129}
-  _bowlIcon: {fileID: 0}
-  _carpetIcon: {fileID: 0}
   _furnitureObjects:
   - {fileID: 741018777}
   - {fileID: 618732129}
