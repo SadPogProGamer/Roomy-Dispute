@@ -23,10 +23,7 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private EventSystem _eventSystem;
 
     private GameObject _lastSelectedButton;
-
     private int _currentFurnitureIndex = 0;  // To track the selected furniture item
-
-    private bool _inFurnitureApp = false;
 
     private void Start()
     {
@@ -37,7 +34,6 @@ public class ButtonSelect : MonoBehaviour
         if (_eventSystem != null && _cashAppIcon != null)
         {
             _eventSystem.SetSelectedGameObject(_cashAppIcon);
-            _lastSelectedButton = _cashAppIcon;  // Track the last selected button
         }
     }
 
@@ -59,10 +55,9 @@ public class ButtonSelect : MonoBehaviour
     private void CancelAction()
     {
         EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_lastSelectedButton);  // Use _lastSelectedButton to go back
+        _eventSystem.SetSelectedGameObject(_lastSelectedButton);
         DisableSabotageApps();
         DisableFurnitureApps();
-        _inFurnitureApp = false;
     }
 
     private void CheckCurrentSelectedButton()
@@ -103,9 +98,9 @@ public class ButtonSelect : MonoBehaviour
     private void MoveSelection(Vector2 direction)
     {
         GameObject currentSelected = _eventSystem.currentSelectedGameObject;
+
         if (currentSelected != null)
         {
-            Navigation navigation = currentSelected.GetComponent<UnityEngine.UI.Button>().navigation;
             if (direction == Vector2.up)
             {
                 if (currentSelected == _sabotageIcon)
@@ -122,13 +117,8 @@ public class ButtonSelect : MonoBehaviour
                 {
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
-
-                if (_currentFurnitureIndex > 0 && _inFurnitureApp)
-                {
-                    _currentFurnitureIndex--;  // Move up in the array
-                }
-                UpdateSelectedFurniture();
             }
+
             else if (direction == Vector2.down)
             {
                 if (currentSelected == _cashAppIcon)
@@ -143,15 +133,8 @@ public class ButtonSelect : MonoBehaviour
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
-                else if (_inFurnitureApp)
-                {
-                    if (_currentFurnitureIndex < _furnitureObjects.Length - 1)  // Check if we are at the last index
-                    {
-                        _currentFurnitureIndex++;  // Move down in the array
-                    }
-                    UpdateSelectedFurniture();
-                }
             }
+
             else if (direction == Vector2.left)
             {
                 if (currentSelected == _bombApp)
@@ -163,6 +146,7 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_targetApp);
                 }
             }
+
             else if (direction == Vector2.right)
             {
                 if (currentSelected == _fireApp)
@@ -177,23 +161,12 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
-    private void UpdateSelectedFurniture()
-    {
-        // Ensure the correct furniture item is selected based on the array index
-        if (_furnitureObjects.Length > 0)
-        {
-            _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex]);
-        }
-    }
-
     public void OnCashAppButtonClick()
     {
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
-        _inFurnitureApp = true;
-        _currentFurnitureIndex = 0;
-        _eventSystem.SetSelectedGameObject(_furnitureObjects[0]);
+        _eventSystem.SetSelectedGameObject(_furnitureObjects[0]);  // Set the first item of furniture as selected
         _lastSelectedButton = _cashAppIcon;
     }
 
@@ -206,7 +179,6 @@ public class ButtonSelect : MonoBehaviour
         _lastSelectedButton = _sabotageIcon;
     }
 
-    // Furniture App Button Clicks
     public void OnFireAppButtonClick()
     {
         Debug.Log("Fire App Button Clicked");
