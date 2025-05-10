@@ -1214,7 +1214,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnFireAppButtonClick
+        m_MethodName: OnChairButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3356,7 +3356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cashAppIcon: {fileID: 2125463657}
   _sabotageIcon: {fileID: 104631786}
-  _bookshelf: {fileID: 741018777}
+  _bookshelfIcon: {fileID: 741018777}
+  _chairIcon: {fileID: 618732129}
   _fireApp: {fileID: 1268659022}
   _bombApp: {fileID: 520062698}
   _targetApp: {fileID: 1993423815}
