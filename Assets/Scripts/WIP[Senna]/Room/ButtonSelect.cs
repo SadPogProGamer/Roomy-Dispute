@@ -10,6 +10,10 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject _cashAppIcon;
     [SerializeField] private GameObject _sabotageIcon;
 
+    [Header("Furniture Apps")]
+    [SerializeField] private GameObject _bookshelfIcon;
+    [SerializeField] private GameObject _chairIcon;
+
     [Header("Sabotage Apps")]
     [SerializeField] private GameObject _fireApp;
     [SerializeField] private GameObject _bombApp;
@@ -24,6 +28,7 @@ public class ButtonSelect : MonoBehaviour
     private void Start()
     {
         DisableSabotageApps();
+        DisableFurnitureApps();
 
         // Ensure the first selected button is set and valid
         if (_eventSystem != null && _cashAppIcon != null)
@@ -49,8 +54,8 @@ public class ButtonSelect : MonoBehaviour
 
     private void CancelAction()
     {
-        _eventSystem.SetSelectedGameObject(_lastSelectedButton);
         EnableBigApps();
+        _eventSystem.SetSelectedGameObject(_lastSelectedButton);
         DisableSabotageApps();
         DisableFurnitureApps();
     }
@@ -112,6 +117,10 @@ public class ButtonSelect : MonoBehaviour
                 {
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
+                if (currentSelected == _chairIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_bookshelfIcon);
+                }
             }
             else if (direction == Vector2.down)
             {
@@ -126,6 +135,10 @@ public class ButtonSelect : MonoBehaviour
                 if (currentSelected == _bombApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
+                }
+                if (currentSelected == _bookshelfIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_chairIcon);
                 }
             }
             else if (direction == Vector2.left)
@@ -157,6 +170,8 @@ public class ButtonSelect : MonoBehaviour
     {
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
+        EnableFurnitureApps();
+        _eventSystem.SetSelectedGameObject(_bookshelfIcon);
         _lastSelectedButton = _cashAppIcon;
     }
 
@@ -167,6 +182,36 @@ public class ButtonSelect : MonoBehaviour
         DisableBigApps();
         _eventSystem.SetSelectedGameObject(_fireApp);
         _lastSelectedButton = _sabotageIcon;
+    }
+    
+    public void OnFireAppButtonClick()
+    {
+        Debug.Log("Fire App Button Clicked");
+    }
+
+    public void OnBombAppButtonClick()
+    {
+        Debug.Log("Bomb App Button Clicked");
+    }
+
+    public void OnTargetAppButtonClick()
+    {
+        Debug.Log("Target App Button Clicked");
+    }
+
+    public void OnBreakAppButtonClick()
+    {
+        Debug.Log("Break App Button Clicked");
+    }
+
+    public void OnBookshelfButtonClick()
+    {
+        Debug.Log("Bookshelf Button Clicked");
+    }
+
+    public void OnChairButtonClick()
+    {
+        Debug.Log("Chair Button Clicked");
     }
 
     private void DisableSabotageApps()
@@ -187,12 +232,14 @@ public class ButtonSelect : MonoBehaviour
 
     private void DisableFurnitureApps()
     {
-
+        _bookshelfIcon.SetActive(false);
+        _chairIcon.SetActive(false);
     }
 
     private void EnableFurnitureApps()
     {
-
+        _bookshelfIcon.SetActive(true);
+        _chairIcon.SetActive(true);
     }
 
     private void DisableBigApps()
