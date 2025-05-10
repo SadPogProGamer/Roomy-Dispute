@@ -53,7 +53,7 @@ public class ItemPlacement : MonoBehaviour
 
             PlaceObjectOnGrid("ShortGrid", "Item/Small");
 
-            if (Mathf.Abs(_itemRotation) == 90)
+            if (Mathf.Abs(_itemRotation) % 180 != 0)
                 PlaceObjectOnGrid("LongGrid/Vert", "Item/Long");
             else
                 PlaceObjectOnGrid("LongGrid/Hori", "Item/Long");
