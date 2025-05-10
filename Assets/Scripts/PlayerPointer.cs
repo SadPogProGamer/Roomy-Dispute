@@ -7,11 +7,7 @@ public class PlayerPointer : MonoBehaviour
 {
     [SerializeField]
     private float _speed;
-
-    private Ray _pointerDirection;
-    private RaycastHit _hit;
     private Vector2 _moveVector;
-    private Mouse _virtualMouse;
 
     public void OnMove(InputValue value)
     {
@@ -29,7 +25,7 @@ public class PlayerPointer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.localPosition += _speed * Time.fixedDeltaTime * new Vector3(_moveVector.x,_moveVector.y);
+        transform.localPosition += _speed * Time.fixedDeltaTime * new Vector3(_moveVector.x * transform.right.x, _moveVector.y * transform.up.y, _moveVector.y * transform.up.z).normalized;
         CheckOutOfBounds();
     }
 

@@ -14,7 +14,8 @@ public class ItemPlacement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        _ray = Camera.main.ScreenPointToRay(screenPos);
         if (_item != null) 
         {
             if (_item.CompareTag("Item/Big")) _layerMask = 1 << 6;
@@ -40,7 +41,7 @@ public class ItemPlacement : MonoBehaviour
 
                 MoveObjectOnGrid("BigGrid", "Item/Big");
             }
-            else {Vector3 mousePos = Input.mousePosition; mousePos.z = _itemDistanceFromCamera; _item.transform.position = Camera.main.ScreenToWorldPoint(mousePos); }
+            else { screenPos.z = _itemDistanceFromCamera; _item.transform.position = Camera.main.ScreenToWorldPoint(screenPos); }
         }
     }
     public void OnComfirm()
