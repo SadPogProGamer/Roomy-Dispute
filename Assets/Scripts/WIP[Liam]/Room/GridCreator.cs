@@ -13,6 +13,9 @@ public class GridCreator : MonoBehaviour
     {
         CreateFloorGrid();
         CreateWallGrid(_wallLeft, _shortGridWallLeft,_longGridVerticalWallLeft,_longGridHorizontalWallLeft);
+        CreateWallGrid(_wallRight, _shortGridWallRight, _longGridVerticalWallRight, _longGridHorizontalWallRight);
+        CreateWallGrid(_wallMiddle, _shortGridWallMiddle, _longGridVerticalWallMiddle, _longGridHorizontalWallMiddle);
+
     }
     private void CreateFloorGrid()
     {
@@ -90,37 +93,42 @@ public class GridCreator : MonoBehaviour
 
                 box.layer = 11;
             }
-        shortGrid.transform.localPosition = wall.transform.localPosition;
+        shortGrid.transform.position = wall.transform.position;
         shortGrid.transform.localRotation = wall.transform.localRotation;
 
 
-        ////this is for the longverticalgridwall
-        //for (int y = 2; y <= _yRange; y++)
-        //    for (int x = 1; x <= _xRange; x++)
-        //    {
+        //this is for the longverticalgridwall
+        for (int y = 2; y <= _yRangeWall; y++)
+            for (int x = 1; x <= _xRange; x++)
+            {
 
-        //        GameObject box = Instantiate(_boxPrefab, _longGridVerticalWall.transform);
+                GameObject box = Instantiate(_boxPrefab, longVGrid.transform);
 
-        //        box.transform.localScale = new Vector3(_floor.transform.parent.localScale.x / _xRange, _floor.transform.parent.localScale.y / _yRange, _floor.transform.parent.localScale.y / _yRangeWall);
+                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, wall.transform.parent.localScale.z / _xRange);
 
-        //        box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRangeWall / 2f) + .5f), (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRange / 2f) + .5f) - box.transform.localScale.y / 2, 0);
+                box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_xRange / 2f) + .5f), (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall / 2f) + .5f) - box.transform.localScale.y / 2, 0);
 
-        //        box.layer = 13;
-        //    }
+                box.layer = 13;
+            }
+        longVGrid.transform.position = wall.transform.position;
+        longVGrid.transform.localRotation = wall.transform.localRotation;
 
-        ////this is for the longhorizontalgridwall
-        //for (int y = 1; y <= _yRange; y++)
-        //    for (int x = 2; x <= _xRange; x++)
-        //    {
 
-        //        GameObject box = Instantiate(_boxPrefab, _longGridHorizontalWall.transform);
+        //this is for the longhorizontalgridwall
+        for (int y = 1; y <= _yRangeWall; y++)
+            for (int x = 2; x <= _xRange; x++)
+            {
 
-        //        box.transform.localScale = new Vector3(_floor.transform.parent.localScale.x / _xRange, _floor.transform.parent.localScale.y / _yRange, _floor.transform.parent.localScale.y / _yRangeWall);
+                GameObject box = Instantiate(_boxPrefab, longHGrid.transform);
 
-        //        box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRangeWall / 2f) + .5f) - box.transform.localScale.y / 2, 0, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall / 2f) + .5f));
+                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, wall.transform.parent.localScale.z / _xRange);
 
-        //        box.layer = 12;
-        //    }
+                box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_xRange / 2f) + .5f) - box.transform.localScale.x / 2, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall / 2) + .5f), 0);
+
+                box.layer = 12;
+            }
+        longHGrid.transform.position = wall.transform.position;
+        longHGrid.transform.localRotation = wall.transform.localRotation;
     }
 
 }
