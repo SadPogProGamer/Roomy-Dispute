@@ -1,6 +1,5 @@
-﻿using UnityEditor.Experimental.GraphView;
+﻿
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class ItemPlacement : MonoBehaviour
 {
