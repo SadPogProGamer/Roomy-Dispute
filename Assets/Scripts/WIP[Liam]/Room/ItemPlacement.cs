@@ -126,6 +126,7 @@ public class ItemPlacement : MonoBehaviour
     {
         Item.GetComponent<ItemStats>().PlayerPhone.SetActive(true);
         Destroy(Item);
+        gameObject.SetActive(false);
     }
     private int GetRotationValue()
     {
