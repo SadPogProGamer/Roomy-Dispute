@@ -233,32 +233,41 @@ public class ItemPlacement : MonoBehaviour
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 10)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 9)
                 {
                     item = InstantiatePlacable();
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
                 if (Item.transform.CompareTag("Item/Placable/Big") && _hit.transform.childCount < 8)
                 {
                     item = InstantiatePlacable();
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
             }
             if (_hit.transform.CompareTag("Item/Long"))
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 6)
                 {
-                    InstantiatePlacable();
+                    item = InstantiatePlacable();
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
                
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 5)
                 {
                     item = InstantiatePlacable();
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
-
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
 
                 if (Item.transform.CompareTag("Item/Placable/Big") && _hit.transform.childCount < 4)
@@ -266,6 +275,8 @@ public class ItemPlacement : MonoBehaviour
                     item = InstantiatePlacable();
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
                 }
             }
         }
@@ -279,10 +290,6 @@ public class ItemPlacement : MonoBehaviour
         Destroy(Item);
         _itemRotation = 0;
         SetPointerBackToOrigin();
-        // ✅ Register the item with the manager
-        PlacedItemManager.Instance.Register(item);
-
-
         return item;
     }
 

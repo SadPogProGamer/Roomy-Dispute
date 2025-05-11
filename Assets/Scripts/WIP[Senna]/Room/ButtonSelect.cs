@@ -1,10 +1,11 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class ButtonSelect : MonoBehaviour
+public class ButtonSelect : MonoBehaviour, IMoveHandler
 {
     [Header("PlayerPointers")]
     [SerializeField] private GameObject _player1Pointer; 
@@ -41,6 +42,8 @@ public class ButtonSelect : MonoBehaviour
 
     private GameObject _lastSelectedButton;
     private int _currentFurnitureIndex = 0;  // To track the selected furniture item
+    private bool _canMove;
+
 
     private void Start()
     {
@@ -110,6 +113,10 @@ public class ButtonSelect : MonoBehaviour
         {
             MoveSelection(Vector2.left);
         }
+        else if (dpadInput.x == 0 && dpadInput.y == 0)
+        {
+            MoveSelection(Vector2.zero);
+        }
     }
 
     private void MoveSelection(Vector2 direction)
@@ -175,6 +182,34 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
             }
+            
+            if (_furnitureObjects[_currentFurnitureIndex].activeSelf)
+            {
+                if (direction == Vector2.zero) _canMove = true;
+
+                if (_canMove)
+                {
+                    if (direction == Vector2.right)
+                    {
+                        _furnitureObjects[_currentFurnitureIndex].SetActive(false);
+                        _currentFurnitureIndex++;
+                        if (_currentFurnitureIndex >= _furnitureObjects.Length) _currentFurnitureIndex = 0;
+                        _furnitureObjects[_currentFurnitureIndex].SetActive(true);
+                        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
+                        _canMove = false;
+                    }
+                    else if (direction == Vector2.left)
+                    {
+                        _furnitureObjects[_currentFurnitureIndex].SetActive(false);
+                        _currentFurnitureIndex--;
+                        if (_currentFurnitureIndex < 0) _currentFurnitureIndex = _furnitureObjects.Length - 1;
+                        _furnitureObjects[_currentFurnitureIndex].SetActive(true);
+                        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
+                        _canMove = false;
+                    }
+                }
+
+            }
         }
     }
 
@@ -183,7 +218,8 @@ public class ButtonSelect : MonoBehaviour
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
-        _eventSystem.SetSelectedGameObject(_furnitureObjects[0]);  // Set the first item of furniture as selected
+        _currentFurnitureIndex = 0;
+        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);  // Set the first item of furniture as selected
         _lastSelectedButton = _cashAppIcon;
     }
 
@@ -224,34 +260,46 @@ public class ButtonSelect : MonoBehaviour
     public void OnItemButtonClickPlayer1(GameObject item)
     {
         _player1Pointer.SetActive(true);
+        item = Instantiate(item);
         item.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
         _player1Pointer.GetComponent<ItemPlacement>().Item = item;
         _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1,item.GetComponent<ItemStats>().Cost);
+        DisableFurnitureApps();
+        EnableBigApps();
         _player1Phone.SetActive(false);
     }
 
     public void OnItemButtonClickPlayer2(GameObject item)
     {
         _player2Pointer.SetActive(true);
+        item = Instantiate(item);
         item.GetComponent<ItemStats>().PlayerPhone = _player2Phone;
         _player2Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(2, item.GetComponent<ItemStats>().Cost);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        DisableFurnitureApps();
+        EnableBigApps();
         _player2Phone.SetActive(false);
     }
     public void OnItemButtonClickPlayer3(GameObject item)
     {
         _player3Pointer.SetActive(true);
+        item = Instantiate(item);
         item.GetComponent<ItemStats>().PlayerPhone = _player3Phone;
         _player3Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(3, item.GetComponent<ItemStats>().Cost);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        DisableFurnitureApps();
+        EnableBigApps();
         _player3Phone.SetActive(false);
     }
     public void OnItemButtonClickPlayer4(GameObject item)
     {
-        _player4Pointer.SetActive(true); 
+        _player4Pointer.SetActive(true);
+        item = Instantiate(item);
         item.GetComponent<ItemStats>().PlayerPhone = _player4Phone;
         _player4Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(4, item.GetComponent<ItemStats>().Cost);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        DisableFurnitureApps();
+        EnableBigApps();
         _player4Phone.SetActive(false);
     }
 
@@ -281,10 +329,7 @@ public class ButtonSelect : MonoBehaviour
 
     private void EnableFurnitureApps()
     {
-        foreach (GameObject furniture in _furnitureObjects)
-        {
-            furniture.SetActive(true);
-        }
+        _furnitureObjects[0].SetActive(true);
     }
 
     private void DisableBigApps()
@@ -297,5 +342,26 @@ public class ButtonSelect : MonoBehaviour
     {
         _cashAppIcon.SetActive(true);
         _sabotageIcon.SetActive(true);
+    }
+
+    public void OnMove(AxisEventData eventData)
+    {
+        print("e");
+            if (_furnitureObjects[_currentFurnitureIndex].activeSelf)
+            {
+                if (eventData.moveVector.y > 0)
+                {
+                    _furnitureObjects[_currentFurnitureIndex].SetActive(false);
+                    _currentFurnitureIndex++;
+                }
+                else if (eventData.moveVector.y < 0)
+                {
+                    _furnitureObjects[_currentFurnitureIndex].SetActive(false);
+                    _currentFurnitureIndex--;
+                }
+                _furnitureObjects[_currentFurnitureIndex].SetActive(true);
+                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
+            }
+        
     }
 }
