@@ -181,6 +181,7 @@ public class ItemPlacement : MonoBehaviour
                 );
             }
 
+            if(item.GetComponent<Collider>() != null)
             item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
             Destroy(Item);

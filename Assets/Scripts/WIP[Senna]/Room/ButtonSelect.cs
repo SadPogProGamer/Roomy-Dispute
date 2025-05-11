@@ -267,6 +267,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(0,item.GetComponent<ItemStats>().Cost);
     }
 
     public void OnItemButtonClickPlayer2(GameObject item)
