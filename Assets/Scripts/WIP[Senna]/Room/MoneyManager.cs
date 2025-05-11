@@ -6,14 +6,14 @@ public class MoneyManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI[] _playerTexts;
 
-    private List<int> _playerMoney = new List<int>();
+    public List<int> PlayerMoney = new List<int>();
 
 
     private void Start()
     {
         for (int i = 0; i < _playerTexts.Length; i++)
         {
-            _playerMoney.Add(100); 
+            PlayerMoney.Add(500); 
         }
 
         UpdateAllMoneyUI();
@@ -22,7 +22,7 @@ public class MoneyManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < _playerMoney.Count; i++)
+        for (int i = 0; i < PlayerMoney.Count; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i)) 
             {
@@ -33,30 +33,30 @@ public class MoneyManager : MonoBehaviour
 
     public void IncreaseMoney(int playerID, int amount)
     {
-        if (playerID >= 0 && playerID < _playerMoney.Count)
+        if (playerID >= 0 && playerID < PlayerMoney.Count)
         {
-            _playerMoney[playerID] += amount;
+            PlayerMoney[playerID] += amount;
             UpdateMoneyUI(playerID);
         }
     }
 
     public void DecreaseMoney(int playerID, int amount)
     {
-        if (playerID >= 0 && playerID < _playerMoney.Count)
+        if (playerID >= 0 && playerID < PlayerMoney.Count)
         {
-            _playerMoney[playerID] += amount;
+            PlayerMoney[playerID] -= amount;
             UpdateMoneyUI(playerID);
         }
     }
 
     private void UpdateMoneyUI(int playerID)
     {
-        _playerTexts[playerID].text = $"Player {playerID + 1}: ${_playerMoney[playerID]}";
+        _playerTexts[playerID].text = $"Player {playerID + 1}: ${PlayerMoney[playerID]}";
     }
 
     private void UpdateAllMoneyUI()
     {
-        for (int i = 0; i < _playerMoney.Count; i++)
+        for (int i = 0; i < PlayerMoney.Count; i++)
         {
             UpdateMoneyUI(i);
         }
