@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class ButtonSelect : MonoBehaviour, IMoveHandler
+public class ButtonSelect : MonoBehaviour
 {
     [Header("PlayerPointers")]
     [SerializeField] private GameObject _player1Pointer; 
