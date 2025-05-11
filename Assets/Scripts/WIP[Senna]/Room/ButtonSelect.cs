@@ -21,6 +21,7 @@ public class ButtonSelect : MonoBehaviour
 
     [Header("Event Timer")]
     [SerializeField] private EventSystem _eventSystem;
+    [SerializeField] private SabotageTool _sabotageTool;
 
     private GameObject _lastSelectedButton;
     private int _currentFurnitureIndex = 0;  // To track the selected furniture item
@@ -182,22 +183,27 @@ public class ButtonSelect : MonoBehaviour
     public void OnFireAppButtonClick()
     {
         Debug.Log("Fire App Button Clicked");
+        _sabotageTool.FireSabotage();
     }
 
     public void OnBombAppButtonClick()
     {
         Debug.Log("Bomb App Button Clicked");
+        _sabotageTool.BombSabotage();
     }
 
     public void OnTargetAppButtonClick()
     {
         Debug.Log("Target App Button Clicked");
+        _sabotageTool.TargetSabotage();
     }
 
     public void OnBreakAppButtonClick()
     {
         Debug.Log("Break App Button Clicked");
+        _sabotageTool.BreakSabotage();
     }
+
 
     public void OnBookshelfButtonClick()
     {
