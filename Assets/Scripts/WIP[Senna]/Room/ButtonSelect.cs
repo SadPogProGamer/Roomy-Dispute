@@ -365,24 +365,5 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         _sabotageIcon.SetActive(true);
     }
 
-    public void OnMove(AxisEventData eventData)
-    {
-        print("e");
-            if (_furnitureObjects[_currentFurnitureIndex].activeSelf)
-            {
-                if (eventData.moveVector.y > 0)
-                {
-                    _furnitureObjects[_currentFurnitureIndex].SetActive(false);
-                    _currentFurnitureIndex++;
-                }
-                else if (eventData.moveVector.y < 0)
-                {
-                    _furnitureObjects[_currentFurnitureIndex].SetActive(false);
-                    _currentFurnitureIndex--;
-                }
-                _furnitureObjects[_currentFurnitureIndex].SetActive(true);
-                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
-            }
-        
-    }
+    
 }
