@@ -5005,23 +5005,23 @@ MonoBehaviour:
   _tvPriceText: {fileID: 599988507}
   _tvStandPriceText: {fileID: 166096771}
   _vasePriceText: {fileID: 1627484009}
-  _bookshelfItemStats: {fileID: 0}
-  _bowlItemStats: {fileID: 0}
-  _chairItemStats: {fileID: 0}
-  _carpetItemStats: {fileID: 0}
-  _couchItemStats: {fileID: 0}
-  _dimLampItemStats: {fileID: 0}
-  _drawerItemStats: {fileID: 0}
-  _glassCupItemStats: {fileID: 0}
-  _mirrorItemStats: {fileID: 0}
-  _paintingItemStats: {fileID: 0}
-  _rugItemStats: {fileID: 0}
-  _singleSeaterItemStats: {fileID: 0}
-  _smallLampItemStats: {fileID: 0}
-  _tableItemStats: {fileID: 0}
-  _tvItemStats: {fileID: 0}
-  _tvStandItemStats: {fileID: 0}
-  _vaseItemStats: {fileID: 0}
+  _bookshelfItemStats: {fileID: -3094469763463836808, guid: b2aa31419be13bd4d803ff8a2e2135ee, type: 3}
+  _bowlItemStats: {fileID: 807399756486338095, guid: 90d0e9c17df49104b81e1c7788c67911, type: 3}
+  _chairItemStats: {fileID: 2228472131923506382, guid: b5824ec54daad3c4b8ccd2a13198075d, type: 3}
+  _carpetItemStats: {fileID: 5230330605065476201, guid: 9a68aaf7d95cf5047ab5c02f7cbb64ff, type: 3}
+  _couchItemStats: {fileID: 4398091786284415959, guid: 89d652076249f0c479adf30d71a20578, type: 3}
+  _dimLampItemStats: {fileID: -7691833780656400951, guid: ff75f9aba7739554a923fda1647f3276, type: 3}
+  _drawerItemStats: {fileID: 8755240850847019196, guid: e0da8d8dadc32eb4ab5c28e18e7704ce, type: 3}
+  _glassCupItemStats: {fileID: 937967557490887817, guid: 6fe6d88210d7f90479489f6935ba4ea2, type: 3}
+  _mirrorItemStats: {fileID: 7549214811523382076, guid: 52886bc62b9b58a428a80533a6d2b00c, type: 3}
+  _paintingItemStats: {fileID: -4245653761309950224, guid: 0fe6ce012522ba440a9bb1b7c5acfc31, type: 3}
+  _rugItemStats: {fileID: -1156880984757638663, guid: e6a1e5fb7b86d3a418f4b856d15fa0b0, type: 3}
+  _singleSeaterItemStats: {fileID: -4605343636877829653, guid: 4e00d1b3d4a67604fb8b792e18de30ad, type: 3}
+  _smallLampItemStats: {fileID: -5952429859461651796, guid: 3ec2cc75be0db014c8a22bd84167a7cf, type: 3}
+  _tableItemStats: {fileID: -5950013275369221199, guid: f832af31bd531f64b9bebce66a982861, type: 3}
+  _tvItemStats: {fileID: 6028803283648512244, guid: 35039e68a2c1b2248a7a47abb4868647, type: 3}
+  _tvStandItemStats: {fileID: -5270945672393453098, guid: 93a1705575ba3264cbc5b3342a4f070d, type: 3}
+  _vaseItemStats: {fileID: 884025290475936923, guid: 576060ccbd8dc1c48a21662bed9bbf79, type: 3}
 --- !u!4 &983987244
 Transform:
   m_ObjectHideFlags: 0
