@@ -260,46 +260,46 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
     public void OnItemButtonClickPlayer1(GameObject item)
     {
         _player1Pointer.SetActive(true);
-        item = Instantiate(item);
-        item.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
-        _player1Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1,item.GetComponent<ItemStats>().Cost);
+        GameObject spawnedItem = Instantiate(item);
+        spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
+        _player1Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
+        _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
     }
 
     public void OnItemButtonClickPlayer2(GameObject item)
     {
         _player2Pointer.SetActive(true);
-        item = Instantiate(item);
-        item.GetComponent<ItemStats>().PlayerPhone = _player2Phone;
-        _player2Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        GameObject spawnedItem = Instantiate(item);
+        spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player2Phone;
+        _player2Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
+        _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player2Phone.SetActive(false);
     }
     public void OnItemButtonClickPlayer3(GameObject item)
     {
         _player3Pointer.SetActive(true);
-        item = Instantiate(item);
+        GameObject spawnedItem = Instantiate(item);
         item.GetComponent<ItemStats>().PlayerPhone = _player3Phone;
-        _player3Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        _player3Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
+        _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player3Phone.SetActive(false);
     }
     public void OnItemButtonClickPlayer4(GameObject item)
     {
         _player4Pointer.SetActive(true);
-        item = Instantiate(item);
-        item.GetComponent<ItemStats>().PlayerPhone = _player4Phone;
-        _player4Pointer.GetComponent<ItemPlacement>().Item = item;
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, item.GetComponent<ItemStats>().Cost);
+        GameObject spawnedItem = Instantiate(item);
+        spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player4Phone;
+        _player4Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
+        _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player4Phone.SetActive(false);
     }
 

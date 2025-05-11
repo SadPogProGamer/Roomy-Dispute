@@ -6,6 +6,7 @@ public class ItemStats : MonoBehaviour
     public bool IsGlass, IsWood, IsPlaced;
     public float PlacementTime, Timer;
     public GameObject PlayerPhone;
+    private bool phoneHasNotBeenActivated = true;
     
    
     // Update is called once per frame
@@ -18,7 +19,10 @@ public class ItemStats : MonoBehaviour
             Timer += Time.deltaTime;
         }
 
-        if (Timer >= PlacementTime)
+        if (Timer >= PlacementTime && phoneHasNotBeenActivated)
+        {
             PlayerPhone.SetActive(true);
+            phoneHasNotBeenActivated = false;
+        }
     }
 }
