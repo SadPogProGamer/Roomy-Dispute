@@ -1,4 +1,4 @@
-using UnityEditor.Experimental.GraphView;
+﻿using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -162,6 +162,7 @@ public class ItemPlacement : MonoBehaviour
         if (_hit.transform.GetComponent<CubeIsTriggerable>() != null && _hit.transform.GetComponent<CubeIsTriggerable>().IsTriggerable && Item.CompareTag(itemTag) && _hit.transform.parent.CompareTag(gridTag))
         {
             GameObject item = Instantiate(Item, _hit.collider.transform.position, Item.transform.localRotation, _hit.transform);
+
             if (Item.tag.Contains("Wall"))
             {
                 if (Mathf.Abs(_itemRotation) % 180 != 0)
@@ -169,16 +170,27 @@ public class ItemPlacement : MonoBehaviour
                 else
                     item.transform.localScale = new Vector3(1.5f, 1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x, 1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x);
             }
-            else 
-                item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            else
+            {
+                item.transform.localScale = new Vector3(
+                    1.5f,
+                    1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x,
+                    1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x
+                );
+            }
 
             item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
+
+            // ✅ Register the item with the manager
+            PlacedItemManager.Instance.Register(item);
+
             Destroy(Item);
             _itemRotation = 0;
             SetPointerBackToOrigin();
         }
     }
+
 
     private void MovePlacableOnObject(string objectTag)
     {
@@ -259,16 +271,20 @@ public class ItemPlacement : MonoBehaviour
     }
     private GameObject InstantiatePlacable()
     {
-        GameObject item;
-        item = Instantiate(Item, _child.position, Item.transform.localRotation, _hit.transform);
+        GameObject item = Instantiate(Item, _child.position, Item.transform.localRotation, _hit.transform);
         item.transform.localScale = new Vector3(1, 1, 1);
         item.GetComponent<Collider>().enabled = true;
         item.GetComponent<ItemStats>().IsPlaced = true;
+
+        // ✅ Register the item with the manager
+        PlacedItemManager.Instance.Register(item);
+
         Destroy(Item);
         _itemRotation = 0;
         SetPointerBackToOrigin();
         return item;
     }
+
 
     private void SetPointerBackToOrigin()
     {
