@@ -6,6 +6,18 @@ using UnityEngine.UI;
 
 public class ButtonSelect : MonoBehaviour
 {
+    [Header("PlayerPointers")]
+    [SerializeField] private GameObject _player1Pointer; 
+    [SerializeField] private GameObject _player2Pointer;
+    [SerializeField] private GameObject _player3Pointer;
+    [SerializeField] private GameObject _player4Pointer;
+    
+    [Header("PlayerPhones")]
+    [SerializeField] private GameObject _player1Phone;
+    [SerializeField] private GameObject _player2Phone;
+    [SerializeField] private GameObject _player3Phone;
+    [SerializeField] private GameObject _player4Phone;
+
     [Header("App Icons")]
     [SerializeField] private GameObject _cashAppIcon;
     [SerializeField] private GameObject _sabotageIcon;
@@ -205,14 +217,30 @@ public class ButtonSelect : MonoBehaviour
     }
 
 
-    public void OnBookshelfButtonClick()
+    public void OnItemButtonClickPlayer1(GameObject item)
     {
-        Debug.Log("Bookshelf Button Clicked");
+        _player1Pointer.SetActive(true);
+        _player1Pointer.GetComponent<ItemPlacement>().Item = item;
+        _player1Phone.SetActive(false);
     }
 
-    public void OnChairButtonClick()
+    public void OnItemButtonClickPlayer2(GameObject item)
     {
-        Debug.Log("Chair Button Clicked");
+        _player2Pointer.SetActive(true);
+        _player2Pointer.GetComponent<ItemPlacement>().Item = item;
+        _player2Phone.SetActive(false);
+    }
+    public void OnItemButtonClickPlayer3(GameObject item)
+    {
+        _player3Pointer.SetActive(true);
+        _player3Pointer.GetComponent<ItemPlacement>().Item = item;
+        _player3Phone.SetActive(false);
+    }
+    public void OnItemButtonClickPlayer4(GameObject item)
+    {
+        _player4Pointer.SetActive(true);
+        _player4Pointer.GetComponent<ItemPlacement>().Item = item;
+        _player4Phone.SetActive(false);
     }
 
     private void DisableSabotageApps()

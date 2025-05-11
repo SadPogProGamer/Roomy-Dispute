@@ -372,11 +372,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 8191629673530756389, guid: 0fe6ce012522ba440a9bb1b7c5acfc31, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -669,11 +669,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 5812457111081824724, guid: e0da8d8dadc32eb4ab5c28e18e7704ce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1048,11 +1048,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnBookshelfButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1226,11 +1226,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 4371502733773393109, guid: 6fe6d88210d7f90479489f6935ba4ea2, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1838,11 +1838,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2107300164547391995, guid: 9a68aaf7d95cf5047ab5c02f7cbb64ff, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -2147,11 +2147,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6757597240583304738, guid: f832af31bd531f64b9bebce66a982861, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3408,11 +3408,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 4772295258942635623, guid: b5824ec54daad3c4b8ccd2a13198075d, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3651,11 +3651,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6094111790992151069, guid: 35039e68a2c1b2248a7a47abb4868647, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4031,11 +4031,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnBookshelfButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2734562972684314305, guid: b2aa31419be13bd4d803ff8a2e2135ee, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5313,6 +5313,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1052221810}
   m_CullTransparentMesh: 1
+--- !u!1 &1066144469 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4862819181733791372, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+  m_PrefabInstance: {fileID: 1555792241}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1069960265
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,11 +5404,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnBookshelfButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2775573493236434086, guid: 10e5126cd718e034aaa7d963437cd8dd, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6806,11 +6811,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 2887813909827775463, guid: ff75f9aba7739554a923fda1647f3276, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7361,11 +7366,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 1592690634435149289, guid: e6a1e5fb7b86d3a418f4b856d15fa0b0, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -7618,6 +7623,10 @@ PrefabInstance:
     - target: {fileID: 4862819181733791372, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: m_Name
       value: Pointer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4862819181733791372, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6674366451444218286, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: Item
@@ -8325,11 +8334,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnBookshelfButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 3790893109711210650, guid: 89d652076249f0c479adf30d71a20578, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9003,11 +9012,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnBookshelfButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 5890477819711321137, guid: 52886bc62b9b58a428a80533a6d2b00c, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9137,11 +9146,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 4476717537678236103, guid: 93a1705575ba3264cbc5b3342a4f070d, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9444,6 +9453,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d92c6a260091741b91ee38d2c6525b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player1Pointer: {fileID: 1066144469}
+  _player2Pointer: {fileID: 0}
+  _player3Pointer: {fileID: 0}
+  _player4Pointer: {fileID: 0}
+  _player1Phone: {fileID: 1634172179}
+  _player2Phone: {fileID: 0}
+  _player3Phone: {fileID: 0}
+  _player4Phone: {fileID: 0}
   _cashAppIcon: {fileID: 2125463657}
   _sabotageIcon: {fileID: 104631786}
   _furnitureObjects:
@@ -9691,11 +9708,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 219351668979571853, guid: 90d0e9c17df49104b81e1c7788c67911, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9825,11 +9842,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1982056318}
         m_TargetAssemblyTypeName: ButtonSelect, Assembly-CSharp
-        m_MethodName: OnChairButtonClick
-        m_Mode: 1
+        m_MethodName: OnItemButtonClickPlayer1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 6941937623383132784, guid: 4e00d1b3d4a67604fb8b792e18de30ad, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

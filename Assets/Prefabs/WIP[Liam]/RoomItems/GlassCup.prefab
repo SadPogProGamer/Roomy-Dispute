@@ -136,9 +136,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
-  Cost: 70
+  Cost: 5
   Points: 10000
   IsGlass: 1
   IsWood: 0
   IsPlaced: 0
   PlacementTime: 0
+  Timer: 0

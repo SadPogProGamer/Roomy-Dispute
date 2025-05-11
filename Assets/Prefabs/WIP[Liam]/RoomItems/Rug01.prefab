@@ -88,3 +88,4 @@ MonoBehaviour:
   IsWood: 0
   IsPlaced: 0
   PlacementTime: 1
+  Timer: 0
