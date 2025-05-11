@@ -124,6 +124,7 @@ public class ItemPlacement : MonoBehaviour
 
     public void OnReturn()
     {
+        Item.GetComponent<ItemStats>().PlayerPhone.SetActive(true);
         Destroy(Item);
     }
     private int GetRotationValue()
@@ -181,13 +182,13 @@ public class ItemPlacement : MonoBehaviour
 
             item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
-
-            // ✅ Register the item with the manager
-            PlacedItemManager.Instance.Register(item);
-
             Destroy(Item);
             _itemRotation = 0;
             SetPointerBackToOrigin();
+            // ✅ Register the item with the manager
+            PlacedItemManager.Instance.Register(item);
+
+
         }
     }
 
@@ -275,13 +276,13 @@ public class ItemPlacement : MonoBehaviour
         item.transform.localScale = new Vector3(1, 1, 1);
         item.GetComponent<Collider>().enabled = true;
         item.GetComponent<ItemStats>().IsPlaced = true;
-
-        // ✅ Register the item with the manager
-        PlacedItemManager.Instance.Register(item);
-
         Destroy(Item);
         _itemRotation = 0;
         SetPointerBackToOrigin();
+        // ✅ Register the item with the manager
+        PlacedItemManager.Instance.Register(item);
+
+
         return item;
     }
 
