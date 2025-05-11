@@ -87,4 +87,4 @@ MonoBehaviour:
   IsGlass: 0
   IsWood: 0
   IsPlaced: 0
-  PlacementTime: 0
+  PlacementTime: 2
