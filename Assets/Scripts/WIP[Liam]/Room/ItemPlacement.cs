@@ -5,6 +5,8 @@ using static UnityEditor.Progress;
 public class ItemPlacement : MonoBehaviour
 {
     [SerializeField]
+    private Vector3 _originPoint;
+    [SerializeField]
     private GameObject _empty;
     public GameObject Item;
     private Ray _ray;
@@ -42,7 +44,7 @@ public class ItemPlacement : MonoBehaviour
             
             if (Item.CompareTag("Item/Wall/Long"))
             {
-                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                if (Mathf.Abs(_itemRotation) % 180 == 0)
                     _layerMask = 1 << 13;
                 else
                     _layerMask = 1 << 12;
@@ -67,7 +69,7 @@ public class ItemPlacement : MonoBehaviour
                 MoveObjectOnGrid("BigGrid", "Item/Big");
                 
                 //wallstuff
-                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                if (Mathf.Abs(_itemRotation) % 180 == 0)
                     MoveObjectOnGrid("LongGridWall/Vert", "Item/Wall/Long");
                 else
                     MoveObjectOnGrid("LongGridWall/Hori", "Item/Wall/Long");
@@ -100,7 +102,7 @@ public class ItemPlacement : MonoBehaviour
             //wallstuff
             PlaceObjectOnGrid("ShortGridWall", "Item/Wall/Small");
 
-            if (Mathf.Abs(_itemRotation) % 180 != 0)
+            if (Mathf.Abs(_itemRotation) % 180 == 0)
                 PlaceObjectOnGrid("LongGridWall/Vert", "Item/Wall/Long");
             else
                 PlaceObjectOnGrid("LongGridWall/Hori", "Item/Wall/Long");
@@ -160,11 +162,21 @@ public class ItemPlacement : MonoBehaviour
         if (_hit.transform.GetComponent<CubeIsTriggerable>() != null && _hit.transform.GetComponent<CubeIsTriggerable>().IsTriggerable && Item.CompareTag(itemTag) && _hit.transform.parent.CompareTag(gridTag))
         {
             GameObject item = Instantiate(Item, _hit.collider.transform.position, Item.transform.localRotation, _hit.transform);
-            item.transform.localScale = new Vector3(1.5f, 1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x, 1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x);
+            if (Item.tag.Contains("Wall"))
+            {
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                else
+                    item.transform.localScale = new Vector3(1.5f, 1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x, 1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x);
+            }
+            else 
+                item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
             item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
             Destroy(Item);
             _itemRotation = 0;
+            SetPointerBackToOrigin();
         }
     }
 
@@ -254,6 +266,13 @@ public class ItemPlacement : MonoBehaviour
         item.GetComponent<ItemStats>().IsPlaced = true;
         Destroy(Item);
         _itemRotation = 0;
+        SetPointerBackToOrigin();
         return item;
+    }
+
+    private void SetPointerBackToOrigin()
+    {
+        transform.position = _originPoint;
+        gameObject.SetActive(false);
     }
 }
