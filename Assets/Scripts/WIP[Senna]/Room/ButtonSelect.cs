@@ -224,6 +224,7 @@ public class ButtonSelect : MonoBehaviour
     public void OnItemButtonClickPlayer1(GameObject item)
     {
         _player1Pointer.SetActive(true);
+        item.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
         _player1Pointer.GetComponent<ItemPlacement>().Item = item;
         _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1,item.GetComponent<ItemStats>().Cost);
         _player1Phone.SetActive(false);
@@ -232,6 +233,7 @@ public class ButtonSelect : MonoBehaviour
     public void OnItemButtonClickPlayer2(GameObject item)
     {
         _player2Pointer.SetActive(true);
+        item.GetComponent<ItemStats>().PlayerPhone = _player2Phone;
         _player2Pointer.GetComponent<ItemPlacement>().Item = item;
         _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(2, item.GetComponent<ItemStats>().Cost);
         _player2Phone.SetActive(false);
@@ -239,13 +241,15 @@ public class ButtonSelect : MonoBehaviour
     public void OnItemButtonClickPlayer3(GameObject item)
     {
         _player3Pointer.SetActive(true);
+        item.GetComponent<ItemStats>().PlayerPhone = _player3Phone;
         _player3Pointer.GetComponent<ItemPlacement>().Item = item;
         _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(3, item.GetComponent<ItemStats>().Cost);
         _player3Phone.SetActive(false);
     }
     public void OnItemButtonClickPlayer4(GameObject item)
     {
-        _player4Pointer.SetActive(true);
+        _player4Pointer.SetActive(true); 
+        item.GetComponent<ItemStats>().PlayerPhone = _player4Phone;
         _player4Pointer.GetComponent<ItemPlacement>().Item = item;
         _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(4, item.GetComponent<ItemStats>().Cost);
         _player4Phone.SetActive(false);
