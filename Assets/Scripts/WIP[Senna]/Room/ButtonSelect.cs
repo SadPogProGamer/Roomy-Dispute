@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -42,7 +43,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
 
     private GameObject _lastSelectedButton;
     private int _currentFurnitureIndex = 0;  // To track the selected furniture item
-    private bool _canMove;
+    private bool _canMove, _didLoop;
 
 
     private void Start()
@@ -195,7 +196,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
                         _currentFurnitureIndex++;
                         if (_currentFurnitureIndex >= _furnitureObjects.Length) _currentFurnitureIndex = 0;
                         _furnitureObjects[_currentFurnitureIndex].SetActive(true);
-                        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
+                        StartCoroutine(CheckChildrensInteractability());
                         _canMove = false;
                     }
                     else if (direction == Vector2.left)
@@ -204,7 +205,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
                         _currentFurnitureIndex--;
                         if (_currentFurnitureIndex < 0) _currentFurnitureIndex = _furnitureObjects.Length - 1;
                         _furnitureObjects[_currentFurnitureIndex].SetActive(true);
-                        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);
+                        StartCoroutine(CheckChildrensInteractability());
                         _canMove = false;
                     }
                 }
@@ -215,12 +216,27 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
 
     public void OnCashAppButtonClick()
     {
+        
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
         _currentFurnitureIndex = 0;
-        _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(0).gameObject);  // Set the first item of furniture as selected
+        StartCoroutine(CheckChildrensInteractability());  // Set the first interactable item of furniture as selected
         _lastSelectedButton = _cashAppIcon;
+        
+    }
+
+    private IEnumerator CheckChildrensInteractability()
+    {
+        yield return null;
+        for (int childIndex = 0; childIndex < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf; childIndex++)
+        {
+            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(childIndex).GetComponent<Button>().interactable)
+            {
+                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(childIndex).gameObject);
+                break;
+            }
+        }
     }
 
     public void OnSabotageButtonClick()
