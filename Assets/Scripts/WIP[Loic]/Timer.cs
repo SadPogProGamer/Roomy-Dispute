@@ -71,7 +71,6 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI timerText; // Link this in the Inspector
 
-    // Example player money variable (you may want to connect this to a GameManager instead)
     private int playerMoney = 0;
 
     void Update()
