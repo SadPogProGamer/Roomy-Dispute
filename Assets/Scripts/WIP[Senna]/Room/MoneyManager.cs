@@ -40,7 +40,7 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
-    private void DecreaseMoney(int playerID, int amount)
+    public void DecreaseMoney(int playerID, int amount)
     {
         if (playerID >= 0 && playerID < _playerMoney.Count)
         {

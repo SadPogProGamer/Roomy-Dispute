@@ -5,6 +5,7 @@ public class ItemStats : MonoBehaviour
     public int HP, Cost, Points;
     public bool IsGlass, IsWood, IsPlaced;
     public float PlacementTime, Timer;
+    public GameObject PlayerPhone;
     
    
     // Update is called once per frame
