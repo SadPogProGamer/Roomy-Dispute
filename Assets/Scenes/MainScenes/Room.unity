@@ -7836,6 +7836,14 @@ PrefabInstance:
       propertyPath: _originPoint.z
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 7323040997257396752, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1937213179}
+    - target: {fileID: 7323040997257396752, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: m_UIInputModule
+      value: 
+      objectReference: {fileID: 731539979}
     - target: {fileID: 8728214216560226669, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
