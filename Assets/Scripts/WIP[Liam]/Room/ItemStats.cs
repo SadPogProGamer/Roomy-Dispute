@@ -13,9 +13,12 @@ public class ItemStats : MonoBehaviour
     {
         if (HP <= 0) Destroy(gameObject);
 
-        if (IsPlaced && Timer >= PlacementTime)
+        if (IsPlaced && Timer < PlacementTime)
         {
             Timer += Time.deltaTime;
         }
+
+        if (Timer >= PlacementTime)
+            PlayerPhone.SetActive(true);
     }
 }
