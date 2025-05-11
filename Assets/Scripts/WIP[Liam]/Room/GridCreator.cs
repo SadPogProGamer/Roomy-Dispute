@@ -87,7 +87,7 @@ public class GridCreator : MonoBehaviour
             {
                 GameObject box = Instantiate(_boxPrefab, shortGrid.transform);
 
-                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, wall.transform.parent.localScale.z / _xRange);
+                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, .01f);
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_yRange / 2f) + .5f), (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall/2) + .5f), 0);
 
@@ -104,7 +104,7 @@ public class GridCreator : MonoBehaviour
 
                 GameObject box = Instantiate(_boxPrefab, longVGrid.transform);
 
-                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, wall.transform.parent.localScale.z / _xRange);
+                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, .01f);
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_xRange / 2f) + .5f), (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall / 2f) + .5f) - box.transform.localScale.y / 2, 0);
 
@@ -121,7 +121,7 @@ public class GridCreator : MonoBehaviour
 
                 GameObject box = Instantiate(_boxPrefab, longHGrid.transform);
 
-                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, wall.transform.parent.localScale.z / _xRange);
+                box.transform.localScale = new Vector3(wall.transform.parent.localScale.x / _xRange, wall.transform.parent.localScale.y / _yRangeWall, .01f);
 
                 box.transform.position = new Vector3((x * box.transform.localScale.x) - box.transform.localScale.x * ((_xRange / 2f) + .5f) - box.transform.localScale.x / 2, (y * box.transform.localScale.y) - box.transform.localScale.y * ((_yRangeWall / 2) + .5f), 0);
 

@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mirror
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 603f7d41e14972043b60b3b3c9083ac8, type: 3}
+      propertyPath: m_TagString
+      value: Item/Wall/Long
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

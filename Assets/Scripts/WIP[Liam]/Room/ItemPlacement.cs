@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using static UnityEditor.Progress;
 
@@ -38,11 +39,24 @@ public class ItemPlacement : MonoBehaviour
             }
             if (Item.CompareTag("Item/Small")) _layerMask = 1 << 7;
             if (Item.tag.Contains("Placable")) _layerMask = 1 << 10;
+            
+            if (Item.CompareTag("Item/Wall/Long"))
+            {
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    _layerMask = 1 << 13;
+                else
+                    _layerMask = 1 << 12;
+            }
+            if (Item.CompareTag("Item/Wall/Small")) _layerMask = 1 << 11;
 
-            Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
+            if (Item.tag.Contains("Wall"))
+                Item.transform.localRotation = Quaternion.Euler(0, 0, _itemRotation);
+            else 
+                Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _layerMask))
             {
+                //floorstuff
                 MoveObjectOnGrid("ShortGrid", "Item/Small");
 
                 if (Mathf.Abs(_itemRotation) % 180 != 0)
@@ -51,7 +65,16 @@ public class ItemPlacement : MonoBehaviour
                     MoveObjectOnGrid("LongGrid/Hori", "Item/Long");
 
                 MoveObjectOnGrid("BigGrid", "Item/Big");
+                
+                //wallstuff
+                if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    MoveObjectOnGrid("LongGridWall/Vert", "Item/Wall/Long");
+                else
+                    MoveObjectOnGrid("LongGridWall/Hori", "Item/Wall/Long");
 
+                MoveObjectOnGrid("ShortGridWall", "Item/Wall/Small");
+
+                //placable
                 MovePlacableOnObject("Item/Big");
                 MovePlacableOnObject("Item/Long");
             }
@@ -64,7 +87,7 @@ public class ItemPlacement : MonoBehaviour
 
         if (Item != null && _hit.collider != null)
         {
-
+            //floorstuff
             PlaceObjectOnGrid("ShortGrid", "Item/Small");
 
             if (Mathf.Abs(_itemRotation) % 180 != 0)
@@ -74,6 +97,15 @@ public class ItemPlacement : MonoBehaviour
 
             PlaceObjectOnGrid("BigGrid", "Item/Big");
 
+            //wallstuff
+            PlaceObjectOnGrid("ShortGridWall", "Item/Wall/Small");
+
+            if (Mathf.Abs(_itemRotation) % 180 != 0)
+                PlaceObjectOnGrid("LongGridWall/Vert", "Item/Wall/Long");
+            else
+                PlaceObjectOnGrid("LongGridWall/Hori", "Item/Wall/Long");
+
+            //placable
             PlacePlacableOnObject("Item/Big");
             PlacePlacableOnObject("Item/Long");
         }
@@ -95,7 +127,7 @@ public class ItemPlacement : MonoBehaviour
     private int GetRotationValue()
     {
         int rotationValue;
-        if (Item.CompareTag("Item/Long")) rotationValue = 90;
+        if (Item.tag.Contains("Item") && Item.tag.Contains("Long")) rotationValue = 90;
         else rotationValue = 45;
         return rotationValue;
     }
@@ -104,8 +136,22 @@ public class ItemPlacement : MonoBehaviour
     {
         if (Item.CompareTag(itemTag) && _hit.transform.parent.CompareTag(gridTag))
         {
-            Item.transform.localScale = new Vector3(1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.y, 1.5f * _hit.transform.localScale.z);
-            Item.transform.localPosition = new Vector3(_hit.transform.position.x, Item.transform.lossyScale.y / 2, _hit.transform.position.z);
+            if (Item.tag.Contains("Wall"))
+            {
+                Item.transform.localScale = new Vector3(1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.x);
+                Item.transform.localRotation = Quaternion.Euler(0, _hit.transform.parent.localEulerAngles.y, _itemRotation);
+                if(_hit.transform.parent.localEulerAngles.y == 90)
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x + Item.transform.lossyScale.z/2, _hit.transform.position.y, _hit.transform.position.z);
+                else if (_hit.transform.parent.localEulerAngles.y == 270)
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x - Item.transform.lossyScale.z/2, _hit.transform.position.y, _hit.transform.position.z);
+                else
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x, _hit.transform.position.y, _hit.transform.position.z + Item.transform.lossyScale.z/2);
+            }
+            else
+            {
+                Item.transform.localScale = new Vector3(1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.y, 1.5f * _hit.transform.localScale.z);
+                Item.transform.localPosition = new Vector3(_hit.transform.position.x, Item.transform.lossyScale.y / 2, _hit.transform.position.z);
+            }
         }
     }
 
@@ -114,7 +160,7 @@ public class ItemPlacement : MonoBehaviour
         if (_hit.transform.GetComponent<CubeIsTriggerable>() != null && _hit.transform.GetComponent<CubeIsTriggerable>().IsTriggerable && Item.CompareTag(itemTag) && _hit.transform.parent.CompareTag(gridTag))
         {
             GameObject item = Instantiate(Item, _hit.collider.transform.position, Item.transform.localRotation, _hit.transform);
-            item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+            item.transform.localScale = new Vector3(1.5f, 1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x, 1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x);
             item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
             Destroy(Item);
