@@ -8,15 +8,17 @@ public class MoneyManager : MonoBehaviour
 
     private List<int> _playerMoney = new List<int>();
 
+
     private void Start()
     {
         for (int i = 0; i < _playerTexts.Length; i++)
         {
-            _playerMoney.Add(10);
+            _playerMoney.Add(100); // Start at 0 instead of 10
         }
 
         UpdateAllMoneyUI();
     }
+
 
     private void Update()
     {
@@ -29,7 +31,7 @@ public class MoneyManager : MonoBehaviour
         }
     }
 
-    private void IncreaseMoney(int playerID, int amount)
+    public void IncreaseMoney(int playerID, int amount)
     {
         if (playerID >= 0 && playerID < _playerMoney.Count)
         {
