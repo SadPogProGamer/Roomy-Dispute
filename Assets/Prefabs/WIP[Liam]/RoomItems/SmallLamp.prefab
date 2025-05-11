@@ -141,4 +141,6 @@ MonoBehaviour:
   IsGlass: 0
   IsWood: 0
   IsPlaced: 0
-  PlacementTime: 1
+  PlacementTime: 2
+  Timer: 0
+  PlayerPhone: {fileID: 0}

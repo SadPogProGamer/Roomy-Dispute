@@ -267,7 +267,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(0,item.GetComponent<ItemStats>().Cost);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(0, Math.Abs(item.GetComponent<ItemStats>().Cost));
     }
 
     public void OnItemButtonClickPlayer2(GameObject item)
@@ -280,6 +280,8 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player2Phone.SetActive(false);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, Math.Abs(item.GetComponent<ItemStats>().Cost));
+
     }
     public void OnItemButtonClickPlayer3(GameObject item)
     {
@@ -291,6 +293,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player3Phone.SetActive(false);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(2, Math.Abs(item.GetComponent<ItemStats>().Cost));
     }
     public void OnItemButtonClickPlayer4(GameObject item)
     {
@@ -302,6 +305,7 @@ public class ButtonSelect : MonoBehaviour, IMoveHandler
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player4Phone.SetActive(false);
+        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(3, Math.Abs(item.GetComponent<ItemStats>().Cost));
     }
 
     private void DisableSabotageApps()
