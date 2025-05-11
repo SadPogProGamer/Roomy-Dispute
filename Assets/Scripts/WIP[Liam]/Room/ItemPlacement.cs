@@ -165,7 +165,7 @@ public class ItemPlacement : MonoBehaviour
             if (Item.tag.Contains("Wall"))
             {
                 if (Mathf.Abs(_itemRotation) % 180 != 0)
-                    item.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+                    item.transform.localScale = new Vector3(1.5f, 1.4f, 1.5f);
                 else
                     item.transform.localScale = new Vector3(1.5f, 1.5f / _hit.transform.localScale.y * _hit.transform.localScale.x, 1.5f / _hit.transform.localScale.z * _hit.transform.localScale.x);
             }
