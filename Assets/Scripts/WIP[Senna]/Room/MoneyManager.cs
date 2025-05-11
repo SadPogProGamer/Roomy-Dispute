@@ -13,7 +13,7 @@ public class MoneyManager : MonoBehaviour
     {
         for (int i = 0; i < _playerTexts.Length; i++)
         {
-            _playerMoney.Add(100); // Start at 0 instead of 10
+            _playerMoney.Add(100); 
         }
 
         UpdateAllMoneyUI();

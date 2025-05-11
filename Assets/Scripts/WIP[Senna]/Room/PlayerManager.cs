@@ -8,7 +8,6 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        // Use onDeviceChange instead of onDeviceAdd
         InputSystem.onDeviceChange += OnDeviceChanged;
     }
 
