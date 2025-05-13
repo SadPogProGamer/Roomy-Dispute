@@ -1,5 +1,6 @@
-﻿
+﻿//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+//using static UnityEditor.Progress;
 
 public class ItemPlacement : MonoBehaviour
 {
@@ -40,7 +41,7 @@ public class ItemPlacement : MonoBehaviour
             }
             if (Item.CompareTag("Item/Small")) _layerMask = 1 << 7;
             if (Item.tag.Contains("Placable")) _layerMask = 1 << 10;
-            
+
             if (Item.CompareTag("Item/Wall/Long"))
             {
                 if (Mathf.Abs(_itemRotation) % 180 == 0)
@@ -52,7 +53,7 @@ public class ItemPlacement : MonoBehaviour
 
             if (Item.tag.Contains("Wall"))
                 Item.transform.localRotation = Quaternion.Euler(0, 0, _itemRotation);
-            else 
+            else
                 Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _layerMask))
@@ -66,7 +67,7 @@ public class ItemPlacement : MonoBehaviour
                     MoveObjectOnGrid("LongGrid/Hori", "Item/Long");
 
                 MoveObjectOnGrid("BigGrid", "Item/Big");
-                
+
                 //wallstuff
                 if (Mathf.Abs(_itemRotation) % 180 == 0)
                     MoveObjectOnGrid("LongGridWall/Vert", "Item/Wall/Long");
@@ -123,9 +124,13 @@ public class ItemPlacement : MonoBehaviour
 
     public void OnReturn()
     {
-        Item.GetComponent<ItemStats>().PlayerPhone.SetActive(true);
-        Destroy(Item);
-        gameObject.SetActive(false);
+        if (GetComponent<ItemPlacement>().enabled)
+        {
+            Item.GetComponent<ItemStats>().PlayerPhone.SetActive(true);
+            Item.GetComponent<ItemStats>().PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
+            Destroy(Item);
+            SetPointerBackToOrigin();
+        }
     }
     private int GetRotationValue()
     {
@@ -143,12 +148,12 @@ public class ItemPlacement : MonoBehaviour
             {
                 Item.transform.localScale = new Vector3(1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.x, 1.5f * _hit.transform.localScale.x);
                 Item.transform.localRotation = Quaternion.Euler(0, _hit.transform.parent.localEulerAngles.y, _itemRotation);
-                if(_hit.transform.parent.localEulerAngles.y == 90)
-                    Item.transform.localPosition = new Vector3(_hit.transform.position.x + Item.transform.lossyScale.z/2, _hit.transform.position.y, _hit.transform.position.z);
+                if (_hit.transform.parent.localEulerAngles.y == 90)
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x + Item.transform.lossyScale.z / 2, _hit.transform.position.y, _hit.transform.position.z);
                 else if (_hit.transform.parent.localEulerAngles.y == 270)
-                    Item.transform.localPosition = new Vector3(_hit.transform.position.x - Item.transform.lossyScale.z/2, _hit.transform.position.y, _hit.transform.position.z);
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x - Item.transform.lossyScale.z / 2, _hit.transform.position.y, _hit.transform.position.z);
                 else
-                    Item.transform.localPosition = new Vector3(_hit.transform.position.x, _hit.transform.position.y, _hit.transform.position.z + Item.transform.lossyScale.z/2);
+                    Item.transform.localPosition = new Vector3(_hit.transform.position.x, _hit.transform.position.y, _hit.transform.position.z + Item.transform.lossyScale.z / 2);
             }
             else
             {
@@ -180,14 +185,14 @@ public class ItemPlacement : MonoBehaviour
                 );
             }
 
-            if(item.GetComponent<Collider>() != null)
-            item.GetComponent<Collider>().enabled = true;
+            if (item.GetComponent<Collider>() != null)
+                item.GetComponent<Collider>().enabled = true;
             item.GetComponent<ItemStats>().IsPlaced = true;
             Destroy(Item);
             _itemRotation = 0;
             SetPointerBackToOrigin();
             // ✅ Register the item with the manager
-            PlacedItemManager.Instance.Register(item);
+            //PlacedItemManager.Instance.Register(item);
 
 
         }
@@ -221,7 +226,7 @@ public class ItemPlacement : MonoBehaviour
                     _usedSpaces = 0;
             }
             _child = _hit.transform.GetChild(_usedSpaces);
-            Item.transform.localScale = new Vector3(_hit.transform.parent.localScale.x * _hit.transform.localScale.x, _hit.transform.parent.localScale.y *_hit.transform.localScale.y , _hit.transform.parent.localScale.z * _hit.transform.localScale.z );
+            Item.transform.localScale = new Vector3(_hit.transform.parent.localScale.x * _hit.transform.localScale.x, _hit.transform.parent.localScale.y * _hit.transform.localScale.y, _hit.transform.parent.localScale.z * _hit.transform.localScale.z);
             Item.transform.localPosition = new Vector3(_child.transform.position.x, _child.transform.position.y + Item.transform.lossyScale.y / 4, _child.transform.position.z);
         }
     }
@@ -251,7 +256,7 @@ public class ItemPlacement : MonoBehaviour
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     // ✅ Register the item with the manager
-                    PlacedItemManager.Instance.Register(item);
+                    //PlacedItemManager.Instance.Register(item);
                 }
             }
             if (_hit.transform.CompareTag("Item/Long"))
@@ -260,15 +265,15 @@ public class ItemPlacement : MonoBehaviour
                 {
                     item = InstantiatePlacable();
                     // ✅ Register the item with the manager
-                    PlacedItemManager.Instance.Register(item);
+                    //PlacedItemManager.Instance.Register(item);
                 }
-               
+
                 if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 5)
                 {
                     item = InstantiatePlacable();
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     // ✅ Register the item with the manager
-                    PlacedItemManager.Instance.Register(item);
+                    //PlacedItemManager.Instance.Register(item);
                 }
 
                 if (Item.transform.CompareTag("Item/Placable/Big") && _hit.transform.childCount < 4)
@@ -277,7 +282,7 @@ public class ItemPlacement : MonoBehaviour
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
                     // ✅ Register the item with the manager
-                    PlacedItemManager.Instance.Register(item);
+                    //PlacedItemManager.Instance.Register(item);
                 }
             }
         }
@@ -298,6 +303,8 @@ public class ItemPlacement : MonoBehaviour
     private void SetPointerBackToOrigin()
     {
         transform.position = _originPoint;
-        gameObject.SetActive(false);
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<ItemPlacement>().enabled = false;
+        GetComponent<PlayerPointer>().CanMove = false;
     }
 }
