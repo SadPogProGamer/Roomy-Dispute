@@ -22,6 +22,7 @@ public class ItemStats : MonoBehaviour
         if (Timer >= PlacementTime && phoneHasNotBeenActivated)
         {
             PlayerPhone.SetActive(true);
+            PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
             phoneHasNotBeenActivated = false;
         }
     }

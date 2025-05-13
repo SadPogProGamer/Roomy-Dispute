@@ -10,18 +10,13 @@ public class ButtonSelect : MonoBehaviour
 {
     [Header("PlayerPointers")]
     [SerializeField] private GameObject _player1Pointer; 
-    [SerializeField] private GameObject _player2Pointer;
-    [SerializeField] private GameObject _player3Pointer;
-    [SerializeField] private GameObject _player4Pointer;
     
     [Header("PlayerPhones")]
     [SerializeField] private GameObject _player1Phone;
-    [SerializeField] private GameObject _player2Phone;
-    [SerializeField] private GameObject _player3Phone;
-    [SerializeField] private GameObject _player4Phone;
+
 
     [Header("UI Stuff")]
-    [SerializeField] private GameObject _moneyManager;
+    public GameObject MoneyManager;
 
 
     [Header("App Icons")]
@@ -42,7 +37,7 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private SabotageTool _sabotageTool;
 
     private GameObject _lastSelectedButton;
-    private int _currentFurnitureIndex = 0;  // To track the selected furniture item
+    private int _currentFurnitureIndex = 0, _childIndex;  // To track the selected furniture item
     private bool _canMove, _didLoop;
 
 
@@ -63,17 +58,21 @@ public class ButtonSelect : MonoBehaviour
         HandleInput();
         CheckCurrentSelectedButton();
         CheckCancelButton();
+        SubmitCurrent();
     }
 
     private void CheckCancelButton()
     {
-        if (Gamepad.current != null && Gamepad.current.buttonEast.wasPressedThisFrame)
+        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null &&
+            Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
+            _eventSystem.currentSelectedGameObject != _cashAppIcon &&
+            _eventSystem.currentSelectedGameObject != _sabotageIcon)
         {
             CancelAction();
         }
     }
 
-    private void CancelAction()
+    public void CancelAction()
     {
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_lastSelectedButton);
@@ -96,7 +95,7 @@ public class ButtonSelect : MonoBehaviour
 
     private void HandleInput()
     {
-        Vector2 dpadInput = Gamepad.current.dpad.ReadValue();
+        Vector2 dpadInput = Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].dpad.ReadValue();
 
         if (dpadInput.y > 0)  // Moving Up
         {
@@ -187,6 +186,7 @@ public class ButtonSelect : MonoBehaviour
             if (_furnitureObjects[_currentFurnitureIndex].activeSelf)
             {
                 if (direction == Vector2.zero) _canMove = true;
+                
 
                 if (_canMove)
                 {
@@ -206,6 +206,41 @@ public class ButtonSelect : MonoBehaviour
                         if (_currentFurnitureIndex < 0) _currentFurnitureIndex = _furnitureObjects.Length - 1;
                         _furnitureObjects[_currentFurnitureIndex].SetActive(true);
                         StartCoroutine(CheckChildrensInteractability());
+                        _canMove = false;
+                    }
+                    if (direction == Vector2.down)
+                    {
+                        print("e");
+                        for (int checkCount = 0; checkCount < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf;)
+                        {
+                            _childIndex += 1;
+                            if (_childIndex >= _furnitureObjects[_currentFurnitureIndex].transform.childCount) _childIndex = 0;
+
+                            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
+                            {
+                                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
+                                break;
+                            }
+                            else checkCount++;
+                        }
+                        _canMove = false;
+                    }
+                    if (direction == Vector2.up)
+                    {
+                        print("f");
+
+                        for (int checkCount = 0; checkCount < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf;)
+                        {
+                            _childIndex -= 1;
+                            if (_childIndex < 0) _childIndex = _furnitureObjects[_currentFurnitureIndex].transform.childCount - 1;
+
+                            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
+                            {
+                                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
+                                break;
+                            }
+                            else checkCount++;
+                        }
                         _canMove = false;
                     }
                 }
@@ -229,11 +264,11 @@ public class ButtonSelect : MonoBehaviour
     private IEnumerator CheckChildrensInteractability()
     {
         yield return null;
-        for (int childIndex = 0; childIndex < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf; childIndex++)
+        for (_childIndex = 0; _childIndex < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf; _childIndex++)
         {
-            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(childIndex).GetComponent<Button>().interactable)
+            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
             {
-                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(childIndex).gameObject);
+                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
                 break;
             }
         }
@@ -275,7 +310,10 @@ public class ButtonSelect : MonoBehaviour
 
     public void OnItemButtonClickPlayer1(GameObject item)
     {
-        _player1Pointer.SetActive(true);
+        _player1Pointer.GetComponent<MeshRenderer>().enabled = true;
+        _player1Pointer.GetComponent<ItemPlacement>().enabled = true;
+        _player1Pointer.GetComponent<PlayerPointer>().CanMove = true;
+        
         GameObject spawnedItem = Instantiate(item);
         spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
         _player1Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
@@ -283,45 +321,7 @@ public class ButtonSelect : MonoBehaviour
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(0, Math.Abs(item.GetComponent<ItemStats>().Cost));
-    }
-
-    public void OnItemButtonClickPlayer2(GameObject item)
-    {
-        _player2Pointer.SetActive(true);
-        GameObject spawnedItem = Instantiate(item);
-        spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player2Phone;
-        _player2Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
-        DisableFurnitureApps();
-        EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_cashAppIcon);
-        _player2Phone.SetActive(false);
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(1, Math.Abs(item.GetComponent<ItemStats>().Cost));
-
-    }
-    public void OnItemButtonClickPlayer3(GameObject item)
-    {
-        _player3Pointer.SetActive(true);
-        GameObject spawnedItem = Instantiate(item);
-        item.GetComponent<ItemStats>().PlayerPhone = _player3Phone;
-        _player3Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
-        DisableFurnitureApps();
-        EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_cashAppIcon);
-        _player3Phone.SetActive(false);
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(2, Math.Abs(item.GetComponent<ItemStats>().Cost));
-    }
-    public void OnItemButtonClickPlayer4(GameObject item)
-    {
-        _player4Pointer.SetActive(true);
-        GameObject spawnedItem = Instantiate(item);
-        spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player4Phone;
-        _player4Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
-        DisableFurnitureApps();
-        EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_cashAppIcon);
-        _player4Phone.SetActive(false);
-        _moneyManager.GetComponent<MoneyManager>().DecreaseMoney(3, Math.Abs(item.GetComponent<ItemStats>().Cost));
+        MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(0, Math.Abs(item.GetComponent<ItemStats>().Cost));
     }
 
     private void DisableSabotageApps()
@@ -365,5 +365,13 @@ public class ButtonSelect : MonoBehaviour
         _sabotageIcon.SetActive(true);
     }
 
-    
+    private void SubmitCurrent()
+    {
+        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonSouth.wasPressedThisFrame)
+        {
+            _eventSystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+        }
+
+    }
+
 }

@@ -6,11 +6,11 @@ using UnityEngine.InputSystem.UI;
 
 public class PlayerPointer : MonoBehaviour
 {
-    
+    public bool CanMove;
     [SerializeField]
     private float _speed;
     private Vector2 _moveVector;
-
+    public int PlayerIndex;
     public void OnMove(InputValue value)
     {
         _moveVector = value.Get<Vector2>();
@@ -27,8 +27,12 @@ public class PlayerPointer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        transform.localPosition += _speed * Time.fixedDeltaTime * new Vector3(_moveVector.x * transform.right.x, _moveVector.y * transform.up.y, _moveVector.y * transform.up.z).normalized;
-        CheckOutOfBounds();
+        if (CanMove)
+        {
+            transform.localPosition += _speed * Time.fixedDeltaTime * new Vector3(_moveVector.x * transform.right.x, _moveVector.y * transform.up.y, _moveVector.y * transform.up.z).normalized;
+            CheckOutOfBounds();
+        }
+
     }
 
     private void CheckOutOfBounds()
