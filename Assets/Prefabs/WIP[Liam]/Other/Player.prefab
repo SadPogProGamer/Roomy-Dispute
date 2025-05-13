@@ -8608,7 +8608,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7323040997257396752, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Gamepad
+      objectReference: {fileID: 0}
+    - target: {fileID: 7323040997257396752, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: m_NotificationBehavior
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7323040997257396752, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: m_NeverAutoSwitchControlSchemes
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8728214216560226669, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}

@@ -55,16 +55,18 @@ public class ButtonSelect : MonoBehaviour
 
     private void Update()
     {
-        HandleInput();
-        CheckCurrentSelectedButton();
-        CheckCancelButton();
-        SubmitCurrent();
+        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null)
+        {
+            HandleInput();
+            CheckCurrentSelectedButton();
+            CheckCancelButton();
+            SubmitCurrent();
+        }
     }
 
     private void CheckCancelButton()
     {
-        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null &&
-            Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
+        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
             _eventSystem.currentSelectedGameObject != _cashAppIcon &&
             _eventSystem.currentSelectedGameObject != _sabotageIcon)
         {
