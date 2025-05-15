@@ -9,37 +9,34 @@ public class Timer : MonoBehaviour
     [SerializeField] 
     private MoneyManager moneyManager; // Assign this in Inspector
 
-    private bool sceneIsLoading = false;
-
-
-    private float StartRoundTime = 61f;
+    private float _startRoundTime = 61f;
     [SerializeField]
-    private float RoundTime = 61f;
+    private float _roundTime = 61f;
 
-    private int Round = 1;
+    private int _round = 1;
+
 
     [SerializeField]
-    private TextMeshProUGUI timerText; // Link this in the Inspector
-
-    private int playerMoney = 0;
+    private TextMeshProUGUI _timerText; // Link this in the Inspector
 
     void Update()
     {
-        RoundTime -= Time.deltaTime;
+        _roundTime -= Time.deltaTime;
 
-        if (RoundTime <= 0.0f && Round < 4)
+        if (_roundTime <= 0.0f && _round < 4)
         {
-            RoundTime = StartRoundTime - 10f * Round;
-            Round++;
-            AddMoneyForRound(Round);
+            _roundTime = _startRoundTime - 10f * _round;
+            _round++;
+            AddMoneyForRound(_round);
         }
-        else if (RoundTime <= 0.0f && Round >= 4 && Round != 9)
+        else if (_roundTime <= 0.0f && _round >= 4 && _round != 9)
         {
-            RoundTime = StartRoundTime - 30f - 5f * (Round - 3);
-            Round++;
-            AddMoneyForRound(Round);
+            _roundTime = _startRoundTime - 30f - 5f * (_round - 3);
+            _round++;
+            AddMoneyForRound(_round);
+
         }
-        else if (RoundTime <= 0.0f && Round == 9)
+        else if (_roundTime <= 0.0f && _round == 9)
         {
             SceneManager.LoadScene("WinScreen");
             return;
@@ -50,9 +47,9 @@ public class Timer : MonoBehaviour
 
     private void UpdateTimerUI()
     {
-        int minutes = Mathf.FloorToInt(RoundTime / 60);
-        int seconds = Mathf.FloorToInt(RoundTime % 60);
-        timerText.text = $"{minutes:00}:{seconds:00}";
+        int minutes = Mathf.FloorToInt(_roundTime / 60);
+        int seconds = Mathf.FloorToInt(_roundTime % 60);
+        _timerText.text = $"{minutes:00}:{seconds:00}";
     }
 
     private void AddMoneyForRound(int round)
