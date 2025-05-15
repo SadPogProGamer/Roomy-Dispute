@@ -79,6 +79,7 @@ public class ItemPlacement : MonoBehaviour
                 //placable
                 MovePlacableOnObject("Item/Big");
                 MovePlacableOnObject("Item/Long");
+                MovePlacableOnObject("Item/Small");
             }
             else { screenPos.z = _itemDistanceFromCamera; Item.transform.position = Camera.main.ScreenToWorldPoint(screenPos); }
         }
@@ -110,6 +111,7 @@ public class ItemPlacement : MonoBehaviour
             //placable
             PlacePlacableOnObject("Item/Big");
             PlacePlacableOnObject("Item/Long");
+            PlacePlacableOnObject("Item/Small");
         }
     }
 
@@ -206,6 +208,13 @@ public class ItemPlacement : MonoBehaviour
         {
             if (_hit.transform.CompareTag("Item/Big"))
             {
+                if (_hit.transform.childCount == 2)
+                    _usedSpaces = 1;
+                if (_hit.transform.childCount == 1)
+                    _usedSpaces = 0;
+            }
+            if (_hit.transform.CompareTag("Item/Big"))
+            {
                 if (_hit.transform.childCount == 9)
                     _usedSpaces = 4;
                 if (_hit.transform.childCount == 8)
@@ -236,6 +245,15 @@ public class ItemPlacement : MonoBehaviour
         if (Item.tag.Contains("Placable") && _hit.transform.CompareTag(objectTag))
         {
             GameObject item;
+            if (_hit.transform.CompareTag("Item/Small"))
+            {
+                if ((Item.transform.CompareTag("Item/Placable/Small") || Item.transform.CompareTag("Item/Placable/Medium")) && _hit.transform.childCount < 2)
+                {
+                    item = InstantiatePlacable();
+                    // ✅ Register the item with the manager
+                    PlacedItemManager.Instance.Register(item);
+                }
+            }
             if (_hit.transform.CompareTag("Item/Big"))
             {
                 if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 10)

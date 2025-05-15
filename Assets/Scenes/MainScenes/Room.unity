@@ -2036,7 +2036,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6828271443313866854, guid: 59bb3b67da63a184190b643d06d17958, type: 3}
   _moneyManager: {fileID: 2068198807}
-  _playerCount: 4
+  _playerCount: 1
   _playerMaterials:
   - {fileID: 2100000, guid: 831f2b4c808d52149af7b0c20fd2b00d, type: 2}
   - {fileID: 2100000, guid: b3f4a8cfa7206b9489bd659ae412b405, type: 2}
@@ -9907,12 +9907,26 @@ MonoBehaviour:
   MoneyManager: {fileID: 0}
   _cashAppIcon: {fileID: 2125463657}
   _sabotageIcon: {fileID: 104631786}
-  _furnitureObjects:
-  - {fileID: 314649942}
-  - {fileID: 2117761251}
-  - {fileID: 2096017905}
-  - {fileID: 350269910}
-  - {fileID: 468164134}
+  _cheapFurniture:
+  - {fileID: 919132149155446097, guid: 8ec684b0f3a1d1847b916f91ef2ba907, type: 3}
+  - {fileID: 919132149155446097, guid: ec57deaa418e44043aa2877647d9cc04, type: 3}
+  - {fileID: 919132149155446097, guid: 76696edcbfd580f4b93a8f6e7bda61bd, type: 3}
+  - {fileID: 919132149155446097, guid: 9ba2bf1da31c7f54ea7c4e477bffb674, type: 3}
+  - {fileID: 919132149155446097, guid: 5c3d21581991ee5468c0500419c564b6, type: 3}
+  - {fileID: 919132149155446097, guid: 290ac0d9613c27140bf0bcfc0debbbb5, type: 3}
+  _mediumFurniture:
+  - {fileID: 919132149155446097, guid: 1dd95a7948b617e48a31c0f3b69e36a8, type: 3}
+  - {fileID: 919132149155446097, guid: 7cf0d9d0a6d7df446957c28350eeef01, type: 3}
+  - {fileID: 919132149155446097, guid: 4944cd366cbf2f04497904a7760e1c9d, type: 3}
+  - {fileID: 919132149155446097, guid: 6d545f0809388164ebde7306efd91032, type: 3}
+  - {fileID: 919132149155446097, guid: 603f7d41e14972043b60b3b3c9083ac8, type: 3}
+  - {fileID: 919132149155446097, guid: ef3ba28f62e5854429c12f777b33eb1c, type: 3}
+  _expensiveFurniture:
+  - {fileID: 919132149155446097, guid: 7fc23d4f861b3614db5f132bc7b67cf9, type: 3}
+  - {fileID: 919132149155446097, guid: 45b77db4c53c3d5408d64400aebf6701, type: 3}
+  - {fileID: 919132149155446097, guid: 310cc4034a0ed2741b72ffd68eed1598, type: 3}
+  - {fileID: 919132149155446097, guid: 3349ef881e9da7b4093856efd476eea0, type: 3}
+  - {fileID: 919132149155446097, guid: 3bbc045a734646f4c9f04bbf4d7455e0, type: 3}
   _fireApp: {fileID: 1268659022}
   _bombApp: {fileID: 520062698}
   _targetApp: {fileID: 1993423815}

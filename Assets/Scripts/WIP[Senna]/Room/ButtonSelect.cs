@@ -1,17 +1,16 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class ButtonSelect : MonoBehaviour
 {
     [Header("PlayerPointers")]
-    [SerializeField] private GameObject _player1Pointer; 
-    
+    [SerializeField] private GameObject _player1Pointer;
+
     [Header("PlayerPhones")]
     [SerializeField] private GameObject _player1Phone;
 
@@ -25,7 +24,9 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject _sabotageIcon;
 
     [Header("Furniture Apps")]
-    [SerializeField] private GameObject[] _furnitureObjects;  // Array of furniture objects
+    [SerializeField] private GameObject[] _cheapFurniture;
+    [SerializeField] private GameObject[] _mediumFurniture;
+    [SerializeField] private GameObject[] _expensiveFurniture;
 
     [Header("Sabotage Apps")]
     [SerializeField] private GameObject _fireApp;
@@ -38,14 +39,20 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private SabotageTool _sabotageTool;
 
     private GameObject _lastSelectedButton;
-    private int _currentFurnitureIndex = 0, _childIndex;  // To track the selected furniture item
     private bool _canMove, _didLoop;
 
+    private int _cheapFurnitureIndex;
+    private int _mediumFurnitureIndex;
+    private int _expensiveFurnitureIndex;
 
     private void Start()
     {
         DisableSabotageApps();
         DisableFurnitureApps();
+
+        GiveRandomNumberForCheapFurniture();
+        GiveRandomNumberForExpensiveFurniture();
+        GiveRandomNumberForMediumFurniture();
 
         // Ensure the first selected button is set and valid
         if (_eventSystem != null && _cashAppIcon != null)
@@ -144,6 +151,16 @@ public class ButtonSelect : MonoBehaviour
                 {
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
+
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+                }
+
+                if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                }
             }
 
             else if (direction == Vector2.down)
@@ -159,6 +176,16 @@ public class ButtonSelect : MonoBehaviour
                 if (currentSelected == _bombApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
+                }
+
+                if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                }
+
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
                 }
             }
 
@@ -185,96 +212,16 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
             }
-            
-            if (_furnitureObjects[_currentFurnitureIndex].activeSelf)
-            {
-                if (direction == Vector2.zero) _canMove = true;
-                
-
-                if (_canMove)
-                {
-                    if (direction == Vector2.right)
-                    {
-                        _furnitureObjects[_currentFurnitureIndex].SetActive(false);
-                        _currentFurnitureIndex++;
-                        if (_currentFurnitureIndex >= _furnitureObjects.Length) _currentFurnitureIndex = 0;
-                        _furnitureObjects[_currentFurnitureIndex].SetActive(true);
-                        StartCoroutine(CheckChildrensInteractability());
-                        _canMove = false;
-                    }
-                    else if (direction == Vector2.left)
-                    {
-                        _furnitureObjects[_currentFurnitureIndex].SetActive(false);
-                        _currentFurnitureIndex--;
-                        if (_currentFurnitureIndex < 0) _currentFurnitureIndex = _furnitureObjects.Length - 1;
-                        _furnitureObjects[_currentFurnitureIndex].SetActive(true);
-                        StartCoroutine(CheckChildrensInteractability());
-                        _canMove = false;
-                    }
-                    if (direction == Vector2.down)
-                    {
-                        print("e");
-                        for (int checkCount = 0; checkCount < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf;)
-                        {
-                            _childIndex += 1;
-                            if (_childIndex >= _furnitureObjects[_currentFurnitureIndex].transform.childCount) _childIndex = 0;
-
-                            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
-                            {
-                                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
-                                break;
-                            }
-                            else checkCount++;
-                        }
-                        _canMove = false;
-                    }
-                    if (direction == Vector2.up)
-                    {
-                        print("f");
-
-                        for (int checkCount = 0; checkCount < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf;)
-                        {
-                            _childIndex -= 1;
-                            if (_childIndex < 0) _childIndex = _furnitureObjects[_currentFurnitureIndex].transform.childCount - 1;
-
-                            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
-                            {
-                                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
-                                break;
-                            }
-                            else checkCount++;
-                        }
-                        _canMove = false;
-                    }
-                }
-
-            }
         }
     }
 
     public void OnCashAppButtonClick()
     {
-        
         Debug.Log("Cash App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
-        _currentFurnitureIndex = 0;
-        StartCoroutine(CheckChildrensInteractability());  // Set the first interactable item of furniture as selected
+        _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
         _lastSelectedButton = _cashAppIcon;
-        
-    }
-
-    private IEnumerator CheckChildrensInteractability()
-    {
-        yield return null;
-        for (_childIndex = 0; _childIndex < _furnitureObjects[_currentFurnitureIndex].transform.childCount && _furnitureObjects[_currentFurnitureIndex].activeSelf; _childIndex++)
-        {
-            if (_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).GetComponent<Button>().interactable)
-            {
-                _eventSystem.SetSelectedGameObject(_furnitureObjects[_currentFurnitureIndex].transform.GetChild(_childIndex).gameObject);
-                break;
-            }
-        }
     }
 
     public void OnSabotageButtonClick()
@@ -316,7 +263,7 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<MeshRenderer>().enabled = true;
         _player1Pointer.GetComponent<ItemPlacement>().enabled = true;
         _player1Pointer.GetComponent<PlayerPointer>().CanMove = true;
-        
+
         GameObject spawnedItem = Instantiate(item);
         spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
         foreach (Material material in spawnedItem.GetComponent<MeshRenderer>().materials)
@@ -329,6 +276,25 @@ public class ButtonSelect : MonoBehaviour
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
+
+        GiveRandomNumberForCheapFurniture();
+        GiveRandomNumberForMediumFurniture();
+        GiveRandomNumberForExpensiveFurniture();
+    }
+
+    private void GiveRandomNumberForExpensiveFurniture()
+    {
+        _expensiveFurnitureIndex = (int)UnityEngine.Random.Range(0f, _expensiveFurniture.Length - 1);
+    }
+
+    private void GiveRandomNumberForMediumFurniture()
+    {
+        _mediumFurnitureIndex = (int)UnityEngine.Random.Range(0f, _mediumFurniture.Length - 1);
+    }
+
+    private void GiveRandomNumberForCheapFurniture()
+    {
+        _cheapFurnitureIndex = (int)UnityEngine.Random.Range(0f, _cheapFurniture.Length - 1);
     }
 
     private void DisableSabotageApps()
@@ -349,7 +315,15 @@ public class ButtonSelect : MonoBehaviour
 
     private void DisableFurnitureApps()
     {
-        foreach (GameObject furniture in _furnitureObjects)
+        foreach (GameObject furniture in _cheapFurniture)
+        {
+            furniture.SetActive(false);
+        }
+        foreach (GameObject furniture in _mediumFurniture)
+        {
+            furniture.SetActive(false);
+        }
+        foreach (GameObject furniture in _expensiveFurniture)
         {
             furniture.SetActive(false);
         }
@@ -357,7 +331,9 @@ public class ButtonSelect : MonoBehaviour
 
     private void EnableFurnitureApps()
     {
-        _furnitureObjects[0].SetActive(true);
+        _cheapFurniture[_cheapFurnitureIndex].SetActive(true);
+        _mediumFurniture[_mediumFurnitureIndex].SetActive(true);
+        _expensiveFurniture[_expensiveFurnitureIndex].SetActive(true);
     }
 
     private void DisableBigApps()
