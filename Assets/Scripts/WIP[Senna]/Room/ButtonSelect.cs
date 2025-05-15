@@ -152,14 +152,19 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
 
-                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                if (_canMove)
                 {
-                    _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
-                }
+                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                    {
+                        _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+                        _canMove = false;
+                    }
 
-                if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
-                {
-                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                    if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
+                    {
+                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                        _canMove = false;
+                    }
                 }
             }
 
@@ -178,15 +183,21 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
 
-                if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
+                if (_canMove)
                 {
-                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-                }
+                    if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
+                    {
+                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                        _canMove = false;
+                    }
 
-                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
-                {
-                    _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                    {
+                        _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+                        _canMove = false;
+                    }
                 }
+                
             }
 
             else if (direction == Vector2.left)
@@ -211,6 +222,10 @@ public class ButtonSelect : MonoBehaviour
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
+            }
+            else if (direction == Vector2.zero)
+            {
+                if (!_canMove) _canMove = true;
             }
         }
     }
