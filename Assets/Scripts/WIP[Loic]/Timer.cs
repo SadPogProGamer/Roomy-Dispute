@@ -1,6 +1,8 @@
 using System;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Timer : MonoBehaviour
 {
@@ -26,6 +28,8 @@ public class Timer : MonoBehaviour
 
         if (RoundTime <= 0.0f && Round < 4)
         {
+            SceneManager.LoadScene("WinScreen", LoadSceneMode.Single);
+
             RoundTime = StartRoundTime - 10f * Round;
             Round++;
             AddMoneyForRound(Round);
@@ -38,7 +42,7 @@ public class Timer : MonoBehaviour
         }
         else if (RoundTime <= 0.0f && Round == 9)
         {
-            TimerEnd();
+            SceneManager.LoadScene("WinScreen", LoadSceneMode.Single);
         }
 
         UpdateTimerUI();
@@ -51,11 +55,6 @@ public class Timer : MonoBehaviour
         timerText.text = $"{minutes:00}:{seconds:00}";
     }
 
-    private void TimerEnd()
-    {
-        timerText.text = "Timer Ended";
-        // implement podium feature/ winning thingy idk
-    }
     private void AddMoneyForRound(int round)
     {
         int amount = round switch
