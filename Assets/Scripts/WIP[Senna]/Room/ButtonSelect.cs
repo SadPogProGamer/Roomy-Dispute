@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class ButtonSelect : MonoBehaviour
 {
@@ -318,6 +319,10 @@ public class ButtonSelect : MonoBehaviour
         
         GameObject spawnedItem = Instantiate(item);
         spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
+        foreach (Material material in spawnedItem.GetComponent<MeshRenderer>().materials)
+        {
+            material.color *= _player1Pointer.GetComponent<MeshRenderer>().material.color;
+        }
         _player1Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
