@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScenes/Room.unity
     guid: 36e259a748e4a2e419b19d48ac48b20c
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/WinScreen.unity
+    guid: f168eff38a37ed548bc2d0352622b133
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 6517d80500059b94280721aa74813274, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 10bdbaf1380d60048b4fd1355b7a5659, type: 3}
