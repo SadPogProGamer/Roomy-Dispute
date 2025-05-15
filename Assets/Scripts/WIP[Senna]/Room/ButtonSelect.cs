@@ -55,7 +55,7 @@ public class ButtonSelect : MonoBehaviour
 
     private void Update()
     {
-        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null)
+        if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
             CheckCurrentSelectedButton();
@@ -323,7 +323,7 @@ public class ButtonSelect : MonoBehaviour
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
-        MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(0, Math.Abs(item.GetComponent<ItemStats>().Cost));
+        MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
     }
 
     private void DisableSabotageApps()
