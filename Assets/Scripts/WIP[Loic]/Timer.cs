@@ -9,6 +9,7 @@ public class Timer : MonoBehaviour
     [SerializeField] 
     private MoneyManager moneyManager; // Assign this in Inspector
 
+    private bool sceneIsLoading = false;
 
 
     private float StartRoundTime = 61f;
@@ -28,8 +29,6 @@ public class Timer : MonoBehaviour
 
         if (RoundTime <= 0.0f && Round < 4)
         {
-            SceneManager.LoadScene("WinScreen", LoadSceneMode.Single);
-
             RoundTime = StartRoundTime - 10f * Round;
             Round++;
             AddMoneyForRound(Round);
@@ -42,7 +41,8 @@ public class Timer : MonoBehaviour
         }
         else if (RoundTime <= 0.0f && Round == 9)
         {
-            SceneManager.LoadScene("WinScreen", LoadSceneMode.Single);
+            SceneManager.LoadScene("WinScreen");
+            return;
         }
 
         UpdateTimerUI();

@@ -7120,7 +7120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyManager: {fileID: 2068198808}
-  RoundTime: 61
+  RoundTime: 5
   timerText: {fileID: 1184678289}
 --- !u!114 &1353896772
 MonoBehaviour:
