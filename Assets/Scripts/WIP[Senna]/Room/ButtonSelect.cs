@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -36,6 +37,10 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject _targetApp;
     [SerializeField] private GameObject _breakApp;
 
+    [SerializeField] private TextMeshProUGUI _sabotageCountText;
+
+    [HideInInspector] public int _sabotageCount = 3;
+
     [Header("Event Timer")]
     [SerializeField] private EventSystem _eventSystem;
     [SerializeField] private SabotageTool _SabotageTool;
@@ -62,6 +67,8 @@ public class ButtonSelect : MonoBehaviour
         GiveRandomNumberForExpensiveFurniture();
         GiveRandomNumberForMediumFurniture();
 
+        _sabotageCountText.text = _sabotageCount.ToString();
+
         // Ensure the first selected button is set and valid
         if (_eventSystem != null && _shoppingAppIcon != null)
         {
@@ -77,6 +84,7 @@ public class ButtonSelect : MonoBehaviour
             //CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
+            _sabotageCountText.text = _sabotageCount.ToString();
         }
     }
 
@@ -84,7 +92,8 @@ public class ButtonSelect : MonoBehaviour
     {
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
             _eventSystem.currentSelectedGameObject != _shoppingAppIcon &&
-            _eventSystem.currentSelectedGameObject != _sabotageIcon)
+            _eventSystem.currentSelectedGameObject != _sabotageIcon && 
+            _eventSystem.currentSelectedGameObject != _cashAppIcon)
         {
             CancelAction();
         }
@@ -256,6 +265,11 @@ public class ButtonSelect : MonoBehaviour
 
     public void OnSabotageButtonClick()
     {
+        if (_sabotageCount <= 0)
+        {
+            return;
+        }
+        
         Debug.Log("Sabotage Button Clicked");
         EnableSabotageApps();
         DisableBigApps();
@@ -296,6 +310,9 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
 
         _player1Phone.SetActive(false);
+
+        _sabotageCount--;
+        
     }
 
     private void OnSabotageComplete()

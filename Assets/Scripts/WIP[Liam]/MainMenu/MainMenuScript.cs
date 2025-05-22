@@ -46,6 +46,7 @@ public class MainMenuScript : MonoBehaviour
 
     public void OnCancel()
     {
+
         if (_playersReadyCanvas.activeInHierarchy)
         {
             GoToPlayerCountCanvas();
