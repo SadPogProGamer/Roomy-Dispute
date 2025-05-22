@@ -125,7 +125,9 @@ public class SabotageTool : MonoBehaviour
         {
             _playerPhone.SetActive(true);
             _playerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
+            _playerPhone.transform.parent.GetComponent<ButtonSelect>()._sabotageCount++;
             GetComponent<ItemPlacement>().SetPointerBackToOrigin();
+            GetComponent<SabotageTool>().enabled = false;
         }
     }
 }

@@ -31,6 +31,7 @@ public class MoneyApp : MonoBehaviour
         {
 
         }
+        else 
     }
     public void OnDown()
     {
