@@ -377,6 +377,7 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<PlayerPointer>().CanMove = true;
 
         GameObject spawnedItem = Instantiate(item);
+        spawnedItem.GetComponent<ItemStats>().PlayerIndex = _player1Pointer.GetComponent<PlayerPointer>().PlayerIndex;
         spawnedItem.GetComponent<ItemStats>().PlayerPhone = _player1Phone;
         foreach (Material material in spawnedItem.GetComponent<MeshRenderer>().materials)
         {
