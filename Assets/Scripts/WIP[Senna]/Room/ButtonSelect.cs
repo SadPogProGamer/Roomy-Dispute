@@ -40,7 +40,7 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private SabotageTool _SabotageTool;
 
     private GameObject _lastSelectedButton;
-    private bool _canMove, _didLoop;
+    private bool _didLoop;
 
     private float _inputCooldown = 0.2f;
     private float _lastInputTime = 0f;
@@ -166,20 +166,17 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
 
-                if (_canMove)
-                {
-                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
-                        _canMove = false;
-                    }
 
-                    else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-                        _canMove = false;
-                    }
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
                 }
+
+                else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                }
+
             }
 
             else if (direction == Vector2.down)
@@ -203,20 +200,15 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
 
-                if (_canMove)
+
+                if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
                 {
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                }
 
-                    if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-                        _canMove = false;
-                    }
-
-                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
-                        _canMove = false;
-                    }
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
                 }
             }
 
@@ -241,13 +233,6 @@ public class ButtonSelect : MonoBehaviour
                 if (currentSelected == _targetApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
-                }
-            }
-            else if (direction == Vector2.zero)
-            {
-                if (!_canMove)
-                {
-                    _canMove = true;
                 }
             }
         }
@@ -376,6 +361,10 @@ public class ButtonSelect : MonoBehaviour
 
     public void OnItemButtonClickPlayer1(GameObject item)
     {
+        GiveRandomNumberForCheapFurniture();
+        GiveRandomNumberForMediumFurniture();
+        GiveRandomNumberForExpensiveFurniture();
+
         _player1Pointer.GetComponent<MeshRenderer>().enabled = true;
         _player1Pointer.GetComponent<ItemPlacement>().enabled = true;
         _player1Pointer.GetComponent<PlayerPointer>().CanMove = true;
@@ -392,26 +381,36 @@ public class ButtonSelect : MonoBehaviour
         _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
+<<<<<<< Updated upstream
         //ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
 
         GiveRandomNumberForCheapFurniture();
         GiveRandomNumberForMediumFurniture();
         GiveRandomNumberForExpensiveFurniture();
+=======
+        ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
+>>>>>>> Stashed changes
     }
 
     private void GiveRandomNumberForExpensiveFurniture()
     {
         _expensiveFurnitureIndex = (int)UnityEngine.Random.Range(0f, _expensiveFurniture.Length - 1);
+        Debug.Log("Given new number for expensive items");
+        Debug.Log(_expensiveFurnitureIndex);
     }
 
     private void GiveRandomNumberForMediumFurniture()
     {
         _mediumFurnitureIndex = (int)UnityEngine.Random.Range(0f, _mediumFurniture.Length - 1);
+        Debug.Log("Given new number for expensive items");
+        Debug.Log (_mediumFurnitureIndex);
     }
 
     private void GiveRandomNumberForCheapFurniture()
     {
         _cheapFurnitureIndex = (int)UnityEngine.Random.Range(0f, _cheapFurniture.Length - 1);
+        Debug.Log("Given new number for expensive items");
+        Debug.Log(_cheapFurnitureIndex);
     }
 
     private void DisableSabotageApps()
