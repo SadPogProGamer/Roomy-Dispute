@@ -1355,7 +1355,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &256462188
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2174,7 +2174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6828271443313866854, guid: 59bb3b67da63a184190b643d06d17958, type: 3}
   _moneyManager: {fileID: 2068198807}
-  _playerCount: 1
+  _playerCount: 2
   _playerMaterials:
   - {fileID: 2100000, guid: 831f2b4c808d52149af7b0c20fd2b00d, type: 2}
   - {fileID: 2100000, guid: b3f4a8cfa7206b9489bd659ae412b405, type: 2}
@@ -4884,7 +4884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &834999957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5963,7 +5963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1126272963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7507,56 +7507,6 @@ MonoBehaviour:
   _prefab: {fileID: 2887813909827775463, guid: ff75f9aba7739554a923fda1647f3276, type: 3}
   _moneyManager: {fileID: 2068198807}
   _playerIndexStartingFrom0: {fileID: 1066144469}
---- !u!1 &1346655858
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1346655860}
-  - component: {fileID: 1346655859}
-  m_Layer: 0
-  m_Name: ScoreManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1346655859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346655858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb6521bc91c2418468a8eae32134112b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playerScoreTexts:
-  - {fileID: 1890720704}
-  - {fileID: 1126272964}
-  - {fileID: 834999958}
-  - {fileID: 256462189}
-  PlayerScore: 
---- !u!4 &1346655860
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1346655858}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.617049, y: -18.23766, z: 17.65067}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1353896770
 GameObject:
   m_ObjectHideFlags: 0
@@ -8325,6 +8275,56 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1139850135}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1512700521
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1512700523}
+  - component: {fileID: 1512700522}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1512700522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512700521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb6521bc91c2418468a8eae32134112b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScores: 00000000000000000000000000000000
+  scoreTexts:
+  - {fileID: 1890720704}
+  - {fileID: 1126272964}
+  - {fileID: 834999958}
+  - {fileID: 256462189}
+--- !u!4 &1512700523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512700521}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1263.2118, y: 66.72162, z: 206.74075}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1555792241
 PrefabInstance:
@@ -10137,7 +10137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1890720703
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10518,8 +10518,9 @@ MonoBehaviour:
   _player1Pointer: {fileID: 1066144469}
   _player1Phone: {fileID: 1634172179}
   MoneyManager: {fileID: 0}
-  _cashAppIcon: {fileID: 2125463657}
+  _shoppingAppIcon: {fileID: 0}
   _sabotageIcon: {fileID: 104631786}
+  _cashAppIcon: {fileID: 2125463657}
   _cheapFurniture:
   - {fileID: 919132149155446097, guid: 8ec684b0f3a1d1847b916f91ef2ba907, type: 3}
   - {fileID: 919132149155446097, guid: ec57deaa418e44043aa2877647d9cc04, type: 3}
@@ -11734,7 +11735,7 @@ SceneRoots:
   - {fileID: 1139850135}
   - {fileID: 763260939}
   - {fileID: 731539981}
-  - {fileID: 1346655860}
+  - {fileID: 1512700523}
   - {fileID: 2068198809}
   - {fileID: 1982056319}
   - {fileID: 31450398}
