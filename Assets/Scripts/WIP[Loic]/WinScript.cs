@@ -1,16 +1,36 @@
 using UnityEngine;
+using TMPro;
 
 public class WinScript : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private TextMeshProUGUI winText; // Assign in Inspector
+
     void Start()
     {
-        
+        ShowWinner();
     }
 
-    // Update is called once per frame
-    void Update()
+    void ShowWinner()
     {
-        
+        if (ScoreManager.Instance == null || winText == null)
+        {
+            Debug.LogError("ScoreManager or winText not set.");
+            return;
+        }
+
+        int[] scores = ScoreManager.Instance.playerScores;
+        int winningPlayerIndex = 0;
+        int highestScore = scores[0];
+
+        for (int i = 1; i < scores.Length; i++)
+        {
+            if (scores[i] > highestScore)
+            {
+                highestScore = scores[i];
+                winningPlayerIndex = i;
+            }
+        }
+
+        winText.text = $"Player {winningPlayerIndex + 1} Wins!";
     }
 }
