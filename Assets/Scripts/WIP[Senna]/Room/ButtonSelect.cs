@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XInput;
 using UnityEngine.UI;
 
 public class ButtonSelect : MonoBehaviour
@@ -50,6 +51,8 @@ public class ButtonSelect : MonoBehaviour
     private int _mediumFurnitureIndex;
     private int _expensiveFurnitureIndex;
 
+
+
     private void Start()
     {
         DisableSabotageApps();
@@ -71,7 +74,7 @@ public class ButtonSelect : MonoBehaviour
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
-            CheckCurrentSelectedButton();
+            //CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
         }

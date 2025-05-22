@@ -5,12 +5,15 @@ public class PlayersInstantiate : MonoBehaviour
 {
     [SerializeField]
     private GameObject _prefab, _moneyManager;
-    public int _playerCount;
+    [HideInInspector] public int _playerCount;
 
     public Material[] _playerMaterials;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _playerCount = Gamepad.all.Count;
+
         for (int plyrcnt = 0; plyrcnt < _playerCount; plyrcnt++)
         {
             GameObject player = Instantiate(_prefab);

@@ -1462,7 +1462,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -81.843506, y: 0, z: 0, w: 0}
+  m_margin: {x: -192.62659, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6070,7 +6070,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -76.65137, y: 0, z: 0, w: 0}
+  m_margin: {x: -195.20044, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8305,8 +8305,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6521bc91c2418468a8eae32134112b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScores: 00000000000000000000000000000000
-  scoreTexts:
+  _playerScores: 00000000000000000000000000000000
+  _scoreTexts:
   - {fileID: 1890720704}
   - {fileID: 1126272964}
   - {fileID: 834999958}
