@@ -16,6 +16,7 @@ public class WinScript : MonoBehaviour
         {
             Debug.LogError("ScoreManager or winText not set.");
             return;
+
         }
 
         int[] scores = ScoreManager._instance._playerScores;
