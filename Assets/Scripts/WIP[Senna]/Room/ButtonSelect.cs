@@ -166,20 +166,18 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
 
-                if (_canMove)
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
                 {
-                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
-                        _canMove = false;
-                    }
-
-                    else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-                        _canMove = false;
-                    }
+                    _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+                    _canMove = false;
                 }
+
+                else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                    _canMove = false;
+                }
+
             }
 
             else if (direction == Vector2.down)
@@ -203,21 +201,19 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
 
-                if (_canMove)
+
+                if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
                 {
-
-                    if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-                        _canMove = false;
-                    }
-
-                    if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
-                    {
-                        _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
-                        _canMove = false;
-                    }
+                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                    _canMove = false;
                 }
+
+                if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
+                {
+                    _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+                    _canMove = false;
+                }
+
             }
 
             else if (direction == Vector2.left)
@@ -241,13 +237,6 @@ public class ButtonSelect : MonoBehaviour
                 if (currentSelected == _targetApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
-                }
-            }
-            else if (direction == Vector2.zero)
-            {
-                if (!_canMove)
-                {
-                    _canMove = true;
                 }
             }
         }
@@ -376,6 +365,10 @@ public class ButtonSelect : MonoBehaviour
 
     public void OnItemButtonClickPlayer1(GameObject item)
     {
+        GiveRandomNumberForCheapFurniture();
+        GiveRandomNumberForMediumFurniture();
+        GiveRandomNumberForExpensiveFurniture();
+
         _player1Pointer.GetComponent<MeshRenderer>().enabled = true;
         _player1Pointer.GetComponent<ItemPlacement>().enabled = true;
         _player1Pointer.GetComponent<PlayerPointer>().CanMove = true;
@@ -394,9 +387,7 @@ public class ButtonSelect : MonoBehaviour
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
         //ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
 
-        GiveRandomNumberForCheapFurniture();
-        GiveRandomNumberForMediumFurniture();
-        GiveRandomNumberForExpensiveFurniture();
+
     }
 
     private void GiveRandomNumberForExpensiveFurniture()
