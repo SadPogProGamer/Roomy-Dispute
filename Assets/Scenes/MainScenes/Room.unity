@@ -2174,7 +2174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6828271443313866854, guid: 59bb3b67da63a184190b643d06d17958, type: 3}
   _moneyManager: {fileID: 2068198807}
-  _playerCount: 2
+  _playerCount: 1
   _playerMaterials:
   - {fileID: 2100000, guid: 831f2b4c808d52149af7b0c20fd2b00d, type: 2}
   - {fileID: 2100000, guid: b3f4a8cfa7206b9489bd659ae412b405, type: 2}
@@ -7540,7 +7540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moneyManager: {fileID: 2068198808}
-  _roundTime: 4
+  _roundTime: 61
   _timerText: {fileID: 1640986031}
 --- !u!114 &1353896772
 MonoBehaviour:
