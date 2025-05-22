@@ -302,14 +302,44 @@ public class ButtonSelect : MonoBehaviour
     public void OnTargetAppButtonClick()
     {
         Debug.Log("Target App Button Clicked");
-        //_sabotageTool.TargetSabotage();
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+
+        pointer.CanMove = true;
+        mesh.enabled = true;
+
+        sabotage.Mode = SabotageTool.SabotageMode.Target;
+        sabotage.aimOrigin = _player1Pointer.transform;
+        sabotage.enabled = true;
+        sabotage.OnComplete += OnSabotageComplete;
+
+        _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
+        _player1Phone.SetActive(false);
     }
+
 
     public void OnBreakAppButtonClick()
     {
         Debug.Log("Break App Button Clicked");
-        //_sabotageTool.BreakSabotage();
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+
+        pointer.CanMove = true;
+        mesh.enabled = true;
+
+        sabotage.Mode = SabotageTool.SabotageMode.Break;
+        sabotage.aimOrigin = _player1Pointer.transform;
+        sabotage.enabled = true;
+        sabotage.OnComplete += OnSabotageComplete;
+
+        _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
+        _player1Phone.SetActive(false);
     }
+
 
 
     public void OnItemButtonClickPlayer1(GameObject item)

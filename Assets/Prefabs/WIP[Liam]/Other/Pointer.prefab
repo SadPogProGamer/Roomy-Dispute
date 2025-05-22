@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7323040997257396752}
   - component: {fileID: 4124564041347443492}
   - component: {fileID: 6540236748116860180}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Pointer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,9 +186,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d4ba1b6b0b3b40a3c5a0b7eba3e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Mode: 0
+  rayDistance: 100
+  highlightColor: {r: 0, g: 1, b: 0, a: 1}
   selectableLayers:
     serializedVersion: 2
     m_Bits: 1025
-  rayDistance: 100
-  highlightColor: {r: 0, g: 1, b: 0, a: 1}
   aimOrigin: {fileID: 0}

@@ -1,39 +1,61 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.InputSystem;
-using System;
-
 
 public class SabotageTool : MonoBehaviour
 {
-    [SerializeField] private LayerMask selectableLayers;
+    public enum SabotageMode { Fire, Target, Break }
+
+
+    [Header("Settings")]
+    public SabotageMode Mode = SabotageMode.Fire;
+
     [SerializeField] private float rayDistance = 100f;
     [SerializeField] private Color highlightColor = Color.green;
-    [SerializeField] public Transform aimOrigin; // Where the ray starts from (e.g., camera or player head)
+    [SerializeField] private LayerMask selectableLayers;
+    public Transform aimOrigin; 
 
     private GameObject _currentTarget;
     private Material[] _originalMaterials;
-    public event Action OnComplete;
 
+    public event Action OnComplete;
 
     private void Update()
     {
         if (aimOrigin == null) return;
 
+        // Match pointer alignment (same as ItemPlacement)
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
 
-        // ✅ Now supports multiple selectable layers
+        // ✅ Filter raycast by layers
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, selectableLayers))
         {
             GameObject candidate = hit.collider.gameObject;
-           
+
+            if (candidate == this.gameObject)
+            {
+                Debug.Log("[Sabotage] Hit self — skipping");
+                return;
+            }
+
             Debug.Log($"[Sabotage] Hit: {candidate.name}");
 
             if (candidate.TryGetComponent(out ItemStats stats))
             {
                 Debug.Log($"[Sabotage] Found ItemStats: HP={stats.HP}, IsWood={stats.IsWood}");
-                if (stats.IsWood)
+
+                bool isValidTarget = Mode switch
+                {
+                    SabotageMode.Fire => stats.IsWood,
+                    SabotageMode.Target => true,
+                    SabotageMode.Break => stats.IsGlass,
+                    _ => false
+                };
+
+
+                if (isValidTarget)
                 {
                     if (_currentTarget != candidate)
                         SelectNewTarget(candidate);
@@ -55,9 +77,15 @@ public class SabotageTool : MonoBehaviour
         }
     }
 
-
-
-
+    public void OnComfirm()
+    {
+        if (_currentTarget != null)
+        {
+            Destroy(_currentTarget);
+            _currentTarget = null;
+            OnComplete?.Invoke();
+        }
+    }
 
     private void SelectNewTarget(GameObject newTarget)
     {
@@ -65,7 +93,6 @@ public class SabotageTool : MonoBehaviour
 
         _currentTarget = newTarget;
 
-        // Highlight by changing color (simple visual snap effect)
         Renderer renderer = _currentTarget.GetComponent<Renderer>();
         if (renderer != null)
         {
@@ -88,17 +115,4 @@ public class SabotageTool : MonoBehaviour
             _originalMaterials = null;
         }
     }
-
-    // Call this from the PlayerInput system
-    public void OnComfirm()
-    {
-        if (_currentTarget != null)
-        {
-            Destroy(_currentTarget);
-            _currentTarget = null;
-            OnComplete?.Invoke();
-        }
-    }
-
-
 }
