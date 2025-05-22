@@ -27,13 +27,7 @@ public class SabotageTool : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, selectableLayers))
         {
             GameObject candidate = hit.collider.gameObject;
-
-            if (candidate == this.gameObject)
-            {
-                Debug.Log("[Sabotage] Hit self — skipping");
-                return;
-            }
-
+           
             Debug.Log($"[Sabotage] Hit: {candidate.name}");
 
             if (candidate.TryGetComponent(out ItemStats stats))
