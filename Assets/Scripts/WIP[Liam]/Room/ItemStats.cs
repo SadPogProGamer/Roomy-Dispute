@@ -15,16 +15,31 @@ public class ItemStats : MonoBehaviour
     {
         if (HP <= 0) Destroy(gameObject);
 
-        if (IsPlaced && Timer < PlacementTime)
+        if (IsPlaced && Timer < PlacementTime && phoneHasNotBeenActivated)
         {
             Timer += Time.deltaTime;
             PlayerPhone.SetActive(true);
+
+            for (int childIndex = 0; childIndex< PlayerPhone.transform.childCount - 1; childIndex++)
+            {
+                if(PlayerPhone.transform.GetChild(childIndex).gameObject.activeSelf)
+                    PlayerPhone.transform.GetChild(childIndex).gameObject.SetActive(false);
+            }
+
+            PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).gameObject.SetActive(true);
             PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().value = Timer;
             PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().maxValue = PlacementTime;
         }
 
         if (Timer >= PlacementTime && phoneHasNotBeenActivated)
         {
+            for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 1; childIndex++)
+            {
+                if (!PlayerPhone.transform.GetChild(childIndex).gameObject.activeSelf)
+                    PlayerPhone.transform.GetChild(childIndex).gameObject.SetActive(true);
+            }
+
+            PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).gameObject.SetActive(false);
             PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
             phoneHasNotBeenActivated = false;
         }
