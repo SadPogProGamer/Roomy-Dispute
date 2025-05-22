@@ -19,7 +19,7 @@ public class ItemStats : MonoBehaviour
 
         if (IsPlaced && !pointsAdded)
         {
-            ScoreManager.Instance.AddPoints(PlayerIndex, Points);
+            ScoreManager._instance.AddPoints(PlayerIndex, Points);
             pointsAdded = true;
         }
 

@@ -12,13 +12,13 @@ public class WinScript : MonoBehaviour
 
     void ShowWinner()
     {
-        if (ScoreManager.Instance == null || winText == null)
+        if (ScoreManager._instance == null || winText == null)
         {
             Debug.LogError("ScoreManager or winText not set.");
             return;
         }
 
-        int[] scores = ScoreManager.Instance.playerScores;
+        int[] scores = ScoreManager._instance._playerScores;
         int winningPlayerIndex = 0;
         int highestScore = scores[0];
 
