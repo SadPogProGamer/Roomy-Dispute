@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemStats : MonoBehaviour
 {
@@ -17,11 +18,13 @@ public class ItemStats : MonoBehaviour
         if (IsPlaced && Timer < PlacementTime)
         {
             Timer += Time.deltaTime;
+            PlayerPhone.SetActive(true);
+            PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().value = Timer;
+            PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().maxValue = PlacementTime;
         }
 
         if (Timer >= PlacementTime && phoneHasNotBeenActivated)
         {
-            PlayerPhone.SetActive(true);
             PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
             phoneHasNotBeenActivated = false;
         }
