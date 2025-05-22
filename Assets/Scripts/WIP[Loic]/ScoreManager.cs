@@ -51,7 +51,7 @@ public class ScoreManager : MonoBehaviour
 
     private void UpdateScoreUI(int playerID)
     {
-        _playerScoreTexts[playerID].text = $"Player {playerID + 1}: ${PlayerScore[playerID]}";
+        _playerScoreTexts[playerID].text = $"Player {playerID + 1}: {PlayerScore[playerID]}";
     }
 
     private void UpdateAllScoreUI()

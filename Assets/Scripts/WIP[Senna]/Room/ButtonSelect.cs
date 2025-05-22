@@ -17,7 +17,7 @@ public class ButtonSelect : MonoBehaviour
 
     [Header("UI Stuff")]
     public GameObject MoneyManager;
-
+    public GameObject ScoreManager;
 
     [Header("App Icons")]
     [SerializeField] private GameObject _cashAppIcon;
@@ -360,6 +360,7 @@ public class ButtonSelect : MonoBehaviour
         _eventSystem.SetSelectedGameObject(_cashAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
+        ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
 
         GiveRandomNumberForCheapFurniture();
         GiveRandomNumberForMediumFurniture();
