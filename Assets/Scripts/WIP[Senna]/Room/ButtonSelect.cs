@@ -17,11 +17,12 @@ public class ButtonSelect : MonoBehaviour
 
     [Header("UI Stuff")]
     public GameObject MoneyManager;
-
+    //public GameObject ScoreManager;
 
     [Header("App Icons")]
-    [SerializeField] private GameObject _cashAppIcon;
+    [SerializeField] private GameObject _shoppingAppIcon;
     [SerializeField] private GameObject _sabotageIcon;
+    [SerializeField] private GameObject _cashAppIcon;
 
     [Header("Furniture Apps")]
     [SerializeField] private GameObject[] _cheapFurniture;
@@ -41,6 +42,10 @@ public class ButtonSelect : MonoBehaviour
     private GameObject _lastSelectedButton;
     private bool _canMove, _didLoop;
 
+    private float _inputCooldown = 0.2f;
+    private float _lastInputTime = 0f;
+
+
     private int _cheapFurnitureIndex;
     private int _mediumFurnitureIndex;
     private int _expensiveFurnitureIndex;
@@ -55,9 +60,9 @@ public class ButtonSelect : MonoBehaviour
         GiveRandomNumberForMediumFurniture();
 
         // Ensure the first selected button is set and valid
-        if (_eventSystem != null && _cashAppIcon != null)
+        if (_eventSystem != null && _shoppingAppIcon != null)
         {
-            _eventSystem.SetSelectedGameObject(_cashAppIcon);
+            _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
         }
     }
 
@@ -66,7 +71,7 @@ public class ButtonSelect : MonoBehaviour
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
-            //CheckCurrentSelectedButton();
+            CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
         }
@@ -75,7 +80,7 @@ public class ButtonSelect : MonoBehaviour
     private void CheckCancelButton()
     {
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
-            _eventSystem.currentSelectedGameObject != _cashAppIcon &&
+            _eventSystem.currentSelectedGameObject != _shoppingAppIcon &&
             _eventSystem.currentSelectedGameObject != _sabotageIcon)
         {
             CancelAction();
@@ -107,27 +112,31 @@ public class ButtonSelect : MonoBehaviour
     {
         Vector2 dpadInput = Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].dpad.ReadValue();
 
-        if (dpadInput.y > 0)  // Moving Up
+        if (Time.time - _lastInputTime < _inputCooldown)
+            return; // Skip this frame if still in cooldown
+
+        if (dpadInput.y > 0)
         {
             MoveSelection(Vector2.up);
+            _lastInputTime = Time.time;
         }
-        else if (dpadInput.y < 0)  // Moving Down
+        else if (dpadInput.y < 0)
         {
             MoveSelection(Vector2.down);
+            _lastInputTime = Time.time;
         }
-        else if (dpadInput.x > 0)  // Moving Right
+        else if (dpadInput.x > 0)
         {
             MoveSelection(Vector2.right);
+            _lastInputTime = Time.time;
         }
-        else if (dpadInput.x < 0)  // Moving Left
+        else if (dpadInput.x < 0)
         {
             MoveSelection(Vector2.left);
-        }
-        else if (dpadInput.x == 0 && dpadInput.y == 0)
-        {
-            MoveSelection(Vector2.zero);
+            _lastInputTime = Time.time;
         }
     }
+
 
     private void MoveSelection(Vector2 direction)
     {
@@ -139,15 +148,20 @@ public class ButtonSelect : MonoBehaviour
             {
                 if (currentSelected == _sabotageIcon)
                 {
-                    _eventSystem.SetSelectedGameObject(_cashAppIcon);
+                    _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
                 }
 
-                if (currentSelected == _targetApp)
+                else if (currentSelected == _cashAppIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
+                }
+
+                else if (currentSelected == _targetApp)
                 {
                     _eventSystem.SetSelectedGameObject(_fireApp);
                 }
 
-                if (currentSelected == _breakApp)
+                else if (currentSelected == _breakApp)
                 {
                     _eventSystem.SetSelectedGameObject(_bombApp);
                 }
@@ -160,7 +174,7 @@ public class ButtonSelect : MonoBehaviour
                         _canMove = false;
                     }
 
-                    if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
+                    else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
                     {
                         _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
                         _canMove = false;
@@ -170,21 +184,28 @@ public class ButtonSelect : MonoBehaviour
 
             else if (direction == Vector2.down)
             {
-                if (currentSelected == _cashAppIcon)
+                if (currentSelected == _shoppingAppIcon)
                 {
                     _eventSystem.SetSelectedGameObject(_sabotageIcon);
                 }
-                if (currentSelected == _fireApp)
+
+                else if (currentSelected == _sabotageIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_cashAppIcon);
+                }
+
+                else if (currentSelected == _fireApp)
                 {
                     _eventSystem.SetSelectedGameObject(_targetApp);
                 }
-                if (currentSelected == _bombApp)
+                else if (currentSelected == _bombApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
                 }
 
                 if (_canMove)
                 {
+
                     if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
                     {
                         _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
@@ -197,7 +218,6 @@ public class ButtonSelect : MonoBehaviour
                         _canMove = false;
                     }
                 }
-                
             }
 
             else if (direction == Vector2.left)
@@ -225,18 +245,21 @@ public class ButtonSelect : MonoBehaviour
             }
             else if (direction == Vector2.zero)
             {
-                if (!_canMove) _canMove = true;
+                if (!_canMove)
+                {
+                    _canMove = true;
+                }
             }
         }
     }
 
-    public void OnCashAppButtonClick()
+    public void OnShoppingAppButtonClick()
     {
-        Debug.Log("Cash App Button Clicked");
+        Debug.Log("Shopping App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
         _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
-        _lastSelectedButton = _cashAppIcon;
+        _lastSelectedButton = _shoppingAppIcon;
     }
 
     public void OnSabotageButtonClick()
@@ -246,6 +269,20 @@ public class ButtonSelect : MonoBehaviour
         DisableBigApps();
         _eventSystem.SetSelectedGameObject(_fireApp);
         _lastSelectedButton = _sabotageIcon;
+    }
+
+    public void OnCashAppButtonClick()
+    {
+        Debug.Log("Cash Button Clicked");
+        EnableCashApps();
+        DisableBigApps();
+        _eventSystem.SetSelectedGameObject(_cashAppIcon);
+        _lastSelectedButton = _cashAppIcon;
+    }
+
+    private void EnableCashApps()
+    {
+
     }
 
     public void OnFireAppButtonClick()
@@ -289,9 +326,6 @@ public class ButtonSelect : MonoBehaviour
         _player1Phone.SetActive(true);
         _eventSystem.SetSelectedGameObject(_sabotageIcon);
     }
-
-
-
 
     public void OnBombAppButtonClick()
     {
@@ -340,8 +374,6 @@ public class ButtonSelect : MonoBehaviour
         _player1Phone.SetActive(false);
     }
 
-
-
     public void OnItemButtonClickPlayer1(GameObject item)
     {
         _player1Pointer.GetComponent<MeshRenderer>().enabled = true;
@@ -357,9 +389,10 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
         DisableFurnitureApps();
         EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_cashAppIcon);
+        _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
+        //ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
 
         GiveRandomNumberForCheapFurniture();
         GiveRandomNumberForMediumFurniture();
@@ -422,14 +455,16 @@ public class ButtonSelect : MonoBehaviour
 
     private void DisableBigApps()
     {
-        _cashAppIcon.SetActive(false);
+        _shoppingAppIcon.SetActive(false);
         _sabotageIcon.SetActive(false);
+        _cashAppIcon.SetActive(false);
     }
 
     private void EnableBigApps()
     {
-        _cashAppIcon.SetActive(true);
+        _shoppingAppIcon.SetActive(true);
         _sabotageIcon.SetActive(true);
+        _cashAppIcon.SetActive(true);
     }
 
     private void SubmitCurrent()
@@ -438,7 +473,5 @@ public class ButtonSelect : MonoBehaviour
         {
             _eventSystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
         }
-
     }
-
 }
