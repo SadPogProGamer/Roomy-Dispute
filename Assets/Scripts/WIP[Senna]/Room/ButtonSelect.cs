@@ -36,7 +36,7 @@ public class ButtonSelect : MonoBehaviour
 
     [Header("Event Timer")]
     [SerializeField] private EventSystem _eventSystem;
-    [SerializeField] private SabotageTool _sabotageTool;
+    [SerializeField] private SabotageTool _SabotageTool;
 
     private GameObject _lastSelectedButton;
     private bool _canMove, _didLoop;
@@ -66,7 +66,7 @@ public class ButtonSelect : MonoBehaviour
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
-            CheckCurrentSelectedButton();
+            //CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
         }
@@ -251,25 +251,64 @@ public class ButtonSelect : MonoBehaviour
     public void OnFireAppButtonClick()
     {
         Debug.Log("Fire App Button Clicked");
-        _sabotageTool.FireSabotage();
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+
+        pointer.CanMove = true;
+        mesh.enabled = true;
+
+        // Assign pointer's transform as the aim origin
+        sabotage.aimOrigin = _player1Pointer.transform;
+        sabotage.enabled = true;
+        sabotage.OnComplete += OnSabotageComplete;
+
+        _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
+
+        _player1Phone.SetActive(false);
     }
+
+    private void OnSabotageComplete()
+    {
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+        var placement = _player1Pointer.GetComponent<ItemPlacement>();
+
+        pointer.CanMove = false;
+        mesh.enabled = false;
+
+        sabotage.enabled = false;
+        sabotage.OnComplete -= OnSabotageComplete;
+
+        // SAFELY clean up any leftover reference from sabotage
+        placement.Item = null;
+        placement.enabled = false;
+
+        _player1Phone.SetActive(true);
+        _eventSystem.SetSelectedGameObject(_sabotageIcon);
+    }
+
+
+
 
     public void OnBombAppButtonClick()
     {
         Debug.Log("Bomb App Button Clicked");
-        _sabotageTool.BombSabotage();
+        //_sabotageTool.BombSabotage();
     }
 
     public void OnTargetAppButtonClick()
     {
         Debug.Log("Target App Button Clicked");
-        _sabotageTool.TargetSabotage();
+        //_sabotageTool.TargetSabotage();
     }
 
     public void OnBreakAppButtonClick()
     {
         Debug.Log("Break App Button Clicked");
-        _sabotageTool.BreakSabotage();
+        //_sabotageTool.BreakSabotage();
     }
 
 

@@ -1,57 +1,110 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using System;
+
 
 public class SabotageTool : MonoBehaviour
 {
-    public void FireSabotage()
+    [SerializeField] private LayerMask selectableLayers;
+    [SerializeField] private float rayDistance = 100f;
+    [SerializeField] private Color highlightColor = Color.green;
+    [SerializeField] public Transform aimOrigin; // Where the ray starts from (e.g., camera or player head)
+
+    private GameObject _currentTarget;
+    private Material[] _originalMaterials;
+    public event Action OnComplete;
+
+
+    private void Update()
     {
-        foreach (var item in PlacedItemManager.Instance.PlacedItems)
+        if (aimOrigin == null) return;
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        Ray ray = Camera.main.ScreenPointToRay(screenPos);
+        Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
+
+        // ✅ Now supports multiple selectable layers
+        if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, selectableLayers))
         {
-            if (item != null)
+            GameObject candidate = hit.collider.gameObject;
+
+            if (candidate == this.gameObject)
             {
-                // 🔥 Example: turn red or mark as burning
-                item.GetComponent<Renderer>().material.color = Color.red;
-                Debug.Log("🔥 Fire sabotage hit: " + item.name);
+                Debug.Log("[Sabotage] Hit self — skipping");
+                return;
             }
+
+            Debug.Log($"[Sabotage] Hit: {candidate.name}");
+
+            if (candidate.TryGetComponent(out ItemStats stats))
+            {
+                Debug.Log($"[Sabotage] Found ItemStats: HP={stats.HP}, IsWood={stats.IsWood}");
+                if (stats.IsWood)
+                {
+                    if (_currentTarget != candidate)
+                        SelectNewTarget(candidate);
+                }
+                else
+                {
+                    ClearCurrentTarget();
+                }
+            }
+            else
+            {
+                Debug.Log("[Sabotage] No ItemStats component on target");
+                ClearCurrentTarget();
+            }
+        }
+        else
+        {
+            ClearCurrentTarget();
         }
     }
 
-    public void BombSabotage()
-    {
-        foreach (var item in new System.Collections.Generic.List<GameObject>(PlacedItemManager.Instance.PlacedItems))
-        {
-            if (item != null)
-            {
-                Debug.Log("💣 Bomb destroyed: " + item.name);
-                Destroy(item);
-            }
-        }
-        PlacedItemManager.Instance.PlacedItems.Clear();
-    }
 
-    public void TargetSabotage()
+
+
+
+    private void SelectNewTarget(GameObject newTarget)
     {
-        // Example: only destroy tagged target items
-        foreach (var item in new System.Collections.Generic.List<GameObject>(PlacedItemManager.Instance.PlacedItems))
+        ClearCurrentTarget();
+
+        _currentTarget = newTarget;
+
+        // Highlight by changing color (simple visual snap effect)
+        Renderer renderer = _currentTarget.GetComponent<Renderer>();
+        if (renderer != null)
         {
-            if (item != null && item.CompareTag("Item/Target"))
-            {
-                Debug.Log("🎯 Target destroyed: " + item.name);
-                Destroy(item);
-                PlacedItemManager.Instance.Remove(item);
-            }
+            _originalMaterials = renderer.materials;
+            Material highlightMat = new Material(renderer.material);
+            highlightMat.color = highlightColor;
+            renderer.material = highlightMat;
         }
     }
 
-    public void BreakSabotage()
+    private void ClearCurrentTarget()
     {
-        // Example: disable colliders to simulate break
-        foreach (var item in PlacedItemManager.Instance.PlacedItems)
+        if (_currentTarget != null)
         {
-            if (item != null && item.TryGetComponent<Collider>(out var col))
-            {
-                col.enabled = false;
-                Debug.Log("🔨 Break sabotage disabled: " + item.name);
-            }
+            Renderer renderer = _currentTarget.GetComponent<Renderer>();
+            if (renderer != null && _originalMaterials != null)
+                renderer.materials = _originalMaterials;
+
+            _currentTarget = null;
+            _originalMaterials = null;
         }
     }
+
+    // Call this from the PlayerInput system
+    public void OnComfirm()
+    {
+        if (_currentTarget != null)
+        {
+            Destroy(_currentTarget);
+            _currentTarget = null;
+            OnComplete?.Invoke();
+        }
+    }
+
+
 }

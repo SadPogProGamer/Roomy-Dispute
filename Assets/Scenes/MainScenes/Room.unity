@@ -7881,6 +7881,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6540236748116860180, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: gridLayers.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540236748116860180, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: selectableLayers.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6674366451444218286, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: Item
       value: 
@@ -9932,7 +9940,7 @@ MonoBehaviour:
   _targetApp: {fileID: 1993423815}
   _breakApp: {fileID: 73839275}
   _eventSystem: {fileID: 731539980}
-  _sabotageTool: {fileID: 0}
+  _SabotageTool: {fileID: 0}
 --- !u!4 &1982056319
 Transform:
   m_ObjectHideFlags: 0

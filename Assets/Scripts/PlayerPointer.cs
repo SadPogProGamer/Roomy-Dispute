@@ -63,4 +63,13 @@ public class PlayerPointer : MonoBehaviour
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
     }
+    public void OnComfirm()
+    {
+        if (TryGetComponent(out SabotageTool sabotage) && sabotage.enabled)
+        {
+            sabotage.OnComfirm(); // Now calls the no-parameter version
+        }
+    }
+
+
 }
