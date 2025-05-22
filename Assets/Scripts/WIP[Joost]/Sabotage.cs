@@ -1,11 +1,14 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Progress;
 
 public class SabotageTool : MonoBehaviour
 {
     public enum SabotageMode { Fire, Target, Break }
 
+    [SerializeField]
+    private GameObject _playerPhone;
 
     [Header("Settings")]
     public SabotageMode Mode = SabotageMode.Fire;
@@ -113,6 +116,16 @@ public class SabotageTool : MonoBehaviour
 
             _currentTarget = null;
             _originalMaterials = null;
+        }
+    }
+
+    public void OnReturn()
+    {
+        if (GetComponent<SabotageTool>().enabled)
+        {
+            _playerPhone.SetActive(true);
+            _playerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
+            GetComponent<ItemPlacement>().SetPointerBackToOrigin();
         }
     }
 }

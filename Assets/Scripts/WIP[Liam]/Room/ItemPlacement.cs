@@ -311,7 +311,7 @@ public class ItemPlacement : MonoBehaviour
     }
 
 
-    private void SetPointerBackToOrigin()
+    public void SetPointerBackToOrigin()
     {
         transform.position = _originPoint;
         GetComponent<MeshRenderer>().enabled = false;

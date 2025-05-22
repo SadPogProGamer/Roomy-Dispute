@@ -2636,7 +2636,7 @@ MonoBehaviour:
   _targetApp: {fileID: 1196725693285624970}
   _breakApp: {fileID: 5625781536058817727}
   _eventSystem: {fileID: 2665471103639865525}
-  _sabotageTool: {fileID: 0}
+  _SabotageTool: {fileID: 0}
 --- !u!114 &4000223581871449983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8546,6 +8546,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6540236748116860180, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: _playerPhone
+      value: 
+      objectReference: {fileID: 211772572600293283}
     - target: {fileID: 6674366451444218286, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: _item
       value: 
