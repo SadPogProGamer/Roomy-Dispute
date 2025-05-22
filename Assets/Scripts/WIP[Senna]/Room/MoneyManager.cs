@@ -6,6 +6,8 @@ public class MoneyManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI[] _playerTexts;
 
+    private PlayersInstantiate _playerInstantiate;
+
     public List<int> PlayerMoney = new List<int>();
 
 
@@ -13,10 +15,18 @@ public class MoneyManager : MonoBehaviour
     {
         for (int i = 0; i < _playerTexts.Length; i++)
         {
-            PlayerMoney.Add(400); 
+            PlayerMoney.Add(400);
+            _playerTexts[i].color = Color.clear;
         }
 
+        _playerInstantiate = Object.FindFirstObjectByType<PlayersInstantiate>();
+
         UpdateAllMoneyUI();
+
+        for (int i = 0 ; i < _playerInstantiate._playerCount ; i++)
+        {
+            _playerTexts[i].color = _playerInstantiate._playerMaterials[i].color;
+        }
     }
 
 
