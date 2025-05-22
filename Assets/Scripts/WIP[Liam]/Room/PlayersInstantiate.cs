@@ -5,10 +5,9 @@ public class PlayersInstantiate : MonoBehaviour
 {
     [SerializeField]
     private GameObject _prefab, _moneyManager;
-    [SerializeField]
-    private int _playerCount;
+    public int _playerCount;
 
-    [SerializeField] private Material[] _playerMaterials;
+    public Material[] _playerMaterials;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
