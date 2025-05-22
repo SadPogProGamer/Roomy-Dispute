@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 3
-  Cost: 60
+  Cost: 260
   Points: 35000
   IsGlass: 1
   IsWood: 1
