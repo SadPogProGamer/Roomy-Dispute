@@ -1,12 +1,15 @@
+using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MoneyApp : MonoBehaviour
 {
     private int _buttonIndex, _previousButtonIndex;
     [SerializeField]
     private PlayerPointer _playerPointer;
-    private bool _canMove;
+    private bool _canMove, _isCountingDown;
+    private float _revertingToWhiteTimer;
     // Update is called once per frame
 
     private void Start()
@@ -25,7 +28,7 @@ public class MoneyApp : MonoBehaviour
 
         if (_buttonIndex != _previousButtonIndex)
         {
-            for (int childIndex = 0; childIndex < transform.childCount; childIndex++)
+            for (int childIndex = 0; childIndex < transform.childCount-3; childIndex++)
             {
                 if(childIndex == _buttonIndex)
                 {
@@ -58,6 +61,17 @@ public class MoneyApp : MonoBehaviour
                 CheckCorrectButton(3);
             }
         }
+
+        if (_revertingToWhiteTimer <= 0 && _isCountingDown)
+        {
+            MakeTheArrowsTheChosenColor(Color.white);
+            _isCountingDown = false;
+        }
+
+        if (_isCountingDown)
+        {
+            _revertingToWhiteTimer -= Time.deltaTime;
+        }
     }
 
     private void CheckCorrectButton(int buttonIndex)
@@ -67,10 +81,26 @@ public class MoneyApp : MonoBehaviour
             transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(_playerPointer.PlayerIndex, 10);
             _previousButtonIndex = _buttonIndex;
             _buttonIndex = Random.Range(0, 4);
+            MakeTheArrowsTheChosenColor(Color.green);
+            _isCountingDown = true;
+            _revertingToWhiteTimer = .2f;
         }
         else
+        {
+            MakeTheArrowsTheChosenColor(Color.red);
+            _isCountingDown = true;
+            _revertingToWhiteTimer = .2f;
             transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 50);
-        
+        }
+
         _canMove = false;
+    }
+
+    private void MakeTheArrowsTheChosenColor(Color clr)
+    {
+        for (int childIndex = 0; childIndex<transform.childCount-3; childIndex++)
+        {
+            transform.GetChild(childIndex).GetComponent<Image>().color = clr;
+        }
     }
 }
