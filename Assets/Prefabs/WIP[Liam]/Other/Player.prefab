@@ -920,7 +920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6034186188813225435
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2886,6 +2886,7 @@ MonoBehaviour:
   _targetApp: {fileID: 1196725693285624970}
   _breakApp: {fileID: 5625781536058817727}
   _sabotageCountText: {fileID: 3344398280255405166}
+  _sabotageCount: 3
   _eventSystem: {fileID: 2665471103639865525}
   _SabotageTool: {fileID: 0}
 --- !u!114 &4000223581871449983
