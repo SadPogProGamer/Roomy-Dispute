@@ -490,7 +490,8 @@ public class ButtonSelect : MonoBehaviour
     {
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonSouth.wasPressedThisFrame)
         {
-            _eventSystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
+            if (_eventSystem.currentSelectedGameObject.GetComponent<Button>().interactable)
+                _eventSystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
         }
     }
 }

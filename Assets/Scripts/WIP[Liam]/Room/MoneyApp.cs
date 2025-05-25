@@ -69,7 +69,7 @@ public class MoneyApp : MonoBehaviour
             _buttonIndex = Random.Range(0, 4);
         }
         else
-            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 5);
+            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 50);
         
         _canMove = false;
     }

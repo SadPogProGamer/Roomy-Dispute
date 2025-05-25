@@ -49,7 +49,7 @@ public class Timer : MonoBehaviour
     {
         int minutes = Mathf.FloorToInt(_roundTime / 60);
         int seconds = Mathf.FloorToInt(_roundTime % 60);
-        _timerText.text = $"Round {_round}/9  {minutes:00}:{seconds:00}";
+        _timerText.text = $"Paycheck {_round}/9  {minutes:00}:{seconds:00}";
     }
 
     private void AddMoneyForRound(int round)
