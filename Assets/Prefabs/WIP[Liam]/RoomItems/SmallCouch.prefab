@@ -121,7 +121,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.48593372, y: 0.6729572, z: 0.5182163}
+  m_Size: {x: 0.43, y: 0.6729572, z: 0.38}
   m_Center: {x: -0.00047340244, y: 0.33647847, z: 0.020595461}
 --- !u!114 &-4605343636877829653
 MonoBehaviour:
@@ -143,3 +143,5 @@ MonoBehaviour:
   IsPlaced: 0
   PlacementTime: 3
   Timer: 0
+  PlayerPhone: {fileID: 0}
+  PlayerIndex: 0

@@ -207,11 +207,11 @@ public class ItemPlacement : MonoBehaviour
     {
         if (Item.tag.Contains("Placable") && _hit.transform.CompareTag(objectTag))
         {
-            if (_hit.transform.CompareTag("Item/Big"))
+            if (_hit.transform.CompareTag("Item/Small"))
             {
-                if (_hit.transform.childCount == 2)
+                if (_hit.transform.childCount == 3)
                     _usedSpaces = 1;
-                if (_hit.transform.childCount == 1)
+                if (_hit.transform.childCount == 2)
                     _usedSpaces = 0;
             }
             if (_hit.transform.CompareTag("Item/Big"))
@@ -248,10 +248,16 @@ public class ItemPlacement : MonoBehaviour
             GameObject item;
             if (_hit.transform.CompareTag("Item/Small"))
             {
-                if ((Item.transform.CompareTag("Item/Placable/Small") || Item.transform.CompareTag("Item/Placable/Medium")) && _hit.transform.childCount < 2)
+                if (Item.transform.CompareTag("Item/Placable/Small") && _hit.transform.childCount < 4)
                 {
                     item = InstantiatePlacable();
-                   
+
+                }
+                if (Item.transform.CompareTag("Item/Placable/Medium") && _hit.transform.childCount < 3)
+                {
+                    item = InstantiatePlacable();
+                    Instantiate(_empty, _hit.transform).GetComponent<PlacableEmpties>().PlacableItem = item;
+
                 }
             }
             if (_hit.transform.CompareTag("Item/Big"))
