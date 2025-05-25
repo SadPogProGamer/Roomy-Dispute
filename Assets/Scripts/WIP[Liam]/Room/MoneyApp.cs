@@ -4,7 +4,7 @@ public class MoneyApp : MonoBehaviour
 {
     private int _buttonIndex, _previousButtonIndex;
     [SerializeField]
-    private GameObject _buttonsParent;
+    private GameObject _buttonsParent, _playerPointer;
     // Update is called once per frame
 
     private void Start()
@@ -16,7 +16,7 @@ public class MoneyApp : MonoBehaviour
     {
         while (_buttonIndex == _previousButtonIndex)
         {
-
+            _buttonIndex = Random.Range(0, 3);
         }
 
         if (_buttonIndex != _previousButtonIndex)
@@ -35,47 +35,30 @@ public class MoneyApp : MonoBehaviour
 
     public void OnUp()
     {
-        if (_buttonIndex == 0)
-        {
-
-        }
+        CheckCorrectButton(0);
     }
     public void OnDown()
     {
-        if (_buttonIndex == 1)
-        {
-
-        }
+        CheckCorrectButton(1);
     }
     public void OnLeft()
     {
-        if (_buttonIndex == 2)
-        {
-
-        }
+        CheckCorrectButton(2);
     }
     public void OnRight()
     {
-        if (_buttonIndex == 3)
-        {
-
-        }
+        CheckCorrectButton(3);
     }
-    //public void OnA()
-    //{
 
-    //}
-    //public void OnX()
-    //{
-
-    //}
-    //public void OnY()
-    //{
-
-    //}
-    //public void OnB()
-    //{
-
-    //}
-
+    private void CheckCorrectButton(int buttonIndex)
+    {
+        if (_buttonIndex == buttonIndex)
+        {
+            GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(_playerPointer.GetComponent<PlayerPointer>().PlayerIndex, 10);
+            _previousButtonIndex = _buttonIndex;
+            _buttonIndex = Random.Range(0, 3);
+        }
+        else
+            GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.GetComponent<PlayerPointer>().PlayerIndex, 5);
+    }
 }
