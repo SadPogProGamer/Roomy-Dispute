@@ -9,9 +9,9 @@ public class Timer : MonoBehaviour
     [SerializeField] 
     private MoneyManager moneyManager; // Assign this in Inspector
 
-    private float _startRoundTime = 61f;
+    private float _startRoundTime = 31f;
     [SerializeField]
-    private float _roundTime = 61f;
+    private float _roundTime = 31f;
 
     private int _round = 9;
 
@@ -25,13 +25,13 @@ public class Timer : MonoBehaviour
 
         if (_roundTime <= 0.0f && _round < 4)
         {
-            _roundTime = _startRoundTime - 10f * _round;
+            _roundTime = _startRoundTime;
             _round++;
             AddMoneyForRound(_round);
         }
         else if (_roundTime <= 0.0f && _round >= 4 && _round != 9)
         {
-            _roundTime = _startRoundTime - 30f - 5f * (_round - 3);
+            _roundTime = _startRoundTime - 5f * (_round - 3);
             _round++;
             AddMoneyForRound(_round);
 
