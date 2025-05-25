@@ -26,6 +26,10 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject _sabotageIcon;
     [SerializeField] private GameObject _cashAppIcon;
 
+    [Header("Money App")]
+    [SerializeField] private GameObject _moneyApp;
+
+
     [Header("Furniture Apps")]
     [SerializeField] private GameObject[] _cheapFurniture;
     [SerializeField] private GameObject[] _mediumFurniture;
@@ -105,6 +109,7 @@ public class ButtonSelect : MonoBehaviour
         _eventSystem.SetSelectedGameObject(_lastSelectedButton);
         DisableSabotageApps();
         DisableFurnitureApps();
+        DisableCashApp();
     }
 
     private void CheckCurrentSelectedButton()
@@ -280,15 +285,19 @@ public class ButtonSelect : MonoBehaviour
     public void OnCashAppButtonClick()
     {
         Debug.Log("Cash Button Clicked");
-        EnableCashApps();
+        EnableCashApp();
         DisableBigApps();
-        _eventSystem.SetSelectedGameObject(_cashAppIcon);
+        _eventSystem.SetSelectedGameObject(_moneyApp.transform.GetChild(_moneyApp.transform.childCount - 1).gameObject);
         _lastSelectedButton = _cashAppIcon;
     }
 
-    private void EnableCashApps()
+    private void EnableCashApp()
     {
-
+        _moneyApp.SetActive(true);
+    }
+    private void DisableCashApp()
+    {
+        _moneyApp.SetActive(false);
     }
 
     public void OnFireAppButtonClick()
@@ -411,17 +420,17 @@ public class ButtonSelect : MonoBehaviour
 
     private void GiveRandomNumberForExpensiveFurniture()
     {
-        _expensiveFurnitureIndex = (int)UnityEngine.Random.Range(0f, _expensiveFurniture.Length - 1);
+        _expensiveFurnitureIndex = UnityEngine.Random.Range(0, _expensiveFurniture.Length);
     }
 
     private void GiveRandomNumberForMediumFurniture()
     {
-        _mediumFurnitureIndex = (int)UnityEngine.Random.Range(0f, _mediumFurniture.Length - 1);
+        _mediumFurnitureIndex = UnityEngine.Random.Range(0, _mediumFurniture.Length);
     }
 
     private void GiveRandomNumberForCheapFurniture()
     {
-        _cheapFurnitureIndex = (int)UnityEngine.Random.Range(0f, _cheapFurniture.Length - 1);
+        _cheapFurnitureIndex = UnityEngine.Random.Range(0, _cheapFurniture.Length);
     }
 
     private void DisableSabotageApps()

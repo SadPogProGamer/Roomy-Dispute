@@ -41,7 +41,7 @@ public class ItemStats : MonoBehaviour
 
         if (Timer >= PlacementTime && phoneHasNotBeenActivated)
         {
-            for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 1; childIndex++)
+            for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 2; childIndex++)
             {
                 if (!PlayerPhone.transform.GetChild(childIndex).gameObject.activeSelf)
                     PlayerPhone.transform.GetChild(childIndex).gameObject.SetActive(true);

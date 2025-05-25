@@ -1,64 +1,76 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MoneyApp : MonoBehaviour
 {
     private int _buttonIndex, _previousButtonIndex;
     [SerializeField]
-    private GameObject _buttonsParent, _playerPointer;
+    private PlayerPointer _playerPointer;
+    private bool _canMove;
     // Update is called once per frame
 
     private void Start()
     {
-        _buttonIndex = Random.Range(0, 3);
+        _buttonIndex = Random.Range(0, 4);
         _previousButtonIndex = -1;//-1 so that it doesnt do the while loop at the start
     }
     void Update()
     {
         while (_buttonIndex == _previousButtonIndex)
         {
-            _buttonIndex = Random.Range(0, 3);
+            _buttonIndex = Random.Range(0, 4);
         }
+        
+
 
         if (_buttonIndex != _previousButtonIndex)
         {
-            for (int childIndex = 0; childIndex < _buttonsParent.transform.childCount; childIndex++)
+            for (int childIndex = 0; childIndex < transform.childCount; childIndex++)
             {
                 if(childIndex == _buttonIndex)
                 {
-                    _buttonsParent.transform.GetChild(childIndex).gameObject.SetActive(true);
+                    transform.GetChild(childIndex).gameObject.SetActive(true);
                 }
-                else { _buttonsParent.transform.GetChild(childIndex).gameObject.SetActive(false); }
+                else { transform.GetChild(childIndex).gameObject.SetActive(false); }
             }
         }
-    }
+        
+        Vector2 dpadInput = Gamepad.all[_playerPointer.PlayerIndex].dpad.ReadValue();
+        
+        if (dpadInput == Vector2.zero) _canMove = true;
 
-
-    public void OnUp()
-    {
-        CheckCorrectButton(0);
-    }
-    public void OnDown()
-    {
-        CheckCorrectButton(1);
-    }
-    public void OnLeft()
-    {
-        CheckCorrectButton(2);
-    }
-    public void OnRight()
-    {
-        CheckCorrectButton(3);
+        if (_canMove)
+        {
+            if (dpadInput.y > 0)
+            {
+                CheckCorrectButton(0);
+            }
+            else if (dpadInput.y < 0)
+            {
+                CheckCorrectButton(1);
+            }
+            else if (dpadInput.x < 0)
+            {
+                CheckCorrectButton(2);
+            }
+            else if (dpadInput.x > 0)
+            {
+                CheckCorrectButton(3);
+            }
+        }
     }
 
     private void CheckCorrectButton(int buttonIndex)
     {
         if (_buttonIndex == buttonIndex)
         {
-            GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(_playerPointer.GetComponent<PlayerPointer>().PlayerIndex, 10);
+            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(_playerPointer.PlayerIndex, 10);
             _previousButtonIndex = _buttonIndex;
-            _buttonIndex = Random.Range(0, 3);
+            _buttonIndex = Random.Range(0, 4);
         }
         else
-            GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.GetComponent<PlayerPointer>().PlayerIndex, 5);
+            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 5);
+        
+        _canMove = false;
     }
 }
