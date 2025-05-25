@@ -13,7 +13,7 @@ public class Timer : MonoBehaviour
     [SerializeField]
     private float _roundTime = 31f;
 
-    private int _round = 9;
+    private int _round = 1;
 
 
     [SerializeField]
