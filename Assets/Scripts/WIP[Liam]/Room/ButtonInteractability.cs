@@ -10,7 +10,12 @@ public class ButtonInteractability : MonoBehaviour
     private GameObject _prefab, _moneyManager, _playerIndexStartingFrom0;
     private bool _placableHasEnoughMoney = true;
     private bool _placableHasEnoughSpace = false;
+    private Color _originalColor;
 
+    private void Start()
+    {
+        _originalColor = GetComponent<Image>().color;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -41,11 +46,13 @@ public class ButtonInteractability : MonoBehaviour
             {
                 GetComponent<Button>().interactable = true;
                 _placableHasEnoughMoney = true;
+                GetComponent<Image>().color = _originalColor;
             }
             else
             {
                 GetComponent<Button>().interactable = false;
                 _placableHasEnoughMoney = false;
+                GetComponent<Image>().color = Color.white;
             }
         }
     }
@@ -60,11 +67,13 @@ public class ButtonInteractability : MonoBehaviour
         {
             GetComponent<Button>().interactable = true;
             _placableHasEnoughSpace = true;
+            GetComponent<Image>().color = _originalColor;
         }
         else
         {
             GetComponent<Button>().interactable = false;
             _placableHasEnoughSpace = false;
+            GetComponent<Image>().color = Color.white;
         }
     }
 }
