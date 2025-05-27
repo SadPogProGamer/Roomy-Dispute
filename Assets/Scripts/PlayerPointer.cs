@@ -1,4 +1,5 @@
 using System.Drawing;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
@@ -62,6 +63,16 @@ public class PlayerPointer : MonoBehaviour
             screenPosition.x = 0;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
+    }
+
+    private void StayOnFloor()
+    {
+
+    }
+
+    private void StayOnWalls()
+    {
+
     }
     public void OnComfirm()
     {
