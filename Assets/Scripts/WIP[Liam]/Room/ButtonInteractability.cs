@@ -8,27 +8,28 @@ public class ButtonInteractability : MonoBehaviour
 {
     [SerializeField]
     private GameObject _prefab, _moneyManager, _playerIndexStartingFrom0;
-    private bool _isPlacable, _placableIsInteractable;
+    private bool _placableHasEnoughMoney;
 
     // Update is called once per frame
     void Update()
     {
-        if(!_isPlacable || (_isPlacable && _placableIsInteractable))
+
+        if (_moneyManager.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().PlayerMoney[_playerIndexStartingFrom0.GetComponent<PlayerPointer>().PlayerIndex] >= _prefab.GetComponent<ItemStats>().Cost)
         {
-            if (_moneyManager.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().PlayerMoney[_playerIndexStartingFrom0.GetComponent<PlayerPointer>().PlayerIndex] >= _prefab.GetComponent<ItemStats>().Cost)
-                GetComponent<Button>().interactable = true;
-            else
-                GetComponent<Button>().interactable = false;
+            GetComponent<Button>().interactable = true;
+            _placableHasEnoughMoney = true;
+        }
+        else
+        {
+            GetComponent<Button>().interactable = false;
+            _placableHasEnoughMoney = false;
         }
 
-
-        if (_prefab.tag.Contains("Placable"))
+        if (_prefab.tag.Contains("Placable") && _placableHasEnoughMoney)
         {
             List<GameObject> listOfTables = GameObject.FindGameObjectsWithTag("Item/Big").Where(table => table.transform.childCount>0).ToList();
             List<GameObject> listOfTvTables = GameObject.FindGameObjectsWithTag("Item/Long").Where(table => table.transform.childCount > 0).ToList();
             List<GameObject> listOfDrawers = GameObject.FindGameObjectsWithTag("Item/Small").Where(table => table.transform.childCount > 0).ToList();
-
-            _isPlacable = true;
 
                 if (_prefab.tag.Contains("Big"))
                 {
@@ -54,12 +55,12 @@ public class ButtonInteractability : MonoBehaviour
         if (drawersAvailable.Count != 0 || tvTablesAvailable.Count != 0 || tablesAvailable.Count != 0)
         {
             GetComponent<Button>().interactable = true;
-            _placableIsInteractable = true;
+            _placableHasEnoughMoney = true;
         }
         else
         {
             GetComponent<Button>().interactable = false;
-            _placableIsInteractable = false;
+            _placableHasEnoughMoney = false;
         }
     }
 }

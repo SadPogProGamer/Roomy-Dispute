@@ -10771,6 +10771,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4124564041347443492, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: _speed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4862819181733791372, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: m_Name
       value: Pointer
