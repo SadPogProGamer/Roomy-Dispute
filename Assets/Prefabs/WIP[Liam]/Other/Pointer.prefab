@@ -126,9 +126,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _originPoint: {x: 0, y: 1.3, z: 0.6}
+  _originPointWall: {x: 0, y: 1.362, z: 0.52}
   _empty: {fileID: 7848992286272240212, guid: 68319d2ba70c3b0459a7f8f84619a9c7, type: 3}
   Item: {fileID: 0}
   _itemDistanceFromCamera: 1.2
+  NewPrefabIsInstantiated: 0
 --- !u!114 &7323040997257396752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f4d4ba1b6b0b3b40a3c5a0b7eba3e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerPhone: {fileID: 0}
   Mode: 0
   rayDistance: 100
   highlightColor: {r: 0, g: 1, b: 0, a: 1}

@@ -1,11 +1,14 @@
 ﻿//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.InputSystem;
 //using static UnityEditor.Progress;
 
 public class ItemPlacement : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 _originPoint;
+    private Vector3 _originPoint, _originPointFloor, _originPointWall;
+    private Vector3 _currentPositionOnRayCast;
+    private Vector2 _currentJoyStickDirectionOnRayCast;
     [SerializeField]
     private GameObject _empty;
     public GameObject Item;
@@ -15,7 +18,7 @@ public class ItemPlacement : MonoBehaviour
     private float _itemDistanceFromCamera;
     private int _itemRotation, _layerMask, _usedSpaces;
     private Transform _child;
-    private bool _prefabIsNotInstantiated;
+    private bool _prefabIsNotInstantiated, _horizontalExit, _verticalExit;
 
 
     // Update is called once per frame
@@ -25,19 +28,27 @@ public class ItemPlacement : MonoBehaviour
         _ray = Camera.main.ScreenPointToRay(screenPos);
         if (Item != null)
         {
-            if (_prefabIsNotInstantiated)
-            {
-                Item = Instantiate(Item);
-                _prefabIsNotInstantiated = false;
-            }
+            //if (_prefabIsNotInstantiated)
+            //{
+            //    Item = Instantiate(Item);
+            //    _prefabIsNotInstantiated = false;
+            //}
 
-            if (Item.CompareTag("Item/Big")) _layerMask = 1 << 6;
+            if (Item.CompareTag("Item/Big"))
+            {
+                _layerMask = 1 << 6;
+            }
             if (Item.CompareTag("Item/Long"))
             {
                 if (Mathf.Abs(_itemRotation) % 180 != 0)
+                {
                     _layerMask = 1 << 9;
+
+                }
                 else
+                {
                     _layerMask = 1 << 8;
+                }
             }
             if (Item.CompareTag("Item/Small")) _layerMask = 1 << 7;
             if (Item.tag.Contains("Placable")) _layerMask = 1 << 10;
@@ -51,13 +62,29 @@ public class ItemPlacement : MonoBehaviour
             }
             if (Item.CompareTag("Item/Wall/Small")) _layerMask = 1 << 11;
 
+            
+            
+            
+            
             if (Item.tag.Contains("Wall"))
+            {
                 Item.transform.localRotation = Quaternion.Euler(0, 0, _itemRotation);
+
+            }
             else
+            {
                 Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
+
+            }
+
+
+
+
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _layerMask))
             {
+                _currentPositionOnRayCast = transform.position;
+
                 //floorstuff
                 MoveObjectOnGrid("ShortGrid", "Item/Small");
 
@@ -84,6 +111,13 @@ public class ItemPlacement : MonoBehaviour
             else { screenPos.z = _itemDistanceFromCamera; Item.transform.position = Camera.main.ScreenToWorldPoint(screenPos); }
         }
         else _prefabIsNotInstantiated = true;
+    }
+
+    private void StayOnRaycast()
+    {
+        _currentJoyStickDirectionOnRayCast = Gamepad.all[GetComponent<PlayerPointer>().PlayerIndex].leftStick.value;
+
+        //if (Mathf.)
     }
     public void OnComfirm()
     {

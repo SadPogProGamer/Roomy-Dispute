@@ -85,7 +85,7 @@ public class ButtonSelect : MonoBehaviour
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
-            CheckCurrentSelectedButton();
+            //CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
             _sabotageCountText.text = _sabotageCount.ToString();
