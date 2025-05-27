@@ -91,19 +91,7 @@ public class ButtonSelect : MonoBehaviour
             _sabotageCountText.text = _sabotageCount.ToString();
             if(_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex])
             {
-                _previousInteractibilityOfCheapFurniture = _currentInteractibilityOfCheapFurniture;
-                _currentInteractibilityOfCheapFurniture = _cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable;
-
-                if (_previousInteractibilityOfCheapFurniture && !_currentInteractibilityOfCheapFurniture)
-                {
-                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
-                }
-                else
-                if (!_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
-                {
-                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
-                }
-
+                StartCoroutine(CheckBlaBla());
             }
             else
             {
@@ -113,6 +101,23 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckBlaBla()
+    {
+        yield return null;
+
+        _previousInteractibilityOfCheapFurniture = _currentInteractibilityOfCheapFurniture;
+        _currentInteractibilityOfCheapFurniture = _cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable;
+
+        if (_previousInteractibilityOfCheapFurniture && !_currentInteractibilityOfCheapFurniture)
+        {
+            StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
+        }
+        else
+                if (!_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+        {
+            StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
+        }
+    }
     private IEnumerator CheckFurnitureSelectabilityPlacement(GameObject furniture)
     {
         yield return null;
