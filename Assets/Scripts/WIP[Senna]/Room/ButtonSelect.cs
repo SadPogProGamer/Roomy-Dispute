@@ -92,6 +92,34 @@ public class ButtonSelect : MonoBehaviour
         }
     }
 
+    private IEnumerator CheckFurnitureSelectabilityPlacement(GameObject furniture)
+    {
+        yield return null;
+        
+        _eventSystem.SetSelectedGameObject(furniture);
+
+        print(_eventSystem.currentSelectedGameObject);
+        if (_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex] && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+            _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+        else 
+        
+        if(_eventSystem.currentSelectedGameObject == _mediumFurniture[_mediumFurnitureIndex] && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable)
+        {
+            _eventSystem.SetSelectedGameObject(_expensiveFurniture[_mediumFurnitureIndex]);
+        }
+        else
+
+        if (_eventSystem.currentSelectedGameObject == _expensiveFurniture[_expensiveFurnitureIndex] && !_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable)
+        {
+            _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+        }
+        else 
+        if (!_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+        {
+            _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+        }
+    }
+
     private void CheckCancelButton()
     {
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonEast.wasPressedThisFrame &&
@@ -185,13 +213,13 @@ public class ButtonSelect : MonoBehaviour
 
                 if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
                 {
-                    _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_cheapFurniture[_cheapFurnitureIndex]));
                     _canMove = false;
                 }
 
                 else if (currentSelected == _expensiveFurniture[_expensiveFurnitureIndex])
                 {
-                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
                     _canMove = false;
                 }
 
@@ -221,13 +249,13 @@ public class ButtonSelect : MonoBehaviour
 
                 if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
                 {
-                    _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
                     _canMove = false;
                 }
 
                 if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
                 {
-                    _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_expensiveFurniture[_expensiveFurnitureIndex]));
                     _canMove = false;
                 }
 
@@ -264,7 +292,7 @@ public class ButtonSelect : MonoBehaviour
         Debug.Log("Shopping App Button Clicked");
         DisableBigApps();
         EnableFurnitureApps();
-        _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+        StartCoroutine(CheckFurnitureSelectabilityPlacement(_cheapFurniture[_cheapFurnitureIndex]));
         _lastSelectedButton = _shoppingAppIcon;
     }
 
@@ -490,8 +518,13 @@ public class ButtonSelect : MonoBehaviour
     {
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex].buttonSouth.wasPressedThisFrame)
         {
-            if (_eventSystem.currentSelectedGameObject.GetComponent<Button>().interactable)
+            if (_eventSystem.currentSelectedGameObject != null && _eventSystem.currentSelectedGameObject.GetComponent<Button>().interactable)
                 _eventSystem.currentSelectedGameObject.GetComponent<Button>().onClick.Invoke();
         }
+    }
+
+    public void MakeItSoThatNothingIsSelected()
+    {
+        _eventSystem.SetSelectedGameObject(null);
     }
 }
