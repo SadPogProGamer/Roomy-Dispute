@@ -85,7 +85,7 @@ public class ButtonSelect : MonoBehaviour
         if (Gamepad.all[_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex] != null && _player1Phone.activeSelf)
         {
             HandleInput();
-            //CheckCurrentSelectedButton();
+            CheckCurrentSelectedButton();
             CheckCancelButton();
             SubmitCurrent();
             _sabotageCountText.text = _sabotageCount.ToString();
@@ -128,27 +128,31 @@ public class ButtonSelect : MonoBehaviour
             _eventSystem.SetSelectedGameObject(furniture);
         }
 
-        print(_eventSystem.currentSelectedGameObject);
-        if (_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex] && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
-            _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-        else 
-        
-        if(_eventSystem.currentSelectedGameObject == _mediumFurniture[_mediumFurnitureIndex] && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable)
+        if (_eventSystem.currentSelectedGameObject.activeSelf)
         {
-            _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+            if (_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex] && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+                _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+            else
+
+            if (_eventSystem.currentSelectedGameObject == _mediumFurniture[_mediumFurnitureIndex] && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable)
+            {
+                _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
+            }
+            else
+
+            if (_eventSystem.currentSelectedGameObject == _expensiveFurniture[_expensiveFurnitureIndex] && !_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable)
+            {
+                _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
+            }
+
+
+            if (!_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable /*&& !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable*/)
+            {
+                _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
+            }
         }
         else
-
-        if (_eventSystem.currentSelectedGameObject == _expensiveFurniture[_expensiveFurnitureIndex] && !_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable)
-        {
-            _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
-        }
-        
-
-        if (!_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable /*&& !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable*/)
-        {
-            _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
-        }
+            CancelAction();
     }
 
     private void CheckCancelButton()
