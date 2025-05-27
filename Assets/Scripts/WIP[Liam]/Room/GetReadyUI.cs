@@ -49,6 +49,6 @@ public class GetReadyUI : MonoBehaviour
     private void OnComfirm()
     {
         Ready = true;
-        _readyText.text = "READY!";
+        _readyText.text = "READY!\n(press B to undo)";
     }
 }
