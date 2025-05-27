@@ -50,7 +50,7 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private SabotageTool _SabotageTool;
 
     private GameObject _lastSelectedButton;
-    private bool _canMove, _didLoop;
+    private bool _canMove, _didLoop, _previousInteractibilityOfCheapFurniture, _currentInteractibilityOfCheapFurniture;
 
     private float _inputCooldown = 0.2f;
     private float _lastInputTime = 0f;
@@ -89,6 +89,27 @@ public class ButtonSelect : MonoBehaviour
             CheckCancelButton();
             SubmitCurrent();
             _sabotageCountText.text = _sabotageCount.ToString();
+            if(_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex])
+            {
+                _previousInteractibilityOfCheapFurniture = _currentInteractibilityOfCheapFurniture;
+                _currentInteractibilityOfCheapFurniture = _cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable;
+
+                if (_previousInteractibilityOfCheapFurniture && !_currentInteractibilityOfCheapFurniture)
+                {
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
+                }
+                else
+                if (!_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+                {
+                    StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
+                }
+
+            }
+            else
+            {
+                _previousInteractibilityOfCheapFurniture = false;
+                _currentInteractibilityOfCheapFurniture = false;
+            }
         }
     }
 
@@ -96,7 +117,10 @@ public class ButtonSelect : MonoBehaviour
     {
         yield return null;
         
-        _eventSystem.SetSelectedGameObject(furniture);
+        if (furniture != null)
+        {
+            _eventSystem.SetSelectedGameObject(furniture);
+        }
 
         print(_eventSystem.currentSelectedGameObject);
         if (_eventSystem.currentSelectedGameObject == _cheapFurniture[_cheapFurnitureIndex] && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
@@ -105,7 +129,7 @@ public class ButtonSelect : MonoBehaviour
         
         if(_eventSystem.currentSelectedGameObject == _mediumFurniture[_mediumFurnitureIndex] && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable)
         {
-            _eventSystem.SetSelectedGameObject(_expensiveFurniture[_mediumFurnitureIndex]);
+            _eventSystem.SetSelectedGameObject(_expensiveFurniture[_expensiveFurnitureIndex]);
         }
         else
 
@@ -113,8 +137,9 @@ public class ButtonSelect : MonoBehaviour
         {
             _eventSystem.SetSelectedGameObject(_mediumFurniture[_mediumFurnitureIndex]);
         }
-        else 
-        if (!_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable && !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable)
+        
+
+        if (!_expensiveFurniture[_expensiveFurnitureIndex].GetComponent<Button>().interactable && !_mediumFurniture[_mediumFurnitureIndex].GetComponent<Button>().interactable /*&& !_cheapFurniture[_cheapFurnitureIndex].GetComponent<Button>().interactable*/)
         {
             _eventSystem.SetSelectedGameObject(_cheapFurniture[_cheapFurnitureIndex]);
         }
