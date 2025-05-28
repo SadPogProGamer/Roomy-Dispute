@@ -98,6 +98,11 @@ public class ButtonSelect : MonoBehaviour
                 _previousInteractibilityOfCheapFurniture = false;
                 _currentInteractibilityOfCheapFurniture = false;
             }
+
+            if (_shoppingAppIcon.activeSelf && _eventSystem.currentSelectedGameObject == null)
+            {
+                _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
+            }
         }
     }
 
