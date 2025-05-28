@@ -136,7 +136,7 @@ public class PlayerPointer : MonoBehaviour
         else
         if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(2).GetChild(0).position).x)
         {
-            StayOnRightWall(screenPosition,keptAwayHorizontalBounds, keptAwayVerticalBounds);
+            StayOnRightWall(screenPosition, bottomMiddleWallInScreenSpace, keptAwayHorizontalBounds, keptAwayVerticalBounds);
         }
         else
             //works
@@ -226,62 +226,69 @@ public class PlayerPointer : MonoBehaviour
     }
 
 
-    private void StayOnRightWall(Vector3 screenPosition, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
+    private void StayOnRightWall(Vector3 screenPosition, Vector3 bottomOfMiddleInScreenSpace, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
-        //Vector3 topLeftCorner = new Vector3(Room[1].transform.position.x, Room[1].transform.position.y + Room[1].transform.localScale.y / 2, Room[1].transform.position.z + Room[1].transform.localScale.z / 2);
-        //Vector3 topRightCorner = new Vector3(Room[1].transform.position.x, Room[1].transform.position.y + Room[1].transform.localScale.y / 2, Room[1].transform.position.z - Room[1].transform.localScale.z / 2);
-        //Vector3 bottomLeftCorner = new Vector3(Room[1].transform.position.x, Room[1].transform.position.y - Room[1].transform.localScale.y / 2, Room[1].transform.position.z + Room[1].transform.localScale.z / 2);
-        //Vector3 bottomRightCorner = new Vector3(Room[1].transform.position.x, Room[1].transform.position.y - Room[1].transform.localScale.y / 2, Room[1].transform.position.z - Room[1].transform.localScale.z / 2);
+        Vector3 topLeftCorner = new Vector3(Room[3].transform.position.x, Room[3].transform.position.y + Room[3].transform.localScale.y / 2, Room[3].transform.position.z + Room[3].transform.localScale.z / 2);
+        Vector3 topRightCorner = new Vector3(Room[3].transform.position.x, Room[3].transform.position.y + Room[3].transform.localScale.y / 2, Room[3].transform.position.z - Room[3].transform.localScale.z / 2);
+        Vector3 bottomLeftCorner = new Vector3(Room[3].transform.position.x, Room[3].transform.position.y - Room[3].transform.localScale.y / 2, Room[3].transform.position.z + Room[3].transform.localScale.z / 2);
+        Vector3 bottomRightCorner = new Vector3(Room[3].transform.position.x, Room[3].transform.position.y - Room[3].transform.localScale.y / 2, Room[3].transform.position.z - Room[3].transform.localScale.z / 2);
 
-        //Vector3 topLeftCornerScreen = Camera.main.WorldToScreenPoint(topLeftCorner);
-        //Vector3 topRightCornerScreen = Camera.main.WorldToScreenPoint(topRightCorner);
-        //Vector3 bottomLeftCornerScreen = Camera.main.WorldToScreenPoint(bottomLeftCorner);
-        //Vector3 bottomRightCornerScreen = Camera.main.WorldToScreenPoint(bottomRightCorner);
+        Vector3 topLeftCornerScreen = Camera.main.WorldToScreenPoint(topLeftCorner);
+        Vector3 topRightCornerScreen = Camera.main.WorldToScreenPoint(topRightCorner);
+        Vector3 bottomLeftCornerScreen = Camera.main.WorldToScreenPoint(bottomLeftCorner);
+        Vector3 bottomRightCornerScreen = Camera.main.WorldToScreenPoint(bottomRightCorner);
 
-        ////print(topLeftCorner + " " + topRightCorner + " " + bottomLeftCorner + " " + bottomRightCorner);
-
-
-        //float sideDifference = Mathf.Abs(topLeftCornerScreen.x - bottomLeftCornerScreen.x);
-        //float pointerSideDifference = Mathf.Abs(screenPosition.x - bottomLeftCornerScreen.x) / sideDifference;
-
-        //float topDifference = Mathf.Abs(topLeftCornerScreen.y - topRightCornerScreen.y);
-        //float pointerTopDifference = Mathf.Abs(screenPosition.y - topRightCornerScreen.y) / topDifference;
-
-        //float bottomDifference = Mathf.Abs(bottomLeftCornerScreen.y - bottomRightCornerScreen.y);
-        //float pointerBottomDifference = Mathf.Abs(screenPosition.y - bottomRightCornerScreen.y) / bottomDifference;
+        //print(topLeftCorner + " " + topRightCorner + " " + bottomLeftCorner + " " + bottomRightCorner);
 
 
-        ////print(pointerBottomDifference + " " + pointerSideDifference + " " + pointerTopDifference);
+        float sideDifference = Mathf.Abs(topLeftCornerScreen.x - bottomLeftCornerScreen.x);
+        float pointerSideDifference = Mathf.Abs(screenPosition.x - bottomLeftCornerScreen.x) / sideDifference;
+
+        float topDifference = Mathf.Abs(topLeftCornerScreen.y - topRightCornerScreen.y);
+        float pointerTopDifference = Mathf.Abs(screenPosition.y - topRightCornerScreen.y) / topDifference;
+
+        float bottomDifference = Mathf.Abs(bottomLeftCornerScreen.y - bottomRightCornerScreen.y);
+        float pointerBottomDifference = Mathf.Abs(screenPosition.y - bottomRightCornerScreen.y) / bottomDifference;
+
+        int collisionCorrecter;
+        //print(pointerBottomDifference + " " + pointerSideDifference + " " + pointerTopDifference);
+        if (screenPosition.y >= bottomOfMiddleInScreenSpace.y)
+        {
+            pointerBottomDifference = 0;
+            collisionCorrecter = 0;
+        }
+        else
+            collisionCorrecter = 1;
 
 
-        //// side
-        //transform.GetChild(4).GetChild(2).position = Vector3.Lerp(bottomLeftCorner, topLeftCorner, pointerSideDifference);
+        // side
+        transform.GetChild(3).GetChild(2).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(bottomLeftCornerScreen, topLeftCornerScreen, pointerSideDifference));
 
-        //// bottom
-        //transform.GetChild(4).GetChild(1).position = Vector3.Lerp(bottomRightCorner, bottomLeftCorner, pointerBottomDifference);
+        // bottom
+        transform.GetChild(3).GetChild(1).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(bottomRightCornerScreen, bottomLeftCornerScreen, pointerBottomDifference));
 
-        //// top
-        //transform.GetChild(4).GetChild(0).position = Vector3.Lerp(topRightCorner, topLeftCorner, pointerTopDifference);
+        // top
+        transform.GetChild(3).GetChild(0).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(topRightCornerScreen, topLeftCornerScreen, pointerTopDifference));
 
-        ////bounding blub
+        //bounding blub
 
-        //if (screenPosition.y < Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(2).position).y + keptAwayHorizontalBounds)
-        //{
-        //    screenPosition.y = Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(2).position).y + keptAwayHorizontalBounds;
-        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-        //}
+        if (screenPosition.y < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds + 60)
+        {
+            screenPosition.y = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds + 60;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
 
-        //if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(1).position).x - keptAwayHorizontalBounds)
-        //{
-        //    screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(1).position).x - keptAwayHorizontalBounds;
-        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-        //}
+        if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x + (keptAwayHorizontalBounds - 20) * collisionCorrecter)
+        {
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x + (keptAwayHorizontalBounds - 20) * collisionCorrecter;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
 
-        //if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(0).position).x + keptAwayHorizontalBounds)
-        //{
-        //    screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(4).GetChild(0).position).x + keptAwayHorizontalBounds;
-        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-        //}
+        if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x - (keptAwayHorizontalBounds + 45))
+        {
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x - (keptAwayHorizontalBounds + 45);
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
 
     }
     public void OnComfirm()
