@@ -140,27 +140,34 @@ public class PlayerPointer : MonoBehaviour
             StayOnRightWall(keptAwayHorizontalBounds, keptAwayVerticalBounds);
         }
         else
-            StayOnMiddletWall(screenPosition, correctVert0Position, correctVert1Position, keptAwayHorizontalBounds, keptAwayVerticalBounds);
+            StayOnMiddletWall(screenPosition, keptAwayHorizontalBounds, keptAwayVerticalBounds);
     }
 
     private void StayOnLeftWall(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
         print("Left");
     }
-    private void StayOnMiddletWall(Vector3 screenPosition, Vector3 correctVert0Position, Vector3 correctVert1Position, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
+
+
+    private void StayOnMiddletWall(Vector3 screenPosition, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
-        if (screenPosition.y > correctVert0Position.y - keptAwayHorizontalBounds)
+        Vector3 topInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y + Room[2].transform.localScale.y/2, Room[2].transform.position.z));
+        Vector3 bottomInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y - Room[2].transform.localScale.y / 2, Room[2].transform.position.z));
+
+        if (screenPosition.y > topInScreenSpace.y - keptAwayHorizontalBounds)
         {
-            screenPosition.y = correctVert0Position.y - keptAwayHorizontalBounds;
+            screenPosition.y = topInScreenSpace.y - keptAwayHorizontalBounds;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
 
-        if (screenPosition.y < correctVert1Position.y + keptAwayHorizontalBounds)
+        if (screenPosition.y < bottomInScreenSpace.y + keptAwayHorizontalBounds)
         {
-            screenPosition.y = correctVert1Position.y + keptAwayHorizontalBounds;
+            screenPosition.y = bottomInScreenSpace.y + keptAwayHorizontalBounds;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
     }
+
+
     private void StayOnRightWall(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
         print("Right");
