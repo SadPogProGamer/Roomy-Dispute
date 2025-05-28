@@ -73,8 +73,6 @@ public class PlayerPointer : MonoBehaviour
         float verticesDifference = Mathf.Abs(correctVert1Position.y - correctVert0Position.y);
         float pointerDifference = Mathf.Abs(screenPosition.y - correctVert0Position.y) / verticesDifference;
 
-        //print(leftFloorMeshVertices[1] + " " + leftFloorMeshVertices[0] + " "+pointerDifference);
-
         // left bound
         transform.GetChild(0).position = new Vector3(-Room[0].transform.localScale.x/2, 0,Mathf.Lerp(leftFloorMeshVertices[0].y, leftFloorMeshVertices[1].y, pointerDifference));
         
@@ -110,50 +108,71 @@ public class PlayerPointer : MonoBehaviour
 
     public void StayOnWalls(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
-        Vector3[] middleWallMeshVertices = Room[2].transform.GetComponent<MeshFilter>().mesh.vertices;
-        Vector3[] leftMiddleWallMeshVertices = middleWallMeshVertices.Where(vert => vert.x < 0).ToArray();
-
-        Vector3 correctVert0Position = Camera.main.WorldToScreenPoint(new Vector3(leftMiddleWallMeshVertices[0].x, leftMiddleWallMeshVertices[0].z, leftMiddleWallMeshVertices[0].y));
-        Vector3 correctVert1Position = Camera.main.WorldToScreenPoint(new Vector3(leftMiddleWallMeshVertices[1].x, leftMiddleWallMeshVertices[1].z, leftMiddleWallMeshVertices[1].y));
-
+        Vector3 topMiddleWallInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y + Room[2].transform.localScale.y / 2, Room[2].transform.position.z));
+        Vector3 bottomMiddleWallInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y - Room[2].transform.localScale.y / 2, Room[2].transform.position.z));
+        
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
 
-        float verticesDifference = Mathf.Abs(correctVert1Position.y - correctVert0Position.y);
-        float pointerDifference = Mathf.Abs(screenPosition.y - correctVert0Position.y) / verticesDifference;
 
-        print(leftMiddleWallMeshVertices[1] + " " + leftMiddleWallMeshVertices[0] + " "+pointerDifference);
+        float sideDifference = Mathf.Abs(topMiddleWallInScreenSpace.y - bottomMiddleWallInScreenSpace.y);
+        float pointerDifference = Mathf.Abs(screenPosition.y - bottomMiddleWallInScreenSpace.y) / sideDifference;
 
         // right bound
-        transform.GetChild(2).GetChild(0).position = new Vector3(-Room[2].transform.localScale.x / 2, Mathf.Lerp(leftMiddleWallMeshVertices[0].y+ Room[2].transform.localScale.x / 2, leftMiddleWallMeshVertices[1].y+ Room[2].transform.localScale.x / 2, pointerDifference), -Room[2].transform.localScale.x / 2);
+        transform.GetChild(2).GetChild(0).position = new Vector3(-Room[2].transform.localScale.x / 2, Mathf.Lerp(Room[2].transform.position.y - Room[2].transform.localScale.y / 2, Room[2].transform.position.y + Room[2].transform.localScale.y / 2,pointerDifference), -Room[2].transform.localScale.x / 2);
 
         // left bound
-        transform.GetChild(2).GetChild(1).position = new Vector3(Room[2].transform.localScale.x / 2, Mathf.Lerp(leftMiddleWallMeshVertices[0].y + Room[2].transform.localScale.x / 2, leftMiddleWallMeshVertices[1].y + Room[2].transform.localScale.x / 2, pointerDifference), -Room[2].transform.localScale.x / 2);
+        transform.GetChild(2).GetChild(1).position = new Vector3(Room[2].transform.localScale.x / 2, Mathf.Lerp(Room[2].transform.position.y - Room[2].transform.localScale.y / 2, Room[2].transform.position.y + Room[2].transform.localScale.y / 2, pointerDifference), -Room[2].transform.localScale.x / 2);
 
 
         if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(2).GetChild(1).position).x)
         {
-            StayOnLeftWall(keptAwayHorizontalBounds, keptAwayVerticalBounds);
+            StayOnLeftWall(screenPosition,keptAwayHorizontalBounds, keptAwayVerticalBounds);
         }
         else
         if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(2).GetChild(0).position).x)
         {
-            StayOnRightWall(keptAwayHorizontalBounds, keptAwayVerticalBounds);
+            StayOnRightWall(screenPosition,keptAwayHorizontalBounds, keptAwayVerticalBounds);
         }
         else
-            StayOnMiddletWall(screenPosition, keptAwayHorizontalBounds, keptAwayVerticalBounds);
+            //works
+            StayOnMiddletWall(screenPosition, topMiddleWallInScreenSpace, bottomMiddleWallInScreenSpace, keptAwayHorizontalBounds, keptAwayVerticalBounds);
     }
 
-    private void StayOnLeftWall(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
+    private void StayOnLeftWall(Vector3 screenPosition,int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
-        print("Left");
+        Vector3 topLeftCorner = new Vector3(Room[1].transform.position.x - Room[1].transform.localScale.x / 2, Room[1].transform.position.y + Room[1].transform.localScale.y / 2, Room[1].transform.position.z);
+        Vector3 topRightCorner = new Vector3(Room[1].transform.position.x + Room[1].transform.localScale.x / 2, Room[1].transform.position.y + Room[1].transform.localScale.y / 2, Room[1].transform.position.z);
+        Vector3 bottomLeftCorner = new Vector3(Room[1].transform.position.x - Room[1].transform.localScale.x / 2, Room[1].transform.position.y - Room[1].transform.localScale.y / 2, Room[1].transform.position.z);
+        Vector3 bottomRightCorner = new Vector3(Room[1].transform.position.x + Room[1].transform.localScale.x / 2, Room[1].transform.position.y - Room[1].transform.localScale.y / 2, Room[1].transform.position.z);
+
+        Vector3 topLeftCornerScreen = Camera.main.WorldToScreenPoint(topLeftCorner);
+        Vector3 topRightCornerScreen = Camera.main.WorldToScreenPoint(topRightCorner);
+        Vector3 bottomLeftCornerScreen = Camera.main.WorldToScreenPoint(bottomLeftCorner);
+        Vector3 bottomRightCornerScreen = Camera.main.WorldToScreenPoint(bottomRightCorner);
+
+        float sideDifference = Mathf.Abs(topLeftCornerScreen.y - bottomLeftCornerScreen.y);
+        float pointerSideDifference = Mathf.Abs(screenPosition.y - bottomLeftCornerScreen.y) / sideDifference;
+
+        float topDifference = Mathf.Abs(topLeftCornerScreen.x - topRightCornerScreen.x);
+        float pointerTopDifference = Mathf.Abs(screenPosition.x - topRightCornerScreen.x) / topDifference;
+
+        float bottomDifference = Mathf.Abs(bottomLeftCornerScreen.x - bottomRightCornerScreen.x);
+        float pointerBottomDifference = Mathf.Abs(screenPosition.x - bottomLeftCornerScreen.x) / bottomDifference;
+
+        // side
+        transform.GetChild(3).GetChild(2).position = Vector3.Lerp(bottomLeftCorner, topLeftCorner, sideDifference);
+
+        // bottom
+        transform.GetChild(3).GetChild(1).position = Vector3.Lerp(bottomRightCorner, bottomLeftCorner,bottomDifference);
+
+        // top
+        transform.GetChild(3).GetChild(0).position = Vector3.Lerp(topRightCorner,topLeftCorner,topDifference);
     }
 
 
-    private void StayOnMiddletWall(Vector3 screenPosition, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
+    private void StayOnMiddletWall(Vector3 screenPosition, Vector3 topInScreenSpace,Vector3 bottomInScreenSpace, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
-        Vector3 topInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y + Room[2].transform.localScale.y/2, Room[2].transform.position.z));
-        Vector3 bottomInScreenSpace = Camera.main.WorldToScreenPoint(new Vector3(0, Room[2].transform.position.y - Room[2].transform.localScale.y / 2, Room[2].transform.position.z));
-
+        
         if (screenPosition.y > topInScreenSpace.y - keptAwayHorizontalBounds)
         {
             screenPosition.y = topInScreenSpace.y - keptAwayHorizontalBounds;
@@ -168,7 +187,7 @@ public class PlayerPointer : MonoBehaviour
     }
 
 
-    private void StayOnRightWall(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
+    private void StayOnRightWall(Vector3 screenPosition, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
         print("Right");
 

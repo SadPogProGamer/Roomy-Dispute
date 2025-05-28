@@ -67,11 +67,11 @@ public class ItemPlacement : MonoBehaviour
                 {
                     if (Mathf.Abs(_itemRotation) % 180 != 0)
                     {
-                        awayFromHori = 90;
+                        awayFromVert = 110;
                     }
                     else
                     {
-                        awayFromVert = 90;
+                        awayFromHori = 110;
                     }
                 }
                 GetComponent<PlayerPointer>().StayOnWalls(awayFromHori, awayFromVert);
