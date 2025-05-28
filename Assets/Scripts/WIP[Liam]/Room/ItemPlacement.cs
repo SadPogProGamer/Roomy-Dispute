@@ -66,8 +66,8 @@ public class ItemPlacement : MonoBehaviour
             {
                 Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
 
-                int awayFromHori = 10;
-                int awayFromVert = 10;
+                int awayFromHori = 15;
+                int awayFromVert = 15;
                 if (Item.CompareTag("Item/Long"))
                 {
                     if (Mathf.Abs(_itemRotation) % 180 != 0)

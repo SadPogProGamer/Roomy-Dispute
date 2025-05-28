@@ -94,17 +94,17 @@ public class PlayerPointer : MonoBehaviour
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
 
-        //if (screenPosition.x > Screen.width)
-        //{
-        //    screenPosition.x = Screen.width;
-        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-        //}
+        if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(0).position).x - keptAwayVerticalBounds)
+        {
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(0).position).x - keptAwayVerticalBounds;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
 
-        //if (screenPosition.x < 0)
-        //{
-        //    screenPosition.x = 0;
-        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
-        //}
+        if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(1).position).x + keptAwayVerticalBounds)
+        {
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(1).position).x + keptAwayVerticalBounds;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
     }
 
     public void StayOnWalls()
