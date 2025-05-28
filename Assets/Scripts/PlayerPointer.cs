@@ -1,4 +1,6 @@
 using System.Drawing;
+using System.Linq;
+using Unity.Mathematics.Geometry;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -57,9 +59,52 @@ public class PlayerPointer : MonoBehaviour
         }
     }
 
-    public void StayOnFloor()
+    public void StayOnFloor(int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
+        Vector3[] floorMeshVertices = Room[0].transform.GetComponent<MeshFilter>().mesh.vertices;
+        Vector3[] leftFloorMeshVertices = floorMeshVertices.Where(vert => vert.x < 0).ToArray();
 
+        Vector3 correctVert0Position = Camera.main.WorldToScreenPoint(new Vector3(leftFloorMeshVertices[0].x, leftFloorMeshVertices[0].z, leftFloorMeshVertices[0].y));
+        Vector3 correctVert1Position = Camera.main.WorldToScreenPoint(new Vector3(leftFloorMeshVertices[1].x, leftFloorMeshVertices[1].z, leftFloorMeshVertices[1].y));
+
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+
+        float verticesDifference = Mathf.Abs(correctVert1Position.y - correctVert0Position.y);
+        float pointerDifference = Mathf.Abs(screenPosition.y - correctVert0Position.y) / verticesDifference;
+
+        print(leftFloorMeshVertices[1] + " " + leftFloorMeshVertices[0] + " "+pointerDifference);
+
+        // left bound
+        transform.GetChild(0).position = new Vector3(-Room[0].transform.localScale.x/2, 0,Mathf.Lerp(leftFloorMeshVertices[0].y, leftFloorMeshVertices[1].y, pointerDifference));
+        
+        // right bound
+        transform.GetChild(1).position = new Vector3(Room[0].transform.localScale.x / 2, 0, Mathf.Lerp(leftFloorMeshVertices[0].y, leftFloorMeshVertices[1].y, pointerDifference));
+
+        
+        //bounding blub
+        if (screenPosition.y > correctVert0Position.y - keptAwayHorizontalBounds)
+        {
+            screenPosition.y = correctVert0Position.y - keptAwayHorizontalBounds;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
+
+        if (screenPosition.y < correctVert1Position.y + keptAwayHorizontalBounds)
+        {
+            screenPosition.y = correctVert1Position.y + keptAwayHorizontalBounds;
+            transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        }
+
+        //if (screenPosition.x > Screen.width)
+        //{
+        //    screenPosition.x = Screen.width;
+        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        //}
+
+        //if (screenPosition.x < 0)
+        //{
+        //    screenPosition.x = 0;
+        //    transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
+        //}
     }
 
     public void StayOnWalls()

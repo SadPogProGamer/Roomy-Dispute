@@ -60,12 +60,32 @@ public class ItemPlacement : MonoBehaviour
             if (Item.tag.Contains("Wall"))
             {
                 Item.transform.localRotation = Quaternion.Euler(0, 0, _itemRotation);
-
+                GetComponent<PlayerPointer>().StayOnWalls();
             }
             else
             {
                 Item.transform.localRotation = Quaternion.Euler(0, _itemRotation, 0);
 
+                int awayFromHori = 10;
+                int awayFromVert = 10;
+                if (Item.CompareTag("Item/Long"))
+                {
+                    if (Mathf.Abs(_itemRotation) % 180 != 0)
+                    {
+                        awayFromHori = 70;
+                    }
+                    else
+                    {
+                        awayFromVert = 70;
+                    }
+                }
+                else if (Item.CompareTag("Item/Big"))
+                {
+                    awayFromHori = 70;
+                    awayFromVert = 70;
+                }
+
+                GetComponent<PlayerPointer>().StayOnFloor(awayFromHori, awayFromVert);
             }
 
 
