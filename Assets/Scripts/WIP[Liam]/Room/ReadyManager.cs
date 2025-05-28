@@ -65,6 +65,7 @@ public class ReadyManager : MonoBehaviour
         foreach (GameObject player in Players)
         {
             player.SetActive(true);
+            player.transform.GetChild(0).GetComponent<ButtonSelect>().CancelAction();
         }
 
         foreach (GameObject getReadyUI in _getReadyObjects)
