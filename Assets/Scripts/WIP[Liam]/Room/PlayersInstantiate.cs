@@ -5,6 +5,8 @@ public class PlayersInstantiate : MonoBehaviour
 {
     [SerializeField]
     private GameObject _prefab, _moneyManager;
+    [SerializeField]
+    private GameObject[] _room;
     [HideInInspector] public int _playerCount;
     [SerializeField]
     private ReadyManager _readyManager;
@@ -29,6 +31,8 @@ public class PlayersInstantiate : MonoBehaviour
                 player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, -player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y);
             }
             player.transform.GetChild(1).GetComponent<PlayerPointer>().PlayerIndex = plyrcnt;
+            player.transform.GetChild(1).GetComponent<PlayerPointer>().Room = _room;
+
 
             Renderer rend = player.GetComponentInChildren<Renderer>();
             if (rend != null && plyrcnt < _playerMaterials.Length)

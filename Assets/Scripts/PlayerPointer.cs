@@ -8,6 +8,7 @@ using UnityEngine.InputSystem.UI;
 public class PlayerPointer : MonoBehaviour
 {
     public bool CanMove;
+    public GameObject[] Room;
     [SerializeField]
     private float _speed;
     private Vector2 _moveVector;
@@ -16,15 +17,6 @@ public class PlayerPointer : MonoBehaviour
     {
         _moveVector = value.Get<Vector2>();
     }
-
-    /*public void OnComfirm()
-    {
-        
-    }
-    public void OnReturn()
-    {
-        
-    }*/
 
     private void FixedUpdate()
     {
@@ -65,12 +57,12 @@ public class PlayerPointer : MonoBehaviour
         }
     }
 
-    private void StayOnFloor()
+    public void StayOnFloor()
     {
 
     }
 
-    private void StayOnWalls()
+    public void StayOnWalls()
     {
 
     }

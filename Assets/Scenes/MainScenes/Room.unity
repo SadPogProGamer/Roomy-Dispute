@@ -2174,6 +2174,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _prefab: {fileID: 6828271443313866854, guid: 59bb3b67da63a184190b643d06d17958, type: 3}
   _moneyManager: {fileID: 2068198807}
+  _room:
+  - {fileID: 1127308518}
+  - {fileID: 1027125585}
+  - {fileID: 141473707}
+  - {fileID: 628755971}
   _playerCount: 1
   _readyManager: {fileID: 837419788}
   _playerMaterials:

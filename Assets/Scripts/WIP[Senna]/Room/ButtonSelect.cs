@@ -473,6 +473,16 @@ public class ButtonSelect : MonoBehaviour
             material.color *= _player1Pointer.GetComponent<MeshRenderer>().material.color;
         }
         _player1Pointer.GetComponent<ItemPlacement>().Item = spawnedItem;
+        
+        if (spawnedItem.tag.Contains("Wall"))
+        {
+            _player1Pointer.transform.position = _player1Pointer.GetComponent<ItemPlacement>().OriginPointWall;
+        }
+        else
+        {
+            _player1Pointer.transform.position = _player1Pointer.GetComponent<ItemPlacement>().OriginPointFloor;
+        }
+
         DisableFurnitureApps();
         EnableBigApps();
         _eventSystem.SetSelectedGameObject(_shoppingAppIcon);

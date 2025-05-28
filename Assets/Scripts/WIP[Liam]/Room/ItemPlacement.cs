@@ -6,9 +6,8 @@ using UnityEngine.InputSystem;
 public class ItemPlacement : MonoBehaviour
 {
     [SerializeField]
-    private Vector3 _originPoint, _originPointFloor, _originPointWall;
-    private Vector3 _currentPositionOnRayCast;
-    private Vector2 _currentJoyStickDirectionOnRayCast;
+    private Vector3 _originPoint;
+    public Vector3 OriginPointFloor, OriginPointWall;
     [SerializeField]
     private GameObject _empty;
     public GameObject Item;
@@ -18,8 +17,6 @@ public class ItemPlacement : MonoBehaviour
     private float _itemDistanceFromCamera;
     private int _itemRotation, _layerMask, _usedSpaces;
     private Transform _child;
-    private bool _prefabIsNotInstantiated, _horizontalExit, _verticalExit;
-
 
     // Update is called once per frame
     void Update()
@@ -28,12 +25,6 @@ public class ItemPlacement : MonoBehaviour
         _ray = Camera.main.ScreenPointToRay(screenPos);
         if (Item != null)
         {
-            //if (_prefabIsNotInstantiated)
-            //{
-            //    Item = Instantiate(Item);
-            //    _prefabIsNotInstantiated = false;
-            //}
-
             if (Item.CompareTag("Item/Big"))
             {
                 _layerMask = 1 << 6;
@@ -83,8 +74,6 @@ public class ItemPlacement : MonoBehaviour
 
             if (Physics.Raycast(_ray, out _hit, Mathf.Infinity, _layerMask))
             {
-                _currentPositionOnRayCast = transform.position;
-
                 //floorstuff
                 MoveObjectOnGrid("ShortGrid", "Item/Small");
 
@@ -110,14 +99,6 @@ public class ItemPlacement : MonoBehaviour
             }
             else { screenPos.z = _itemDistanceFromCamera; Item.transform.position = Camera.main.ScreenToWorldPoint(screenPos); }
         }
-        else _prefabIsNotInstantiated = true;
-    }
-
-    private void StayOnRaycast()
-    {
-        _currentJoyStickDirectionOnRayCast = Gamepad.all[GetComponent<PlayerPointer>().PlayerIndex].leftStick.value;
-
-        //if (Mathf.)
     }
     public void OnComfirm()
     {
