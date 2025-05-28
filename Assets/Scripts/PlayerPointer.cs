@@ -167,39 +167,43 @@ public class PlayerPointer : MonoBehaviour
         float bottomDifference = Mathf.Abs(bottomLeftCornerScreen.y - bottomRightCornerScreen.y);
         float pointerBottomDifference = Mathf.Abs(screenPosition.y - bottomRightCornerScreen.y) / bottomDifference;
 
-
+        int collisionCorrecter;
         //print(pointerBottomDifference + " " + pointerSideDifference + " " + pointerTopDifference);
         if (screenPosition.y >= bottomOfMiddleInScreenSpace.y)
         {
             pointerBottomDifference = 0;
+            collisionCorrecter = 0;
         }
+        else
+            collisionCorrecter = 1;
+
 
         // side
-        transform.GetChild(3).GetChild(2).position = Vector3.Lerp(bottomLeftCorner, topLeftCorner, pointerSideDifference);
+        transform.GetChild(3).GetChild(2).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(bottomLeftCornerScreen, topLeftCornerScreen, pointerSideDifference));
 
         // bottom
-        transform.GetChild(3).GetChild(1).position = Vector3.Lerp(bottomRightCorner, bottomLeftCorner, pointerBottomDifference);
+        transform.GetChild(3).GetChild(1).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(bottomRightCornerScreen, bottomLeftCornerScreen, pointerBottomDifference));
 
         // top
-        transform.GetChild(3).GetChild(0).position = Vector3.Lerp(topRightCorner,topLeftCorner,pointerTopDifference);
+        transform.GetChild(3).GetChild(0).position = Camera.main.ScreenToWorldPoint(Vector3.Lerp(topRightCornerScreen, topLeftCornerScreen, pointerTopDifference));
 
         //bounding blub
 
-        if (screenPosition.y < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds + 50)
+        if (screenPosition.y < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds +60)
         {
-            screenPosition.y = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds + 50 ;
+            screenPosition.y = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(2).position).y + keptAwayVerticalBounds +60;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
 
-        if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x - keptAwayHorizontalBounds)
+        if (screenPosition.x > Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x - (keptAwayHorizontalBounds - 20) * collisionCorrecter)
         {
-            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x - keptAwayHorizontalBounds;
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(1).position).x - (keptAwayHorizontalBounds - 20) * collisionCorrecter;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
 
-        if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x + keptAwayHorizontalBounds)
+        if (screenPosition.x < Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x + keptAwayHorizontalBounds+45)
         {
-            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x + keptAwayHorizontalBounds;
+            screenPosition.x = Camera.main.WorldToScreenPoint(transform.GetChild(3).GetChild(0).position).x + keptAwayHorizontalBounds+45;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
     }
@@ -208,9 +212,9 @@ public class PlayerPointer : MonoBehaviour
     private void StayOnMiddletWall(Vector3 screenPosition, Vector3 topInScreenSpace,Vector3 bottomInScreenSpace, int keptAwayHorizontalBounds, int keptAwayVerticalBounds)
     {
         
-        if (screenPosition.y > topInScreenSpace.y - keptAwayHorizontalBounds)
+        if (screenPosition.y > topInScreenSpace.y - keptAwayHorizontalBounds - 45)
         {
-            screenPosition.y = topInScreenSpace.y - keptAwayHorizontalBounds;
+            screenPosition.y = topInScreenSpace.y - keptAwayHorizontalBounds - 45;
             transform.position = Camera.main.ScreenToWorldPoint(screenPosition);
         }
 
