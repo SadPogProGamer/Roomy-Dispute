@@ -183,7 +183,7 @@ public class ItemPlacement : MonoBehaviour
             Item.GetComponent<ItemStats>().PlayerPhone.SetActive(true);
             Item.GetComponent<ItemStats>().PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
             Item.GetComponent<ItemStats>().PlayerPhone.transform.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(GetComponent<PlayerPointer>().PlayerIndex, Item.GetComponent<ItemStats>().Cost);
-            //Item.GetComponent<ItemStats>().PlayerPhone.transform.parent.GetComponent<ButtonSelect>().ScoreManager.GetComponent<ScoreManager>().DecreaseScore(GetComponent<PlayerPointer>().PlayerIndex, Item.GetComponent<ItemStats>().Points);
+            Item.GetComponent<ItemStats>().PlayerPhone.transform.parent.GetComponent<ButtonSelect>().SetFurnitureBack();
 
             Destroy(Item);
             SetPointerBackToOrigin();

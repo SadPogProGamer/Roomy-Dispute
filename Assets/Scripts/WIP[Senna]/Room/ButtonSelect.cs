@@ -56,9 +56,9 @@ public class ButtonSelect : MonoBehaviour
     private float _lastInputTime = 0f;
 
 
-    private int _cheapFurnitureIndex;
-    private int _mediumFurnitureIndex;
-    private int _expensiveFurnitureIndex;
+    private int _cheapFurnitureIndex, _previousCheapFurnitureIndex;
+    private int _mediumFurnitureIndex, _previousMediumFurnitureIndex;
+    private int _expensiveFurnitureIndex, _previousExpensiveFurnitureIndex;
 
 
 
@@ -169,6 +169,13 @@ public class ButtonSelect : MonoBehaviour
         {
             CancelAction();
         }
+    }
+
+    public void SetFurnitureBack()
+    {
+        _cheapFurnitureIndex = _previousCheapFurnitureIndex;
+        _mediumFurnitureIndex = _previousMediumFurnitureIndex;
+        _expensiveFurnitureIndex = _previousExpensiveFurnitureIndex;
     }
 
     public void CancelAction()
@@ -462,6 +469,10 @@ public class ButtonSelect : MonoBehaviour
 
     public void OnItemButtonClickPlayer1(GameObject item)
     {
+        _previousCheapFurnitureIndex = _cheapFurnitureIndex;
+        _previousExpensiveFurnitureIndex = _expensiveFurnitureIndex;
+        _previousMediumFurnitureIndex = _mediumFurnitureIndex;
+
         GiveRandomNumberForCheapFurniture();
         GiveRandomNumberForMediumFurniture();
         GiveRandomNumberForExpensiveFurniture();
