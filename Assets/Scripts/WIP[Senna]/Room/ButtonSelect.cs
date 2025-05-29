@@ -59,7 +59,7 @@ public class ButtonSelect : MonoBehaviour
     private int _cheapFurnitureIndex, _previousCheapFurnitureIndex;
     private int _mediumFurnitureIndex, _previousMediumFurnitureIndex;
     private int _expensiveFurnitureIndex, _previousExpensiveFurnitureIndex;
-
+    
 
 
     private void Start()
@@ -390,41 +390,38 @@ public class ButtonSelect : MonoBehaviour
         sabotage.aimOrigin = _player1Pointer.transform;
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
+        sabotage.OnCancel += OnSabotageCancel;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
 
         _player1Phone.SetActive(false);
 
-        _sabotageCount--;
+        
         
     }
 
-    private void OnSabotageComplete()
-    {
-        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
-        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
-        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
-        var placement = _player1Pointer.GetComponent<ItemPlacement>();
-
-        pointer.CanMove = false;
-        mesh.enabled = false;
-
-        sabotage.enabled = false;
-        sabotage.OnComplete -= OnSabotageComplete;
-
-        // SAFELY clean up any leftover reference from sabotage
-        placement.Item = null;
-        placement.enabled = false;
-
-        _player1Phone.SetActive(true);
-        _eventSystem.SetSelectedGameObject(_sabotageIcon);
-    }
 
     public void OnBombAppButtonClick()
     {
         Debug.Log("Bomb App Button Clicked");
-        //_sabotageTool.BombSabotage();
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+
+        pointer.CanMove = true;
+        mesh.enabled = true;
+
+        sabotage.Mode = SabotageTool.SabotageMode.Bomb;
+        sabotage.aimOrigin = _player1Pointer.transform;
+        sabotage.enabled = true;
+        sabotage.OnComplete += OnSabotageComplete;
+        sabotage.OnCancel += OnSabotageCancel;
+
+        _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
+        _player1Phone.SetActive(false);
     }
+
 
     public void OnTargetAppButtonClick()
     {
@@ -441,6 +438,7 @@ public class ButtonSelect : MonoBehaviour
         sabotage.aimOrigin = _player1Pointer.transform;
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
+        sabotage.OnCancel += OnSabotageCancel;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
@@ -462,10 +460,63 @@ public class ButtonSelect : MonoBehaviour
         sabotage.aimOrigin = _player1Pointer.transform;
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
+        sabotage.OnCancel += OnSabotageCancel;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
     }
+    private void OnSabotageComplete()
+    {
+        Debug.Log("oncomplete ran");
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+        var placement = _player1Pointer.GetComponent<ItemPlacement>();
+
+        pointer.CanMove = false;
+        mesh.enabled = false;
+
+        sabotage.enabled = false;
+
+        sabotage.OnComplete -= OnSabotageComplete;
+        sabotage.OnCancel -= OnSabotageCancel;
+
+        placement.Item = null;
+        placement.enabled = false;
+
+        _player1Phone.SetActive(true);
+        CancelAction();
+        _sabotageCount--;
+    }
+
+
+    private void OnSabotageCancel()
+    {
+        Debug.Log("oncancel ran");
+
+        var pointer = _player1Pointer.GetComponent<PlayerPointer>();
+        var mesh = _player1Pointer.GetComponent<MeshRenderer>();
+        var sabotage = _player1Pointer.GetComponent<SabotageTool>();
+        var placement = _player1Pointer.GetComponent<ItemPlacement>();
+
+        pointer.CanMove = false;
+        mesh.enabled = false;
+
+        sabotage.enabled = false;
+
+        sabotage.OnComplete -= OnSabotageComplete;
+        sabotage.OnCancel -= OnSabotageCancel;
+
+        placement.Item = null;
+        placement.enabled = false;
+
+        _player1Phone.SetActive(true);
+        CancelAction();
+    }
+
+
+
 
     public void OnItemButtonClickPlayer1(GameObject item)
     {

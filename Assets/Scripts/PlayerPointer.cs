@@ -291,11 +291,11 @@ public class PlayerPointer : MonoBehaviour
         }
 
     }
-    public void OnComfirm()
+    /*public void OnComfirm()
     {
         if (TryGetComponent(out SabotageTool sabotage) && sabotage.enabled)
         {
             sabotage.OnComfirm(); // Now calls the no-parameter version
         }
-    }
+    }*/
 }

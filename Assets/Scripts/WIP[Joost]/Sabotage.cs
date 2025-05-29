@@ -1,14 +1,17 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 //using static UnityEditor.Progress;
 
 public class SabotageTool : MonoBehaviour
 {
-    public enum SabotageMode { Fire, Target, Break }
+    public enum SabotageMode { Fire, Target, Break, Bomb }
 
     [SerializeField]
     private GameObject _playerPhone;
+    private GameObject _player1Pointer;
+    private ButtonSelect _buttonselect;
 
     [Header("Settings")]
     public SabotageMode Mode = SabotageMode.Fire;
@@ -16,23 +19,41 @@ public class SabotageTool : MonoBehaviour
     [SerializeField] private float rayDistance = 100f;
     [SerializeField] private Color highlightColor = Color.green;
     [SerializeField] private LayerMask selectableLayers;
+    [SerializeField] private float bombRadius = 3f;
+    [SerializeField] private GameObject bombPreview;
+    private Vector3 _bombTargetPoint;
+
     public Transform aimOrigin; 
 
     private GameObject _currentTarget;
     private Material[] _originalMaterials;
 
     public event Action OnComplete;
+    public event Action OnCancel;
 
     private void Update()
     {
         if (aimOrigin == null) return;
-
-        // Match pointer alignment (same as ItemPlacement)
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
+        if (Mode == SabotageMode.Bomb)
+        {
+            if (Physics.Raycast(ray, out RaycastHit bombHit, rayDistance, selectableLayers))
+            {
+                _bombTargetPoint = bombHit.point;
 
-        // ✅ Filter raycast by layers
+                if (bombPreview != null)
+                {
+                    bombPreview.SetActive(true);
+                    bombPreview.transform.position = _bombTargetPoint + Vector3.up * 0.01f;
+                    bombPreview.transform.localScale = new Vector3(bombRadius * 2, 0.1f, bombRadius * 2);
+                }
+            }
+
+            return;
+        }
+        
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, selectableLayers))
         {
             GameObject candidate = hit.collider.gameObject;
@@ -82,11 +103,27 @@ public class SabotageTool : MonoBehaviour
 
     public void OnComfirm()
     {
+        if (Mode == SabotageMode.Bomb)
+        {
+            Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
+            foreach (var hit in hits)
+            {
+                if (hit.TryGetComponent(out ItemStats stats))
+                    Destroy(hit.gameObject);
+            }
+
+            if (bombPreview != null)
+                bombPreview.SetActive(false);
+
+            OnComplete?.Invoke();
+            return;
+        }
         if (_currentTarget != null)
         {
             Destroy(_currentTarget);
             _currentTarget = null;
             OnComplete?.Invoke();
+           
         }
     }
 
@@ -123,11 +160,10 @@ public class SabotageTool : MonoBehaviour
     {
         if (GetComponent<SabotageTool>().enabled)
         {
-            _playerPhone.SetActive(true);
-            _playerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
-            _playerPhone.transform.parent.GetComponent<ButtonSelect>()._sabotageCount++;
-            GetComponent<ItemPlacement>().SetPointerBackToOrigin();
-            GetComponent<SabotageTool>().enabled = false;
+            if (bombPreview != null)
+                bombPreview.SetActive(false);
+            ClearCurrentTarget();
+            OnCancel?.Invoke();
         }
     }
 }
