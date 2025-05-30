@@ -448,9 +448,6 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
 
         _player1Phone.SetActive(false);
-
-        
-        
     }
 
 
