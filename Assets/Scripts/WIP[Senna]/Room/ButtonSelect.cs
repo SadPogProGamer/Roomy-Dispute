@@ -35,6 +35,9 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject[] _mediumFurniture;
     [SerializeField] private GameObject[] _expensiveFurniture;
 
+    [Header("Furniture App Text")]
+    [SerializeField] private GameObject _furnitureText;
+
     [Header("Sabotage Apps")]
     [SerializeField] private GameObject _fireApp;
     [SerializeField] private GameObject _bombApp;
@@ -121,6 +124,14 @@ public class ButtonSelect : MonoBehaviour
                 _targetAppText.SetActive(false);
                 _breakAppText.SetActive(false);
             }
+
+            if (_cheapFurniture[_cheapFurnitureIndex].activeSelf && _expensiveFurniture[_expensiveFurnitureIndex].activeSelf && _mediumFurniture[_mediumFurnitureIndex].activeSelf)
+            {
+                _furnitureText.SetActive(true);
+            }
+            else
+                _furnitureText.SetActive(false);
+
         }
     }
 
