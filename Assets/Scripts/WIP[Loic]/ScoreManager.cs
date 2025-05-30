@@ -95,6 +95,14 @@ public class ScoreManager : MonoBehaviour
         UpdateScoreText(playerIndex);
     }
 
+    public void RemovePoints(int playerIndex, int points)
+    {
+        if (playerIndex < 0 || playerIndex >= _playerScores.Length) return;
+
+        _playerScores[playerIndex] -= points;
+        UpdateScoreText(playerIndex);
+    }
+
     private void UpdateScoreText(int playerIndex)
     {
         if (_scoreTexts != null && _scoreTexts.Length > playerIndex && _scoreTexts[playerIndex] != null)
