@@ -526,6 +526,7 @@ public class ButtonSelect : MonoBehaviour
         var mesh = _player1Pointer.GetComponent<MeshRenderer>();
         var sabotage = _player1Pointer.GetComponent<SabotageTool>();
         var placement = _player1Pointer.GetComponent<ItemPlacement>();
+        int countSubtractionValue;
 
         pointer.CanMove = false;
         mesh.enabled = false;
@@ -540,7 +541,16 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Phone.SetActive(true);
         CancelAction();
-        _sabotageCount--;
+
+        if (sabotage.Mode == SabotageTool.SabotageMode.Bomb)
+            countSubtractionValue = 3;
+        else
+            if (sabotage.Mode == SabotageTool.SabotageMode.Target)
+            countSubtractionValue = 2;
+        else
+            countSubtractionValue = 1;
+
+        _sabotageCount -= countSubtractionValue;
     }
 
 
