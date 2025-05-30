@@ -53,5 +53,10 @@ public class ItemStats : MonoBehaviour
             phoneHasNotBeenActivated = false;
         }
     }
+
+    public void RemovePoints()
+    {
+        ScoreManager._instance.RemovePoints(PlayerIndex, Points);
+    }
 }
 
