@@ -41,6 +41,12 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private GameObject _targetApp;
     [SerializeField] private GameObject _breakApp;
 
+    [Header("Sabotage Apps Text")]
+    [SerializeField] private GameObject _fireAppText;
+    [SerializeField] private GameObject _bombAppText;
+    [SerializeField] private GameObject _targetAppText;
+    [SerializeField] private GameObject _breakAppText;
+
     [SerializeField] private TextMeshProUGUI _sabotageCountText;
 
     [HideInInspector] public int _sabotageCount = 3;
@@ -103,6 +109,53 @@ public class ButtonSelect : MonoBehaviour
             {
                 _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
             }
+
+            if (_fireApp.activeSelf && _bombApp.activeSelf && _targetApp.activeSelf && _breakApp.activeSelf)
+            {
+                SetCorrectSabotageText();
+            }
+            else
+            {
+                _fireAppText.SetActive(false);
+                _bombAppText.SetActive(false);
+                _targetAppText.SetActive(false);
+                _breakAppText.SetActive(false);
+            }
+        }
+    }
+
+    private void SetCorrectSabotageText()
+    {
+        if (_eventSystem.currentSelectedGameObject == _fireApp)
+        {
+            _fireAppText.SetActive(true);
+            _bombAppText.SetActive(false);
+            _targetAppText.SetActive(false);
+            _breakAppText.SetActive(false);
+        }
+        else 
+        if (_eventSystem.currentSelectedGameObject == _bombApp)
+        {
+            _fireAppText.SetActive(false);
+            _bombAppText.SetActive(true);
+            _targetAppText.SetActive(false);
+            _breakAppText.SetActive(false);
+        }
+        else
+        if (_eventSystem.currentSelectedGameObject == _targetApp)
+        {
+            _fireAppText.SetActive(false);
+            _bombAppText.SetActive(false);
+            _targetAppText.SetActive(true);
+            _breakAppText.SetActive(false);
+        }
+        else 
+        if (_eventSystem.currentSelectedGameObject == _breakApp)
+        {
+            _fireAppText.SetActive(false);
+            _bombAppText.SetActive(false);
+            _targetAppText.SetActive(false);
+            _breakAppText.SetActive(true);
         }
     }
 
