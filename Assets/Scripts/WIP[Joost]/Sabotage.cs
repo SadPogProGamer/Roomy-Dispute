@@ -109,8 +109,11 @@ public class SabotageTool : MonoBehaviour
             foreach (var hit in hits)
             {
                 if (hit.TryGetComponent(out ItemStats stats))
-                    hit.GetComponent<ItemStats>().RemovePoints();
+                {
+                    stats.RemovePoints();
+                    stats.ActivatePhone();
                     Destroy(hit.gameObject);
+                }
             }
 
             if (bombPreview != null)
@@ -122,6 +125,7 @@ public class SabotageTool : MonoBehaviour
         if (_currentTarget != null)
         {
             _currentTarget.GetComponent<ItemStats>().RemovePoints();
+            _currentTarget.GetComponent<ItemStats>().ActivatePhone();
             Destroy(_currentTarget);
             _currentTarget = null;
             OnComplete?.Invoke();

@@ -42,21 +42,26 @@ public class ItemStats : MonoBehaviour
 
         if (Timer >= PlacementTime && phoneHasNotBeenActivated)
         {
-            for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 2; childIndex++)
-            {
-                if (!PlayerPhone.transform.GetChild(childIndex).gameObject.activeSelf)
-                    PlayerPhone.transform.GetChild(childIndex).gameObject.SetActive(true);
-            }
-
-            PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).gameObject.SetActive(false);
-            PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
-            phoneHasNotBeenActivated = false;
+            ActivatePhone();
         }
     }
 
     public void RemovePoints()
     {
         ScoreManager._instance.RemovePoints(PlayerIndex, Points);
+    }
+
+    public void ActivatePhone()
+    {
+        for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 2; childIndex++)
+        {
+            if (!PlayerPhone.transform.GetChild(childIndex).gameObject.activeSelf)
+                PlayerPhone.transform.GetChild(childIndex).gameObject.SetActive(true);
+        }
+
+        PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).gameObject.SetActive(false);
+        PlayerPhone.transform.parent.GetComponent<ButtonSelect>().CancelAction();
+        phoneHasNotBeenActivated = false;
     }
 }
 
