@@ -15,7 +15,7 @@ public class MusicPitchController : MonoBehaviour
     {
         if (timer != null && timer._round == 9 && !pitchIncreased)
         {
-            audioSource.pitch = 1.25f; // Speed up music
+            audioSource.pitch = 1.4f; // Speed up music
             pitchIncreased = true;
         }
     }

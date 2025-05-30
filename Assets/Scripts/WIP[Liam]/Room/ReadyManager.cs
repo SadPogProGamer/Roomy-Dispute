@@ -4,7 +4,9 @@ using UnityEngine;
 public class ReadyManager : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _timer, _playerTextCanvas, _getReadyUI;
+    private GameObject _timer, _playerTextCanvas, _getReadyUI,_gameSource, _readySource;
+
+
     public List<GameObject> Players;
     private List<GameObject> _getReadyObjects = new List<GameObject>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -67,7 +69,9 @@ public class ReadyManager : MonoBehaviour
             player.SetActive(true);
             player.transform.GetChild(0).GetComponent<ButtonSelect>().CancelAction();
         }
-
+        _gameSource.SetActive(true);
+        
+        Destroy(_readySource);
         foreach (GameObject getReadyUI in _getReadyObjects)
         {
             Destroy(getReadyUI);
