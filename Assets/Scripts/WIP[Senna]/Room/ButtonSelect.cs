@@ -555,6 +555,7 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Phone.SetActive(true);
         CancelAction();
+        _eventSystem.SetSelectedGameObject(null);
 
         if (sabotage.Mode == SabotageTool.SabotageMode.Bomb)
             countSubtractionValue = 3;
