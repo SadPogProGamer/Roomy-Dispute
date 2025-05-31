@@ -112,26 +112,6 @@ public class ButtonSelect : MonoBehaviour
             {
                 _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
             }
-
-            if (_fireApp.activeSelf && _bombApp.activeSelf && _targetApp.activeSelf && _breakApp.activeSelf)
-            {
-                SetCorrectSabotageText();
-            }
-            else
-            {
-                _fireAppText.SetActive(false);
-                _bombAppText.SetActive(false);
-                _targetAppText.SetActive(false);
-                _breakAppText.SetActive(false);
-            }
-
-            if (_cheapFurniture[_cheapFurnitureIndex].activeSelf && _expensiveFurniture[_expensiveFurnitureIndex].activeSelf && _mediumFurniture[_mediumFurnitureIndex].activeSelf)
-            {
-                _furnitureText.SetActive(true);
-            }
-            else
-                _furnitureText.SetActive(false);
-
         }
     }
 
@@ -167,6 +147,13 @@ public class ButtonSelect : MonoBehaviour
             _bombAppText.SetActive(false);
             _targetAppText.SetActive(false);
             _breakAppText.SetActive(true);
+        }
+        else
+        {
+            _fireAppText.SetActive(false);
+            _bombAppText.SetActive(false);
+            _targetAppText.SetActive(false);
+            _breakAppText.SetActive(false);
         }
     }
 
@@ -249,6 +236,8 @@ public class ButtonSelect : MonoBehaviour
         DisableSabotageApps();
         DisableFurnitureApps();
         DisableCashApp();
+        SetCorrectSabotageText();
+        _furnitureText.SetActive(false);
     }
 
     private void CheckCurrentSelectedButton()
@@ -315,11 +304,13 @@ public class ButtonSelect : MonoBehaviour
                 else if (currentSelected == _targetApp)
                 {
                     _eventSystem.SetSelectedGameObject(_fireApp);
+                    SetCorrectSabotageText();
                 }
 
-                else if (currentSelected == _breakApp)
+                else if (currentSelected == _bombApp)
                 {
-                    _eventSystem.SetSelectedGameObject(_bombApp);
+                    _eventSystem.SetSelectedGameObject(_breakApp);
+                    SetCorrectSabotageText();
                 }
 
                 if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
@@ -348,13 +339,15 @@ public class ButtonSelect : MonoBehaviour
                     _eventSystem.SetSelectedGameObject(_cashAppIcon);
                 }
 
-                else if (currentSelected == _fireApp)
+                else if (currentSelected == _fireApp && _targetApp.GetComponent<Button>().interactable)
                 {
                     _eventSystem.SetSelectedGameObject(_targetApp);
+                    SetCorrectSabotageText();
                 }
-                else if (currentSelected == _bombApp)
+                else if (currentSelected == _breakApp && _bombApp.GetComponent<Button>().interactable)
                 {
-                    _eventSystem.SetSelectedGameObject(_breakApp);
+                    _eventSystem.SetSelectedGameObject(_bombApp);
+                    SetCorrectSabotageText();
                 }
 
 
@@ -376,11 +369,13 @@ public class ButtonSelect : MonoBehaviour
             {
                 if (currentSelected == _bombApp)
                 {
-                    _eventSystem.SetSelectedGameObject(_fireApp);
+                    _eventSystem.SetSelectedGameObject(_targetApp);
+                    SetCorrectSabotageText();
                 }
                 if (currentSelected == _breakApp)
                 {
-                    _eventSystem.SetSelectedGameObject(_targetApp);
+                    _eventSystem.SetSelectedGameObject(_fireApp);
+                    SetCorrectSabotageText();
                 }
             }
 
@@ -388,11 +383,13 @@ public class ButtonSelect : MonoBehaviour
             {
                 if (currentSelected == _fireApp)
                 {
-                    _eventSystem.SetSelectedGameObject(_bombApp);
-                }
-                if (currentSelected == _targetApp)
-                {
                     _eventSystem.SetSelectedGameObject(_breakApp);
+                    SetCorrectSabotageText();
+                }
+                if (currentSelected == _targetApp && _bombApp.GetComponent<Button>().interactable)
+                {
+                    _eventSystem.SetSelectedGameObject(_bombApp);
+                    SetCorrectSabotageText();
                 }
             }
         }
@@ -405,6 +402,7 @@ public class ButtonSelect : MonoBehaviour
         EnableFurnitureApps();
         StartCoroutine(CheckFurnitureSelectabilityPlacement(_cheapFurniture[_cheapFurnitureIndex]));
         _lastSelectedButton = _shoppingAppIcon;
+        _furnitureText.SetActive(true);
     }
 
     public void OnSabotageButtonClick()
@@ -419,6 +417,14 @@ public class ButtonSelect : MonoBehaviour
         DisableBigApps();
         _eventSystem.SetSelectedGameObject(_fireApp);
         _lastSelectedButton = _sabotageIcon;
+        SetCorrectSabotageText();
+
+        if (_sabotageCount < 3)
+        {
+            _bombApp.GetComponent<Button>().interactable = false;
+            if (_sabotageCount < 2)
+                _targetApp.GetComponent<Button>().interactable = false;
+        }
     }
 
     public void OnCashAppButtonClick()
