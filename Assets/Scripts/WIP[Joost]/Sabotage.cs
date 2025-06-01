@@ -23,7 +23,9 @@ public class SabotageTool : MonoBehaviour
     [SerializeField] private GameObject bombPreview;
     private Vector3 _bombTargetPoint;
 
-    public Transform aimOrigin; 
+    public Transform aimOrigin;
+
+    public bool SabotageHasBeenActivated;
 
     private GameObject _currentTarget;
     private Material[] _originalMaterials;
@@ -103,33 +105,36 @@ public class SabotageTool : MonoBehaviour
 
     public void OnComfirm()
     {
-        if (Mode == SabotageMode.Bomb)
+        if (SabotageHasBeenActivated)
         {
-            Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
-            foreach (var hit in hits)
+            if (Mode == SabotageMode.Bomb)
             {
-                if (hit.TryGetComponent(out ItemStats stats))
+                Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
+                foreach (var hit in hits)
                 {
-                    stats.RemovePoints();
-                    stats.ActivatePhone();
-                    Destroy(hit.gameObject);
+                    if (hit.TryGetComponent(out ItemStats stats))
+                    {
+                        stats.RemovePoints();
+                        stats.ActivatePhone();
+                        Destroy(hit.gameObject);
+                    }
                 }
+
+                if (bombPreview != null)
+                    bombPreview.SetActive(false);
+
+                OnComplete?.Invoke();
+                return;
             }
-
-            if (bombPreview != null)
-                bombPreview.SetActive(false);
-
-            OnComplete?.Invoke();
-            return;
-        }
-        if (_currentTarget != null)
-        {
-            _currentTarget.GetComponent<ItemStats>().RemovePoints();
-            _currentTarget.GetComponent<ItemStats>().ActivatePhone();
-            Destroy(_currentTarget);
-            _currentTarget = null;
-            OnComplete?.Invoke();
+            if (_currentTarget != null)
+            {
+                _currentTarget.GetComponent<ItemStats>().RemovePoints();
+                _currentTarget.GetComponent<ItemStats>().ActivatePhone();
+                Destroy(_currentTarget);
+                _currentTarget = null;
+                OnComplete?.Invoke();
            
+            }
         }
     }
 

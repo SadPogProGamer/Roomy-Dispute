@@ -461,6 +461,7 @@ public class ButtonSelect : MonoBehaviour
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
         sabotage.OnCancel += OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = true;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
 
@@ -484,6 +485,7 @@ public class ButtonSelect : MonoBehaviour
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
         sabotage.OnCancel += OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = true;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
@@ -506,6 +508,7 @@ public class ButtonSelect : MonoBehaviour
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
         sabotage.OnCancel += OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = true;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
@@ -528,6 +531,7 @@ public class ButtonSelect : MonoBehaviour
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
         sabotage.OnCancel += OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = true;
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
@@ -549,6 +553,7 @@ public class ButtonSelect : MonoBehaviour
 
         sabotage.OnComplete -= OnSabotageComplete;
         sabotage.OnCancel -= OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = false;
 
         placement.Item = null;
         placement.enabled = false;
@@ -585,6 +590,8 @@ public class ButtonSelect : MonoBehaviour
 
         sabotage.OnComplete -= OnSabotageComplete;
         sabotage.OnCancel -= OnSabotageCancel;
+        sabotage.SabotageHasBeenActivated = false;
+
 
         placement.Item = null;
         placement.enabled = false;
