@@ -10,6 +10,7 @@ public class MoneyManager : MonoBehaviour
 
     private List<TextMeshProUGUI> _mainMenuMoneyText = new List<TextMeshProUGUI>();
     private List<TextMeshProUGUI> _moneyAppMoneyText = new List<TextMeshProUGUI>();
+    private List<TextMeshProUGUI> _furnitureAppMoneyText = new List<TextMeshProUGUI>();
 
     [HideInInspector] public List<int> _playerMoney = new List<int>();
 
@@ -23,19 +24,23 @@ public class MoneyManager : MonoBehaviour
 
             Transform mainMenuMoneyTextTransform = player.transform.Find("Phone/PhoneImage/ShoppingAppButton/MoneyText");
             Transform moneyAppMoneyTextTransform = player.transform.Find("Phone/PhoneImage/CashGameButtons/MoneyText");
+            Transform furnitureMoneyTextTransform = player.transform.Find("Phone/PhoneImage/FurnitureIcons/Text/MoneyText");
 
             if (mainMenuMoneyTextTransform != null)
             {
                 TextMeshProUGUI mainMenuMoneyText = mainMenuMoneyTextTransform.GetComponent<TextMeshProUGUI>();
                 TextMeshProUGUI moneyAppMoneyText = moneyAppMoneyTextTransform.GetComponent<TextMeshProUGUI>();
+                TextMeshProUGUI furnitureAppMoneyText = furnitureMoneyTextTransform.GetComponent<TextMeshProUGUI>();
 
                 if (mainMenuMoneyText != null && moneyAppMoneyText != null)
                 {
                     _playerMoney.Add(_initialMoney);
                     _mainMenuMoneyText.Add(mainMenuMoneyText);
                     _moneyAppMoneyText.Add(moneyAppMoneyText);
+                    _furnitureAppMoneyText.Add(furnitureAppMoneyText);
                     mainMenuMoneyText.text = $"Money: ${_initialMoney}";
                     moneyAppMoneyText.text = $"Money: ${_initialMoney}";
+                    furnitureAppMoneyText.text = $"Money: ${_initialMoney}";
                     Debug.Log($"MoneyText initialized for player {i}");
                 }
                 else
@@ -43,6 +48,7 @@ public class MoneyManager : MonoBehaviour
                     Debug.LogWarning($"MoneyText component missing on player {i}");
                     _mainMenuMoneyText.Add(null);
                     _moneyAppMoneyText.Add(null);
+                    _furnitureAppMoneyText.Add(null);
                     _playerMoney.Add(_initialMoney);
                 }
             }
@@ -51,6 +57,7 @@ public class MoneyManager : MonoBehaviour
                 Debug.LogWarning($"MoneyText not found on player {i}");
                 _mainMenuMoneyText.Add(null);
                 _moneyAppMoneyText.Add(null);
+                _furnitureAppMoneyText.Add(null);
                 _playerMoney.Add(_initialMoney);
             }
         }
@@ -106,6 +113,11 @@ public class MoneyManager : MonoBehaviour
         if (_moneyAppMoneyText[playerID] != null)
         {
             _moneyAppMoneyText[playerID].text = $"Money: ${_playerMoney[playerID]}";
+        }
+
+        if (_furnitureAppMoneyText[playerID] != null)
+        {
+            _furnitureAppMoneyText[playerID].text = $"Money: ${_playerMoney[playerID]}";
         }
     }
 }
