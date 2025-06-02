@@ -651,7 +651,7 @@ public class ButtonSelect : MonoBehaviour
 
         DisableFurnitureApps();
         EnableBigApps();
-        _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
+        //_eventSystem.SetSelectedGameObject(_shoppingAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
         Boarders.SetActive(false);
