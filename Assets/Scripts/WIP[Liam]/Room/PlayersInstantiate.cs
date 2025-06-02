@@ -29,10 +29,12 @@ public class PlayersInstantiate : MonoBehaviour
             if (plyrcnt % 2 != 0)
             {
                 player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(-player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y);
+                player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition = new Vector2(-player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition.x, player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition.y);
             }
             if (plyrcnt > 1)
             {
                 player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, -player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y);
+                player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition = new Vector2(player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition.x, -player.transform.GetChild(0).GetChild(1).GetComponent<RectTransform>().anchoredPosition.y);
             }
 
             for (int border = 0; border < player.transform.GetChild(0).GetChild(1).childCount; border++)
