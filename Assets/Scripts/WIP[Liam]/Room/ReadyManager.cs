@@ -63,6 +63,7 @@ public class ReadyManager : MonoBehaviour
 
     private void StartTheGame()
     {
+
         _readySetGoCanvas.SetActive(true);
         _readySetGoCanvas.GetComponent<ReadySetGo>().GameTimer = _timer;
         _readySetGoCanvas.GetComponent<ReadySetGo>().Players = Players;
