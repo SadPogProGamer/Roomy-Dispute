@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayersInstantiate : MonoBehaviour
 {
@@ -30,6 +31,9 @@ public class PlayersInstantiate : MonoBehaviour
             {
                 player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition = new Vector2(player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.x, -player.transform.GetChild(0).GetChild(0).GetComponent<RectTransform>().anchoredPosition.y);
             }
+
+            for (int border = 0; border < player.transform.GetChild(0).GetChild(1).childCount; border++)
+                player.transform.GetChild(0).GetChild(1).GetChild(border).GetComponent<Image>().color = _playerMaterials[plyrcnt].color * Color.gray;
             player.transform.GetChild(1).GetComponent<PlayerPointer>().PlayerIndex = plyrcnt;
             player.transform.GetChild(1).GetComponent<PlayerPointer>().Room = _room;
 

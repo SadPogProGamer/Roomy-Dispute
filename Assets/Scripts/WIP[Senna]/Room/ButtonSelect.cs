@@ -58,6 +58,9 @@ public class ButtonSelect : MonoBehaviour
     [SerializeField] private EventSystem _eventSystem;
     [SerializeField] private SabotageTool _SabotageTool;
 
+    [SerializeField] public GameObject Boarders;
+
+
     private GameObject _lastSelectedButton;
     private bool _canMove, _didLoop, _previousInteractibilityOfCheapFurniture, _currentInteractibilityOfCheapFurniture;
 
@@ -291,17 +294,8 @@ public class ButtonSelect : MonoBehaviour
         {
             if (direction == Vector2.up)
             {
-                if (currentSelected == _sabotageIcon)
-                {
-                    _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
-                }
 
-                else if (currentSelected == _cashAppIcon)
-                {
-                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
-                }
-
-                else if (currentSelected == _targetApp)
+                if (currentSelected == _targetApp)
                 {
                     _eventSystem.SetSelectedGameObject(_fireApp);
                     SetCorrectSabotageText();
@@ -329,17 +323,9 @@ public class ButtonSelect : MonoBehaviour
 
             else if (direction == Vector2.down)
             {
-                if (currentSelected == _shoppingAppIcon)
-                {
-                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
-                }
+                
 
-                else if (currentSelected == _sabotageIcon)
-                {
-                    _eventSystem.SetSelectedGameObject(_cashAppIcon);
-                }
-
-                else if (currentSelected == _fireApp && _targetApp.GetComponent<Button>().interactable)
+                if (currentSelected == _fireApp && _targetApp.GetComponent<Button>().interactable)
                 {
                     _eventSystem.SetSelectedGameObject(_targetApp);
                     SetCorrectSabotageText();
@@ -350,13 +336,13 @@ public class ButtonSelect : MonoBehaviour
                     SetCorrectSabotageText();
                 }
 
-
+                else
                 if (currentSelected == _cheapFurniture[_cheapFurnitureIndex])
                 {
                     StartCoroutine(CheckFurnitureSelectabilityPlacement(_mediumFurniture[_mediumFurnitureIndex]));
                     _canMove = false;
                 }
-
+                else
                 if (currentSelected == _mediumFurniture[_mediumFurnitureIndex])
                 {
                     StartCoroutine(CheckFurnitureSelectabilityPlacement(_expensiveFurniture[_expensiveFurnitureIndex]));
@@ -367,25 +353,47 @@ public class ButtonSelect : MonoBehaviour
 
             else if (direction == Vector2.left)
             {
-                if (currentSelected == _bombApp)
+                if (currentSelected == _sabotageIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
+                }
+
+                else if (currentSelected == _cashAppIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
+                }
+                else if (currentSelected == _bombApp)
                 {
                     _eventSystem.SetSelectedGameObject(_targetApp);
                     SetCorrectSabotageText();
                 }
-                if (currentSelected == _breakApp)
+                else if (currentSelected == _breakApp)
                 {
                     _eventSystem.SetSelectedGameObject(_fireApp);
                     SetCorrectSabotageText();
                 }
+
+
             }
 
             else if (direction == Vector2.right)
             {
+                if (currentSelected == _shoppingAppIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_sabotageIcon);
+                }
+
+                else if (currentSelected == _sabotageIcon)
+                {
+                    _eventSystem.SetSelectedGameObject(_cashAppIcon);
+                }
+                else
                 if (currentSelected == _fireApp)
                 {
                     _eventSystem.SetSelectedGameObject(_breakApp);
                     SetCorrectSabotageText();
                 }
+                else
                 if (currentSelected == _targetApp && _bombApp.GetComponent<Button>().interactable)
                 {
                     _eventSystem.SetSelectedGameObject(_bombApp);
@@ -466,6 +474,7 @@ public class ButtonSelect : MonoBehaviour
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
 
         _player1Phone.SetActive(false);
+        Boarders.SetActive(false);
     }
 
 
@@ -489,6 +498,7 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
+        Boarders.SetActive(false);
     }
 
 
@@ -512,6 +522,7 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
+        Boarders.SetActive(false);
     }
 
 
@@ -535,6 +546,7 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Pointer.GetComponent<ItemPlacement>().enabled = false;
         _player1Phone.SetActive(false);
+        Boarders.SetActive(false);
     }
     private void OnSabotageComplete()
     {
@@ -571,6 +583,7 @@ public class ButtonSelect : MonoBehaviour
             countSubtractionValue = 1;
 
         _sabotageCount -= countSubtractionValue;
+        Boarders.SetActive(true);
     }
 
 
@@ -598,6 +611,7 @@ public class ButtonSelect : MonoBehaviour
 
         _player1Phone.SetActive(true);
         CancelAction();
+        Boarders.SetActive(true);
     }
 
 
@@ -640,6 +654,7 @@ public class ButtonSelect : MonoBehaviour
         _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
         _player1Phone.SetActive(false);
         MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Cost));
+        Boarders.SetActive(false);
         //ScoreManager.GetComponent<ScoreManager>().IncreaseScore(_player1Pointer.GetComponent<PlayerPointer>().PlayerIndex, Math.Abs(item.GetComponent<ItemStats>().Points));
     }
 

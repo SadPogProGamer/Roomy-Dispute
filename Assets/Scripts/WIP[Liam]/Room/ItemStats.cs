@@ -27,6 +27,7 @@ public class ItemStats : MonoBehaviour
         {
             Timer += Time.deltaTime;
             PlayerPhone.SetActive(true);
+            PlayerPhone.transform.parent.GetComponent<ButtonSelect>().Boarders.SetActive(true);
 
             for (int childIndex = 0; childIndex < PlayerPhone.transform.childCount - 1; childIndex++)
             {
@@ -35,6 +36,7 @@ public class ItemStats : MonoBehaviour
             }
 
             PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).gameObject.SetActive(true);
+
             PlayerPhone.transform.parent.GetComponent<ButtonSelect>().MakeItSoThatNothingIsSelected();
             PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().value = PlacementTime - Timer;
             PlayerPhone.transform.GetChild(PlayerPhone.transform.childCount - 1).GetComponent<Slider>().maxValue = PlacementTime;
