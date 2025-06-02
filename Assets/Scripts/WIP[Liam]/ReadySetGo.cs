@@ -14,7 +14,7 @@ public class ReadySetGo : MonoBehaviour
     void Update()
     {
         _timer += Time.deltaTime;
-        if (_timer >=1)
+        if (_timer >.7f)
         {
             _ready.SetActive(true);
 
