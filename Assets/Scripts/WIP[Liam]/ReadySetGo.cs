@@ -28,7 +28,7 @@ public class ReadySetGo : MonoBehaviour
                     _set.SetActive(false);
                     _go.SetActive(true);
                     _go.transform.localScale += Vector3.one/10 * Time.deltaTime;
-                    if (_timer > 4.75)
+                    if (_timer > /*5.75*/6)
                     {
                         _go.SetActive(false);
 
@@ -37,7 +37,9 @@ public class ReadySetGo : MonoBehaviour
                         foreach (GameObject player in Players)
                         {
                             player.SetActive(true);
+                            player.transform.GetChild(0).GetComponent<ButtonSelect>().CancelAction();
                         }
+                        gameObject.SetActive(false);
                     }
                 }
             }
