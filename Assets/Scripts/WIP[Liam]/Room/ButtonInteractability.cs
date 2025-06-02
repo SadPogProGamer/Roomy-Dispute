@@ -42,7 +42,7 @@ public class ButtonInteractability : MonoBehaviour
 
         if(!(_prefab.tag.Contains("Placable") && !_placableHasEnoughSpace))
         {
-            if (_moneyManager.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().PlayerMoney[_playerIndexStartingFrom0.GetComponent<PlayerPointer>().PlayerIndex] >= _prefab.GetComponent<ItemStats>().Cost)
+            if (_moneyManager.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>()._playerMoney[_playerIndexStartingFrom0.GetComponent<PlayerPointer>().PlayerIndex] >= _prefab.GetComponent<ItemStats>().Cost)
             {
                 GetComponent<Button>().interactable = true;
                 _placableHasEnoughMoney = true;

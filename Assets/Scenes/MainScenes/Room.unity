@@ -8506,11 +8506,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerScores: 00000000000000000000000000000000
-  _scoreTexts:
-  - {fileID: 1890720704}
-  - {fileID: 1126272964}
-  - {fileID: 834999958}
-  - {fileID: 256462189}
 --- !u!4 &1512700523
 Transform:
   m_ObjectHideFlags: 0
@@ -11513,12 +11508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c6c824bf4069e458d9166ce38f4197, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerTexts:
-  - {fileID: 686705438}
-  - {fileID: 604139337}
-  - {fileID: 429247769}
-  - {fileID: 1915454036}
-  PlayerMoney: 
+  _initialMoney: 400
+  _playerMoney: 
 --- !u!4 &2068198809
 Transform:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class PlayersInstantiate : MonoBehaviour
     private ReadyManager _readyManager;
 
     public Material[] _playerMaterials;
+
+    public List<GameObject> SpawnedPlayers { get; private set; } = new List<GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -44,7 +47,14 @@ public class PlayersInstantiate : MonoBehaviour
                 rend.material = _playerMaterials[plyrcnt];
             }
 
+            SpawnedPlayers.Add(player);
             _readyManager.Players.Add(player);
         }
+    }
+    public GameObject GetPlayer(int index)
+    {
+        if (index >= 0 && index < SpawnedPlayers.Count)
+            return SpawnedPlayers[index];
+        return null;
     }
 }

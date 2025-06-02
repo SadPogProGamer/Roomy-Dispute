@@ -1,61 +1,17 @@
-//using UnityEngine;
-//using TMPro;
-
-//public class ScoreManager : MonoBehaviour
-//{
-//    public static ScoreManager _instance;
-
-//    public int[] _playerScores = new int[4];  // Array for 4 players
-//    public TextMeshProUGUI[] _scoreTexts;     // Assign 4 TextMeshProUGUI elements, one for each player
-//    private PlayersInstantiate _playerInstantiate;
-
-//    private void Awake()
-//    {
-//        if (_instance == null)
-//            _instance = this;
-//        else
-//            Destroy(gameObject);
-//    }
-
-//    private void Start()
-//    {
-//        _playerInstantiate = Object.FindFirstObjectByType<PlayersInstantiate>();
-
-//        for (int i = 0; i < _scoreTexts.Length; i++)
-//        {
-//            _scoreTexts[i].color = Color.clear;
-//            UpdateScoreText(i);
-//        }
-
-//        for (int i = 0; i < _playerInstantiate._playerCount; i++)
-//        {
-//            _scoreTexts[i].color = _playerInstantiate._playerMaterials[i].color;
-//        }
-//    }
-
-//    public void AddPoints(int playerIndex, int points)
-//    {
-//        if (playerIndex < 0 || playerIndex >= _playerScores.Length) return;
-
-//        _playerScores[playerIndex] += points;
-//        UpdateScoreText(playerIndex);
-//    }
-
-//    private void UpdateScoreText(int playerIndex)
-//    {
-//        if (_scoreTexts != null && _scoreTexts.Length > playerIndex && _scoreTexts[playerIndex] != null)
-//            _scoreTexts[playerIndex].text = $"Player {playerIndex + 1} Score: {_playerScores[playerIndex]}";
-//    }
-//}
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager _instance;
 
-    public int[] _playerScores = new int[4];  // Scores for 4 players
-    public TextMeshProUGUI[] _scoreTexts;     // Assign 4 UI elements in scene
+    [HideInInspector] public List<int> _playerScores = new List<int>();
+
+    private const int _initialScore = 0;
+
+    private List<TextMeshProUGUI> _scoreTexts = new List<TextMeshProUGUI>();
+
     private PlayersInstantiate _playerInstantiate;
 
     private void Awake()
@@ -75,37 +31,72 @@ public class ScoreManager : MonoBehaviour
     {
         _playerInstantiate = Object.FindFirstObjectByType<PlayersInstantiate>();
 
-        for (int i = 0; i < _scoreTexts.Length; i++)
-        {
-            _scoreTexts[i].color = Color.clear;
-            UpdateScoreText(i);
-        }
-
         for (int i = 0; i < _playerInstantiate._playerCount; i++)
         {
-            _scoreTexts[i].color = _playerInstantiate._playerMaterials[i].color;
+            GameObject player = _playerInstantiate.GetPlayer(i); // Assumes you added this method (see below)
+
+            Transform ScoreTextTransform = player.transform.Find("Phone/PhoneImage/CashAppButton/PointCount");
+
+            if (ScoreTextTransform != null)
+            {
+                TextMeshProUGUI ScoreText = ScoreTextTransform.GetComponent<TextMeshProUGUI>();
+
+                if (ScoreText != null)
+                {
+                    _playerScores.Add(_initialScore);
+                    _scoreTexts.Add(ScoreText);
+                    ScoreText.text = $"Score: {_initialScore}";
+                    Debug.Log($"ScoreText initialized for player {i}");
+                }
+                else
+                {
+                    Debug.LogWarning($"ScoreText component missing on player {i}");
+                    _scoreTexts.Add(null);
+                    _playerScores.Add(_initialScore);
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"ScoreText not found on player {i}");
+                _scoreTexts.Add(null);
+                _playerScores.Add(_initialScore);
+            }
         }
+    }
+
+    private void Update()
+    {
+        UpdateAllScoreUI();
     }
 
     public void AddPoints(int playerIndex, int points)
     {
-        if (playerIndex < 0 || playerIndex >= _playerScores.Length) return;
+        if (playerIndex < 0 || playerIndex >= _playerScores.Count) return;
 
         _playerScores[playerIndex] += points;
-        UpdateScoreText(playerIndex);
     }
 
     public void RemovePoints(int playerIndex, int points)
     {
-        if (playerIndex < 0 || playerIndex >= _playerScores.Length) return;
+        if (playerIndex < 0 || playerIndex >= _playerScores.Count) return;
 
         _playerScores[playerIndex] -= points;
-        UpdateScoreText(playerIndex);
     }
 
-    private void UpdateScoreText(int playerIndex)
+
+    private void UpdateAllScoreUI()
     {
-        if (_scoreTexts != null && _scoreTexts.Length > playerIndex && _scoreTexts[playerIndex] != null)
-            _scoreTexts[playerIndex].text = $"Player {playerIndex + 1} Score: {_playerScores[playerIndex]}";
+        for (int i = 0; i < _playerInstantiate._playerCount; i++)
+        {
+            UpdateScoreUI(i);
+        }
+    }
+
+    private void UpdateScoreUI(int playerID)
+    {
+        if (_scoreTexts[playerID] != null)
+        {
+            _scoreTexts[playerID].text = $"Score: {_playerScores[playerID]}";
+        }
     }
 }

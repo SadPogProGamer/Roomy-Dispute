@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class WinScript : MonoBehaviour
 {
@@ -19,11 +20,11 @@ public class WinScript : MonoBehaviour
 
         }
 
-        int[] scores = ScoreManager._instance._playerScores;
+        List<int> scores = ScoreManager._instance._playerScores;
         int winningPlayerIndex = 0;
         int highestScore = scores[0];
 
-        for (int i = 1; i < scores.Length; i++)
+        for (int i = 1; i < scores.Count; i++)
         {
             if (scores[i] > highestScore)
             {
