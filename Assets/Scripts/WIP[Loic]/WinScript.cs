@@ -6,21 +6,17 @@ public class WinScript : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI winText; // Assign in Inspector
 
-    
+    private ScoreManager _scoreManager;
 
     void Start()
     {
+        _scoreManager = FindFirstObjectByType<ScoreManager>();
+
         ShowWinner();
     }
 
     void ShowWinner()
     {
-        //if (ScoreManager._instance == null || winText == null)
-        //{
-        //    Debug.LogError("ScoreManager or winText not set.");
-        //    return;
-        //}
-
         List<int> scores = ScoreManager._instance._playerScores;
         int winningPlayerIndex = 0;
         int highestScore = scores[0];

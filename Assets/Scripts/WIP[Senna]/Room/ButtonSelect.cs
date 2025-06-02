@@ -240,7 +240,6 @@ public class ButtonSelect : MonoBehaviour
         DisableFurnitureApps();
         DisableCashApp();
         SetCorrectSabotageText();
-        _furnitureText.SetActive(false);
     }
 
     private void CheckCurrentSelectedButton()
@@ -703,6 +702,7 @@ public class ButtonSelect : MonoBehaviour
         {
             furniture.SetActive(false);
         }
+        _furnitureText.SetActive(false);
     }
 
     private void EnableFurnitureApps()
