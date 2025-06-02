@@ -17,18 +17,20 @@ public class ReadySetGo : MonoBehaviour
         if (_timer >.7f)
         {
             _ready.SetActive(true);
+            _ready.transform.localScale += Vector3.one / 10 * Time.deltaTime;
 
             if (_timer > 2.3f)
             {
                 _ready.SetActive(false);
                 _set.SetActive(true);
+                _set.transform.localScale += Vector3.one / 10 * Time.deltaTime;
 
                 if (_timer > 3.7f)
                 {
                     _set.SetActive(false);
                     _go.SetActive(true);
                     _go.transform.localScale += Vector3.one/10 * Time.deltaTime;
-                    if (_timer > /*5.75*/6)
+                    if (_timer > 6)
                     {
                         _go.SetActive(false);
 
