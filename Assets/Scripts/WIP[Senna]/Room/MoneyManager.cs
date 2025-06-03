@@ -78,6 +78,11 @@ public class MoneyManager : MonoBehaviour
         //}
 
         UpdateAllMoneyUI();
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManager.LoadScene("WinScreen");
+        }
     }
 
     public void IncreaseMoney(int playerID, int amount)
