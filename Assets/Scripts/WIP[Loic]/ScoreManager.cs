@@ -19,7 +19,7 @@ public class ScoreManager : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            DontDestroyOnLoad(gameObject); //  Important to persist scores between scenes
+            DontDestroyOnLoad(gameObject); 
         }
         else
         {
@@ -33,7 +33,7 @@ public class ScoreManager : MonoBehaviour
 
         for (int i = 0; i < _playerInstantiate._playerCount; i++)
         {
-            GameObject player = _playerInstantiate.GetPlayer(i); // Assumes you added this method (see below)
+            GameObject player = _playerInstantiate.GetPlayer(i); 
 
             Transform ScoreTextTransform = player.transform.Find("Phone/PhoneImage/CashAppButton/PointCount");
 
@@ -46,7 +46,6 @@ public class ScoreManager : MonoBehaviour
                     _playerScores.Add(_initialScore);
                     _scoreTexts.Add(ScoreText);
                     ScoreText.text = $"Score: {_initialScore}";
-                    Debug.Log($"ScoreText initialized for player {i}");
                 }
                 else
                 {
