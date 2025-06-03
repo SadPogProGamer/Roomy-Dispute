@@ -36,6 +36,7 @@ public class IncreaseScore : MonoBehaviour
     private float _lerpTime = 1f;
 
     private bool _canOrderBorders = false;
+    [HideInInspector] public bool _canContinue = false;
 
     private Color[] _playerColors = new Color[4]
     {
@@ -79,32 +80,6 @@ public class IncreaseScore : MonoBehaviour
         UpdateScoreText();
         GetHighestScore();
         OrderBorders();
-
-        if (_firstPlaceBorder.transform.position == _borderPositions[0].position)
-        {
-            Debug.Log($"First Place Border Position has reached the position");
-            Debug.Log(_firstPlaceBorder.transform.GetChild(2).gameObject.name);
-        }
-    }
-
-    private void ShowIcons()
-    {
-        if (_firstPlaceBorder != null)
-        {
-            _firstPlaceBorder.transform.GetChild(2).gameObject.SetActive(true);
-        }
-        if (_secondPlaceBorder != null)
-        {
-            _secondPlaceBorder.transform.GetChild(3).gameObject.SetActive(true);
-        }
-        if (_thirdPlaceBorder != null)
-        {
-            _thirdPlaceBorder.transform.GetChild(4).gameObject.SetActive(true);
-        }
-        if (_fourthPlaceBorder != null)
-        {
-            _fourthPlaceBorder.transform.GetChild(5).gameObject.SetActive(true);
-        }
     }
 
     private void OrderBorders()
@@ -120,7 +95,7 @@ public class IncreaseScore : MonoBehaviour
         if (_canOrderBorders)
         {
             if (_firstPlaceBorder == null)
-            {
+            {              
                 return; // Ensure first place border is initialized
             }
 
@@ -187,7 +162,6 @@ public class IncreaseScore : MonoBehaviour
                     _fourthPlaceBorder.transform.position = Vector3.Lerp(_fourthPlaceBorder.transform.position, _borderPositions[3].position, Time.deltaTime * _lerpTime);
                 }
             }
-            ShowIcons();
         }
     }
 

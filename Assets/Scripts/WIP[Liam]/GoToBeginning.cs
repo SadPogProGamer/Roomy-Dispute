@@ -1,17 +1,24 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GoToBeginning : MonoBehaviour
 {
-    private float _timer = 30;
+    [SerializeField] private IncreaseScore _increaseScore;
+
+    [SerializeField] private Image _continueImage;
 
     // Update is called once per frame
     void Update()
     {
-        _timer -= Time.deltaTime;
-        if ( _timer < 0)
+        if (_increaseScore._canContinue)
         {
-            SceneManager.LoadScene(0);
+            _continueImage.enabled = true;
+            if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+            {
+                SceneManager.LoadScene(0);
+            }
         }
     }
 }
