@@ -79,6 +79,11 @@ public class MoneyApp : MonoBehaviour
         if (_buttonIndex == buttonIndex)
         {
             transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().IncreaseMoney(_playerPointer.PlayerIndex, 10);
+            
+            if (Random.Range(1,21) == 1)
+            {
+                transform.parent.parent.GetComponent<ButtonSelect>()._sabotageCount++;
+            }
             _previousButtonIndex = _buttonIndex;
             _buttonIndex = Random.Range(0, 4);
             MakeTheArrowsTheChosenColor(Color.green);
