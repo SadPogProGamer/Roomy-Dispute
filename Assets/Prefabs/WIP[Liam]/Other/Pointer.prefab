@@ -488,7 +488,10 @@ MonoBehaviour:
   selectableLayers:
     serializedVersion: 2
     m_Bits: 1025
+  bombRadius: 0.25
+  bombPreview: {fileID: 0}
   aimOrigin: {fileID: 0}
+  SabotageHasBeenActivated: 0
 --- !u!1 &6265401078191588886
 GameObject:
   m_ObjectHideFlags: 0
