@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +8,14 @@ using UnityEngine.InputSystem;
 public class SabotageTool : MonoBehaviour
 {
     public enum SabotageMode { Fire, Target, Break, Bomb }
+
+    [Header("Audio")]
+    [SerializeField] private AudioClip fireSound;
+    [SerializeField] private AudioClip targetSound;
+    [SerializeField] private AudioClip breakSound;
+    [SerializeField] private AudioClip bombSound;
+    private AudioSource _audioSource;
+
 
     [SerializeField]
     private GameObject _playerPhone;
@@ -29,18 +38,36 @@ public class SabotageTool : MonoBehaviour
 
     private GameObject _currentTarget;
     private Material[] _originalMaterials;
+    private readonly System.Collections.Generic.List<Renderer> _bombHighlightedRenderers = new();
+    private readonly System.Collections.Generic.Dictionary<Renderer, Material[]> _originalBombMaterials = new();
+
 
     public event Action OnComplete;
     public event Action OnCancel;
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+    }
 
+    private List<GameObject> _highlightedObjects = new List<GameObject>();
     private void Update()
     {
         if (aimOrigin == null) return;
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
         Ray ray = Camera.main.ScreenPointToRay(screenPos);
         Debug.DrawRay(ray.origin, ray.direction * rayDistance, Color.red);
+
         if (Mode == SabotageMode.Bomb)
         {
+            // Clear previous highlights
+            foreach (GameObject obj in _highlightedObjects)
+            {
+                Renderer rend = obj.GetComponent<Renderer>();
+                if (rend != null && _originalMaterials != null)
+                    rend.materials = _originalMaterials;
+            }
+            _highlightedObjects.Clear();
+
             if (Physics.Raycast(ray, out RaycastHit bombHit, rayDistance, selectableLayers))
             {
                 _bombTargetPoint = bombHit.point;
@@ -51,11 +78,30 @@ public class SabotageTool : MonoBehaviour
                     bombPreview.transform.position = _bombTargetPoint + Vector3.up * 0.01f;
                     bombPreview.transform.localScale = new Vector3(bombRadius * 2, 0.1f, bombRadius * 2);
                 }
+
+                Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
+                foreach (var collider in hits)
+                {
+                    if (collider.TryGetComponent(out ItemStats stats))
+                    {
+                        Renderer rend = collider.GetComponent<Renderer>();
+                        if (rend != null)
+                        {
+                            _originalMaterials = rend.materials;
+                            Material highlightMat = new Material(rend.material);
+                            highlightMat.color = highlightColor;
+                            rend.material = highlightMat;
+
+                            _highlightedObjects.Add(collider.gameObject);
+                        }
+                    }
+                }
             }
 
             return;
         }
-        
+
+
         if (Physics.Raycast(ray, out RaycastHit hit, rayDistance, selectableLayers))
         {
             GameObject candidate = hit.collider.gameObject;
@@ -102,6 +148,36 @@ public class SabotageTool : MonoBehaviour
             ClearCurrentTarget();
         }
     }
+    private void PlaySabotageSound()
+    {
+        if (_audioSource == null) return;
+
+        AudioClip clipToPlay = Mode switch
+        {
+            SabotageMode.Fire => fireSound,
+            SabotageMode.Target => targetSound,
+            SabotageMode.Break => breakSound,
+            SabotageMode.Bomb => bombSound,
+            _ => null
+        };
+
+        if (clipToPlay != null)
+            _audioSource.PlayOneShot(clipToPlay);
+    }
+    private void ClearBombHighlights()
+    {
+        foreach (var renderer in _bombHighlightedRenderers)
+        {
+            if (renderer != null && _originalBombMaterials.TryGetValue(renderer, out var originalMats))
+            {
+                renderer.materials = originalMats;
+            }
+        }
+
+        _bombHighlightedRenderers.Clear();
+        _originalBombMaterials.Clear();
+    }
+
 
     public void OnComfirm()
     {
@@ -122,7 +198,8 @@ public class SabotageTool : MonoBehaviour
 
                 if (bombPreview != null)
                     bombPreview.SetActive(false);
-
+                PlaySabotageSound();
+                ClearBombHighlights();
                 OnComplete?.Invoke();
                 return;
             }
@@ -132,6 +209,8 @@ public class SabotageTool : MonoBehaviour
                 _currentTarget.GetComponent<ItemStats>().ActivatePhone();
                 Destroy(_currentTarget);
                 _currentTarget = null;
+                ClearBombHighlights();
+                PlaySabotageSound();
                 OnComplete?.Invoke();
            
             }
@@ -174,6 +253,7 @@ public class SabotageTool : MonoBehaviour
             if (bombPreview != null)
                 bombPreview.SetActive(false);
             ClearCurrentTarget();
+            ClearBombHighlights();
             OnCancel?.Invoke();
         }
     }
