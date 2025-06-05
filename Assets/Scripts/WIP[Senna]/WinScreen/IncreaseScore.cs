@@ -67,7 +67,6 @@ public class IncreaseScore : MonoBehaviour
         {
             if (_orderingHasFinished)
             {
-                if (Gamepad.current.buttonSouth.wasPressedThisFrame)
                     SceneManager.LoadScene(0);
             }
             else
