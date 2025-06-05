@@ -90,7 +90,7 @@ public class MoneyApp : MonoBehaviour
             MakeTheArrowsTheChosenColor(Color.red);
             _isCountingDown = true;
             _revertingToWhiteTimer = .2f;
-            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 50);
+            transform.parent.parent.GetComponent<ButtonSelect>().MoneyManager.GetComponent<MoneyManager>().DecreaseMoney(_playerPointer.PlayerIndex, 30);
         }
 
         _canMove = false;
