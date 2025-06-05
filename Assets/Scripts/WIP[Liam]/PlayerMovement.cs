@@ -32,6 +32,6 @@ public class PlayerMovement : MonoBehaviour
             transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(0, _angle, 0), _normalisedTime);
         }
 
-        _characterController.Move(_movement);
+        _characterController.Move(_movement+Physics.gravity);
     }
 }
