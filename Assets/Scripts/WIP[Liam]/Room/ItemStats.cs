@@ -10,7 +10,7 @@ public class ItemStats : MonoBehaviour
     private bool phoneHasNotBeenActivated = true;
     public int PlayerIndex;
     private bool pointsAdded = false;  // To prevent adding points multiple times
-
+    private bool pointsRemoved = false; // To prevent removing points multiple times
 
     // Update is called once per frame
     void Update()
@@ -50,7 +50,10 @@ public class ItemStats : MonoBehaviour
 
     public void RemovePoints()
     {
+        if (pointsRemoved) return;
+
         ScoreManager._instance.RemovePoints(PlayerIndex, Points);
+        pointsRemoved = true;
     }
 
     public void ActivatePhone()
@@ -66,4 +69,3 @@ public class ItemStats : MonoBehaviour
         phoneHasNotBeenActivated = false;
     }
 }
-
