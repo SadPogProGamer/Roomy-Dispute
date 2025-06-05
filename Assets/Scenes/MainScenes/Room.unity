@@ -2870,6 +2870,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6540236748116860180, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
+      propertyPath: bombRadius
+      value: 0.00000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6540236748116860180, guid: cdf688f78e4e2844cacd1ad1428bb237, type: 3}
       propertyPath: gridLayers.m_Bits
       value: 1
       objectReference: {fileID: 0}
