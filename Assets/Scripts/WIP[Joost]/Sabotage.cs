@@ -134,39 +134,65 @@ public class SabotageTool : MonoBehaviour
 
     public void OnComfirm()
     {
-        if (SabotageHasBeenActivated)
+        if (!SabotageHasBeenActivated) return;
+
+        if (Mode == SabotageMode.Bomb)
         {
-            if (Mode == SabotageMode.Bomb)
+            Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
+            foreach (var hit in hits)
             {
-                Collider[] hits = Physics.OverlapSphere(_bombTargetPoint, bombRadius, selectableLayers);
-                foreach (var hit in hits)
+                if (hit.TryGetComponent(out ItemStats stats))
                 {
-                    if (hit.TryGetComponent(out ItemStats stats))
-                    {
-                        stats.RemovePoints();
-                        stats.ActivatePhone();
-                        Destroy(hit.gameObject);
-                    }
+                    HandleItemAndChildren(hit.gameObject);
                 }
-
-                if (bombPreview != null)
-                    bombPreview.SetActive(false);
-                PlaySabotageSound();
-                OnComplete?.Invoke();
-                return;
             }
-            if (_currentTarget != null)
-            {
-                _currentTarget.GetComponent<ItemStats>().RemovePoints();
-                _currentTarget.GetComponent<ItemStats>().ActivatePhone();
-                Destroy(_currentTarget);
-                _currentTarget = null;
-                PlaySabotageSound();
-                OnComplete?.Invoke();
 
-            }
+            if (bombPreview != null)
+                bombPreview.SetActive(false);
+
+            PlaySabotageSound();
+            OnComplete?.Invoke();
+            return;
+        }
+
+        if (_currentTarget != null)
+        {
+            HandleItemAndChildren(_currentTarget);
+            _currentTarget = null;
+
+            PlaySabotageSound();
+            OnComplete?.Invoke();
         }
     }
+
+    private void HandleItemAndChildren(GameObject item)
+    {
+        if (item == null) return;
+
+        // Avoid multiple calls by checking for ItemStats and object status
+        if (item.TryGetComponent(out ItemStats mainStats) && item.activeInHierarchy)
+        {
+            mainStats.RemovePoints();
+            mainStats.ActivatePhone();
+        }
+
+        // Loop through children
+        foreach (Transform child in item.transform)
+        {
+            GameObject childObj = child.gameObject;
+            if (childObj == null || !childObj.activeInHierarchy) continue;
+
+            if (childObj.TryGetComponent(out ItemStats childStats))
+            {
+                childStats.RemovePoints();
+                childStats.ActivatePhone();
+            }
+        }
+
+        Destroy(item);
+    }
+
+
 
     private void SelectNewTarget(GameObject newTarget)
     {
