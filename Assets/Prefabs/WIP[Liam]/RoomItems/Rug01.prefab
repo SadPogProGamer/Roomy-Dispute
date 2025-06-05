@@ -86,7 +86,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 1
   Cost: 100
-  Points: 10000
+  Points: 100
   IsGlass: 0
   IsWood: 0
   IsPlaced: 0

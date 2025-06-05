@@ -137,9 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 1
   Cost: 50
-  Points: 8000
+  Points: 100
   IsGlass: 0
   IsWood: 1
   IsPlaced: 0
   PlacementTime: 3
   Timer: 0
+  PlayerPhone: {fileID: 0}
+  PlayerIndex: 0
