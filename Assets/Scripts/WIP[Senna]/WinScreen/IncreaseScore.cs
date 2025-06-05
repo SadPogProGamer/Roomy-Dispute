@@ -217,61 +217,36 @@ public class IncreaseScore : MonoBehaviour
         }
     }
 
+
     private void GetHighestScore()
     {
-        for (int i = 0; i < Gamepad.all.Count; i++)
+        var playerCount = Gamepad.all.Count;
+        List<(int score, int index)> scoreList = new List<(int score, int index)>();
+
+        for (int i = 0; i < playerCount; i++)
         {
-            if (_scoreManager._playerScores[i] > _highestScore)
-            {
-                _fourthHighestScore = _thirdHighestScore;
-                _thirdHighestScore = _secondHighestScore;
-                _secondHighestScore = _highestScore;
-                _highestScore = _scoreManager._playerScores[i];
-
-                _fourthHighestScorePlayer = _thirdHighestScorePlayer;
-                _thirdHighestScorePlayer = _secondHighestScorePlayer;
-                _secondHighestScorePlayer = _highestScorePlayer;
-                _highestScorePlayer = $"Player {i + 1}";
-
-                _fourthPlaceBorder = _thirdPlaceBorder;
-                _thirdPlaceBorder = _secondPlaceBorder;
-                _secondPlaceBorder = _firstPlaceBorder;
-                _firstPlaceBorder = _spawnedBorders[i];
-            }
-            else if (_scoreManager._playerScores[i] > _secondHighestScore && _scoreManager._playerScores[i] < _highestScore)
-            {
-                _fourthHighestScore = _thirdHighestScore;
-                _thirdHighestScore = _secondHighestScore;
-                _secondHighestScore = _scoreManager._playerScores[i];
-
-                _fourthHighestScorePlayer = _thirdHighestScorePlayer;
-                _thirdHighestScorePlayer = _secondHighestScorePlayer;
-                _secondHighestScorePlayer = $"Player {i + 1}";
-
-                _fourthPlaceBorder = _thirdPlaceBorder;
-                _thirdPlaceBorder = _secondPlaceBorder;
-                _secondPlaceBorder = _spawnedBorders[i];
-            }
-            else if (_scoreManager._playerScores[i] > _thirdHighestScore && _scoreManager._playerScores[i] < _secondHighestScore)
-            {
-                _fourthHighestScore = _thirdHighestScore;
-                _thirdHighestScore = _scoreManager._playerScores[i];
-
-                _fourthHighestScorePlayer = _thirdHighestScorePlayer;
-                _thirdHighestScorePlayer = $"Player {i + 1}";
-
-                _fourthPlaceBorder = _thirdPlaceBorder;
-                _thirdPlaceBorder = _spawnedBorders[i];
-            }
-            else if (_scoreManager._playerScores[i] > _fourthHighestScore && _scoreManager._playerScores[i] < _thirdHighestScore)
-            {
-                _fourthHighestScore = _scoreManager._playerScores[i];
-
-                _fourthHighestScorePlayer = $"Player {i + 1}";
-
-                _fourthPlaceBorder = _spawnedBorders[i];
-            }
+            scoreList.Add((_scoreManager._playerScores[i], i));
         }
+
+        scoreList.Sort((a, b) => b.score.CompareTo(a.score));
+
+        _firstPlaceBorder = null;
+        _secondPlaceBorder = null;
+        _thirdPlaceBorder = null;
+        _fourthPlaceBorder = null;
+
+        if (scoreList.Count > 0)
+            _firstPlaceBorder = _spawnedBorders[scoreList[0].index];
+
+        if (scoreList.Count > 1)
+            _secondPlaceBorder = _spawnedBorders[scoreList[1].index];
+
+        if (scoreList.Count > 2)
+            _thirdPlaceBorder = _spawnedBorders[scoreList[2].index];
+
+        if (scoreList.Count > 3)
+            _fourthPlaceBorder = _spawnedBorders[scoreList[3].index];
+
     }
 
     private void MakeCanvasParent()
@@ -306,9 +281,17 @@ public class IncreaseScore : MonoBehaviour
 
             if (_spawnedBorders[i] != null)
             {
-                _spawnedBorders[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = $"Score: {_playerScores[i]}";
-            }
+                string label = $"Score: {_playerScores[i]}";
 
+                //tie check
+                int countSameScore = _scoreManager._playerScores.FindAll(score => score == _scoreManager._playerScores[i]).Count;
+                if (countSameScore > 1)
+                {
+                    label += " (Tie)";
+                }
+
+                _spawnedBorders[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = label;
+            }
             else
             {
                 Debug.LogWarning($"Border for player {i} is null.");
