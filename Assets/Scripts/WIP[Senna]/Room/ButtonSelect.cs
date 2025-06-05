@@ -474,7 +474,7 @@ public class ButtonSelect : MonoBehaviour
         pointer.CanMove = true;
         mesh.enabled = true;
 
-        // Assign pointer's transform as the aim origin
+        sabotage.Mode = SabotageTool.SabotageMode.Fire;
         sabotage.aimOrigin = _player1Pointer.transform;
         sabotage.enabled = true;
         sabotage.OnComplete += OnSabotageComplete;
