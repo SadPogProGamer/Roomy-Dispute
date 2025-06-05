@@ -1789,6 +1789,10 @@ MonoBehaviour:
   - {fileID: 1290417683}
   - {fileID: 1112706744}
   - {fileID: 1382216372}
+  positionP1: {fileID: 902526043}
+  positionP2: {fileID: 1290417683}
+  positionP3: {fileID: 1112706744}
+  positionP4: {fileID: 1382216372}
 --- !u!4 &1124612112
 Transform:
   m_ObjectHideFlags: 0

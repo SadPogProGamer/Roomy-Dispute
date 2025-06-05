@@ -29,10 +29,8 @@ public class IncreaseScore : MonoBehaviour
     private Image _thirdPlaceBorder;
     private Image _fourthPlaceBorder;
 
-    public Transform positionP1;
-    public Transform positionP2;
-    public Transform positionP3;
-    public Transform positionP4;
+    public RectTransform positionP1, positionP2, positionP3, positionP4;
+
 
     private List<int> _playerScores = new List<int>();
     private List<Image> _spawnedBorders = new List<Image>();
@@ -257,6 +255,28 @@ public class IncreaseScore : MonoBehaviour
                 positionP4.GetComponent<RectTransform>().anchoredPosition;
         }
     }
+    //private void GetHighestScore()
+    //{
+    //    var playerCount = Gamepad.all.Count;
+    //    List<(int score, int index)> scoreList = new List<(int score, int index)>();
+
+    //    for (int i = 0; i < playerCount; i++)
+    //    {
+    //        scoreList.Add((_scoreManager._playerScores[i], i));
+    //    }
+
+    //    scoreList.Sort((a, b) => b.score.CompareTo(a.score));
+
+    //    RectTransform[] positions = new RectTransform[] { positionP1, positionP2, positionP3, positionP4 };
+
+    //    for (int rank = 0; rank < Mathf.Min(scoreList.Count, positions.Length); rank++)
+    //    {
+    //        int playerIndex = scoreList[rank].index;
+
+    //        RectTransform border = _spawnedBorders[playerIndex].GetComponent<RectTransform>();
+    //        border.anchoredPosition = positions[rank].anchoredPosition;
+    //    }
+    //}
 
 
     private void MakeCanvasParent()
