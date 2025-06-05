@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -102,17 +103,24 @@ public class IncreaseScore : MonoBehaviour
     {
         List<(int score, int index)> scoreList = new List<(int, int)>();
 
-        for (int i = 0; i < _scoreManager._playerScores.Count; i++)
+        print(_scoreManager._playerScores.Count +"b");
+
+        for (int i = 0; i < Gamepad.all.Count; i++)
         {
             scoreList.Add((_scoreManager._playerScores[i], i));
         }
 
-        scoreList.Sort((a, b) => b.score.CompareTo(a.score)); // Descending order
+        scoreList = scoreList.OrderByDescending(x => x.score).ToList()/*.Sort((a, b) => b.score.CompareTo(a.score))*/; // Descending order
 
-        if (scoreList.Count > 0) _firstPlaceBorder = _spawnedBorders[scoreList[0].index];
-        if (scoreList.Count > 1) _secondPlaceBorder = _spawnedBorders[scoreList[1].index];
-        if (scoreList.Count > 2) _thirdPlaceBorder = _spawnedBorders[scoreList[2].index];
-        if (scoreList.Count > 3) _fourthPlaceBorder = _spawnedBorders[scoreList[3].index];
+        print(scoreList.Count);
+        if (_spawnedBorders.Count == scoreList.Count)
+        {
+            if (scoreList.Count > 0) _firstPlaceBorder = _spawnedBorders[scoreList[0].index];
+            if (scoreList.Count > 1) _secondPlaceBorder = _spawnedBorders[scoreList[1].index];
+            if (scoreList.Count > 2) _thirdPlaceBorder = _spawnedBorders[scoreList[2].index];
+            if (scoreList.Count > 3) _fourthPlaceBorder = _spawnedBorders[scoreList[3].index];
+        }
+        
     }
 
     private void OrderBorders()
