@@ -432,6 +432,13 @@ public class ButtonSelect : MonoBehaviour
             _bombApp.GetComponent<Button>().interactable = false;
             if (_sabotageCount < 2)
                 _targetApp.GetComponent<Button>().interactable = false;
+            else 
+                _targetApp.GetComponent<Button>().interactable = true;
+        }
+        else
+        { 
+            _bombApp.GetComponent<Button>().interactable = true;
+            _targetApp.GetComponent<Button>().interactable = true;
         }
     }
 
