@@ -12,7 +12,7 @@ public class GoToGame : MonoBehaviour
     {
         if (Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(2);
         }
     }
 }

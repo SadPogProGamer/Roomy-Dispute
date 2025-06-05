@@ -38,7 +38,7 @@ public class Timer : MonoBehaviour
         }
         else if (_roundTime <= 0.0f && _round == 9)
         {
-            SceneManager.LoadScene(/*"WinScreen"*/2);
+            SceneManager.LoadScene(3);
             return;
         }
 
