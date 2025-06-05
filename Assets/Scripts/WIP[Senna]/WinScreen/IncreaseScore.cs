@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
 public class IncreaseScore : MonoBehaviour
 {
     [SerializeField] private Image _borderPrefab;
@@ -29,6 +28,11 @@ public class IncreaseScore : MonoBehaviour
     private Image _secondPlaceBorder;
     private Image _thirdPlaceBorder;
     private Image _fourthPlaceBorder;
+
+    public Transform positionP1;
+    public Transform positionP2;
+    public Transform positionP3;
+    public Transform positionP4;
 
     private List<int> _playerScores = new List<int>();
     private List<Image> _spawnedBorders = new List<Image>();
@@ -217,7 +221,6 @@ public class IncreaseScore : MonoBehaviour
         }
     }
 
-
     private void GetHighestScore()
     {
         var playerCount = Gamepad.all.Count;
@@ -230,24 +233,31 @@ public class IncreaseScore : MonoBehaviour
 
         scoreList.Sort((a, b) => b.score.CompareTo(a.score));
 
-        _firstPlaceBorder = null;
-        _secondPlaceBorder = null;
-        _thirdPlaceBorder = null;
-        _fourthPlaceBorder = null;
-
         if (scoreList.Count > 0)
-            _firstPlaceBorder = _spawnedBorders[scoreList[0].index];
+        {
+            _spawnedBorders[scoreList[0].index].GetComponent<RectTransform>().anchoredPosition =
+                positionP1.GetComponent<RectTransform>().anchoredPosition;
+        }
 
         if (scoreList.Count > 1)
-            _secondPlaceBorder = _spawnedBorders[scoreList[1].index];
+        {
+            _spawnedBorders[scoreList[1].index].GetComponent<RectTransform>().anchoredPosition =
+                positionP2.GetComponent<RectTransform>().anchoredPosition;
+        }
 
         if (scoreList.Count > 2)
-            _thirdPlaceBorder = _spawnedBorders[scoreList[2].index];
+        {
+            _spawnedBorders[scoreList[2].index].GetComponent<RectTransform>().anchoredPosition =
+                positionP3.GetComponent<RectTransform>().anchoredPosition;
+        }
 
         if (scoreList.Count > 3)
-            _fourthPlaceBorder = _spawnedBorders[scoreList[3].index];
-
+        {
+            _spawnedBorders[scoreList[3].index].GetComponent<RectTransform>().anchoredPosition =
+                positionP4.GetComponent<RectTransform>().anchoredPosition;
+        }
     }
+
 
     private void MakeCanvasParent()
     {
