@@ -115,6 +115,9 @@ public class ButtonSelect : MonoBehaviour
             {
                 _eventSystem.SetSelectedGameObject(_shoppingAppIcon);
             }
+
+            if (_sabotageCount<0)
+                _sabotageCount = 0;
         }
     }
 
