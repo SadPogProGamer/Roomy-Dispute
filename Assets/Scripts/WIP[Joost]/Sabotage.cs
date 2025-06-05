@@ -24,7 +24,7 @@ public class SabotageTool : MonoBehaviour
     [Header("Settings")]
     public SabotageMode Mode = SabotageMode.Fire;
 
-    [SerializeField] private float rayDistance = 100f;
+    [SerializeField] private float rayDistance = Mathf.Infinity;
     [SerializeField] private Color highlightColor = Color.green;
     [SerializeField] private LayerMask selectableLayers;
     [SerializeField] private float bombRadius = 3f;
