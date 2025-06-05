@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class IncreaseScore : MonoBehaviour
@@ -11,6 +12,8 @@ public class IncreaseScore : MonoBehaviour
 
     [SerializeField] private Transform _canvasParent; // Parent object for borders
     [SerializeField] private Transform[] _borderPositions;
+
+    //[SerializeField] private GoToBeginning _goToBeginningScript;
 
     private int _highestScore = 0;
     private int _secondHighestScore = 0;
@@ -36,7 +39,10 @@ public class IncreaseScore : MonoBehaviour
     private float _lerpTime = 1f;
 
     private bool _canOrderBorders = false;
-    [HideInInspector] public bool _canContinue = false;
+    private bool _hasSkipped;
+    private bool _orderingHasFinished, _order1IsFinished, _order2IsFinished, _order3IsFinished, _order4IsFinished;
+
+    //[HideInInspector] public bool _canContinue = false;
 
     private Color[] _playerColors = new Color[4]
     {
@@ -76,10 +82,29 @@ public class IncreaseScore : MonoBehaviour
         {
             return;
         }
-
+        
+        
+        if (Gamepad.current.buttonSouth.isPressed)
+        {
+            if (_orderingHasFinished)
+            {
+                if (Gamepad.current.buttonSouth.wasPressedThisFrame)
+                {
+                    SceneManager.LoadScene(0);
+                }
+            }
+            else
+            {
+                _hasSkipped = true;
+            }
+        }
+        
+        
         UpdateScoreText();
         GetHighestScore();
         OrderBorders();
+
+
     }
 
     private void OrderBorders()
@@ -105,6 +130,11 @@ public class IncreaseScore : MonoBehaviour
                 {
                     _firstPlaceBorder.transform.position = Vector3.Lerp(_firstPlaceBorder.transform.position, _borderPositions[0].position, Time.deltaTime * _lerpTime);
                 }
+                else _order1IsFinished = true;
+
+                if (_order1IsFinished)
+                    _orderingHasFinished = true;
+
                 return; // Ensure second place border is initialized
             }
 
@@ -114,12 +144,20 @@ public class IncreaseScore : MonoBehaviour
                 {
                     _firstPlaceBorder.transform.position = Vector3.Lerp(_firstPlaceBorder.transform.position, _borderPositions[0].position, Time.deltaTime * _lerpTime);
                 }
+                else _order1IsFinished = true;
+
 
                 if (_secondPlaceBorder.transform.position != _borderPositions[1].position)
                 {
                     _secondPlaceBorder.transform.position = Vector3.Lerp(_secondPlaceBorder.transform.position, _borderPositions[1].position, Time.deltaTime * _lerpTime);
                 }
+                else _order2IsFinished = true;
+
+                if (_order1IsFinished && _order2IsFinished)
+                    _orderingHasFinished = true;
+
                 return; // Ensure third place border is initialized
+
             }
 
             else if (_fourthPlaceBorder == null)
@@ -128,16 +166,23 @@ public class IncreaseScore : MonoBehaviour
                 {
                     _firstPlaceBorder.transform.position = Vector3.Lerp(_firstPlaceBorder.transform.position, _borderPositions[0].position, Time.deltaTime * _lerpTime);
                 }
+                else _order1IsFinished = true;
 
                 if (_secondPlaceBorder.transform.position != _borderPositions[1].position)
                 {
                     _secondPlaceBorder.transform.position = Vector3.Lerp(_secondPlaceBorder.transform.position, _borderPositions[1].position, Time.deltaTime * _lerpTime);
                 }
+                else _order2IsFinished = true;
 
                 if (_thirdPlaceBorder.transform.position != _borderPositions[2].position)
                 {
                     _thirdPlaceBorder.transform.position = Vector3.Lerp(_thirdPlaceBorder.transform.position, _borderPositions[2].position, Time.deltaTime * _lerpTime);
                 }
+                else _order3IsFinished = true;
+
+                if (_order1IsFinished && _order2IsFinished && _order3IsFinished)
+                    _orderingHasFinished = true;
+
                 return; // Ensure fourth place border is initialized
             }
             else
@@ -146,21 +191,28 @@ public class IncreaseScore : MonoBehaviour
                 {
                     _firstPlaceBorder.transform.position = Vector3.Lerp(_firstPlaceBorder.transform.position, _borderPositions[0].position, Time.deltaTime * _lerpTime);
                 }
+                else _order1IsFinished = true;
 
                 if (_secondPlaceBorder.transform.position != _borderPositions[1].position)
                 {
                     _secondPlaceBorder.transform.position = Vector3.Lerp(_secondPlaceBorder.transform.position, _borderPositions[1].position, Time.deltaTime * _lerpTime);
                 }
+                else _order2IsFinished = true;
 
                 if (_thirdPlaceBorder.transform.position != _borderPositions[2].position)
                 {
                     _thirdPlaceBorder.transform.position = Vector3.Lerp(_thirdPlaceBorder.transform.position, _borderPositions[2].position, Time.deltaTime * _lerpTime);
                 }
+                else _order3IsFinished = true;
 
                 if (_fourthPlaceBorder.transform.position != _borderPositions[3].position)
                 {
                     _fourthPlaceBorder.transform.position = Vector3.Lerp(_fourthPlaceBorder.transform.position, _borderPositions[3].position, Time.deltaTime * _lerpTime);
                 }
+                else _order4IsFinished = true;
+
+                if (_order1IsFinished && _order2IsFinished && _order3IsFinished && _order4IsFinished)
+                    _orderingHasFinished = true;
             }
         }
     }
@@ -242,6 +294,10 @@ public class IncreaseScore : MonoBehaviour
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
+            if (_hasSkipped)
+            {
+                _playerScores[i] = _scoreManager._playerScores[i];
+            }
 
             if (_playerScores[i] < _scoreManager._playerScores[i])
             {

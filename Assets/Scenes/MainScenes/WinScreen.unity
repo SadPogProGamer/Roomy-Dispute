@@ -614,7 +614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &244474502
 Transform:
   m_ObjectHideFlags: 0
@@ -637,12 +637,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 244474500}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3da3037f7906ed646be0fa64efee781b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _increaseScore: {fileID: 1124612111}
   _continueImage: {fileID: 1226165632}
 --- !u!1 &426129579
 GameObject:
@@ -1835,7 +1834,6 @@ MonoBehaviour:
   - {fileID: 1290417683}
   - {fileID: 1112706744}
   - {fileID: 1382216372}
-  _canContinue: 0
 --- !u!4 &1124612112
 Transform:
   m_ObjectHideFlags: 0
