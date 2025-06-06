@@ -68,7 +68,9 @@ public class IncreaseScore : MonoBehaviour
         {
             if (_orderingHasFinished)
             {
-                    SceneManager.LoadScene(0);
+                Destroy(FindFirstObjectByType<ScoreManager>());
+                SceneManager.LoadSceneAsync(0);
+
             }
             else
             {
